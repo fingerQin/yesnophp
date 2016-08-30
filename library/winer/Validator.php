@@ -26,7 +26,7 @@ class Validator {
 			'url'            => '%label%格式不正确',
 			'utf8'           => '%label%必须为UTF-8字符',
 			'email'          => '%label%格式不正确',
-			'require'        => '%label%必须填写',
+			'require'        => '%label%不能为空',
 			'len'            => '%label%长度必须在%min%~%max%之间',
 			'date'           => '%label%格式不正确',
 			'alpha'          => '%label%必须为字母',
@@ -63,14 +63,14 @@ class Validator {
 	 */
 	public static function valido(array $data, array $rules) {
 		if (empty($data)) {
-			YCore::throw_exception(5001001, 'The $data parameter can\'t be empty');
+			YCore::exception(5001001, 'The $data parameter can\'t be empty');
 		}
 		if (empty($rules)) {
-			YCore::throw_exception(5001002, 'The $rules parameter can\'t be empty');
+			YCore::exception(5001002, 'The $rules parameter can\'t be empty');
 		}
 		foreach ($rules as $name => $rule) {
 			if (!array_key_exists($name, $data)) {
-				YCore::throw_exception(5001003, "The {$name} value does not exist");
+				YCore::exception(5001003, "The {$name} value does not exist");
 			}
 			$arr_rule = explode('|', $rule);
 			if (count($arr_rule) === 1) {
@@ -111,7 +111,7 @@ class Validator {
 						$class_func_name = "is_{$rule_name}"; // 当前调用的验证器名称。
 						if (!self::$class_func_name($vali_value)) {
 							$errmsg = str_replace('%label%', $label_name, self::$rule_txt[$rule_name]);
-							YCore::throw_exception($rule_exception_code, $errmsg);
+							YCore::exception($rule_exception_code, $errmsg);
 						}
 						break;
 					case 'alpha_between':
@@ -119,14 +119,14 @@ class Validator {
 							continue;
 						}
 						if (!isset($arr_rule_item[2])) {
-							YCore::throw_exception(5001004, 'Alpha_between validator must set the starting value');
+							YCore::exception(5001004, 'Alpha_between validator must set the starting value');
 						}
 						if (!isset($arr_rule_item[3])) {
-							YCore::throw_exception(5001005, 'Alpha_between validator must set the cut-off value');
+							YCore::exception(5001005, 'Alpha_between validator must set the cut-off value');
 						}
-						if (!self::is_alpha_between($vali_value, $arr_rule_item[1], $arr_rule_item[2])) {
+						if (!self::is_alpha_between($vali_value, $arr_rule_item[2], $arr_rule_item[3])) {
 							$errmsg = str_replace('%label%', $label_name, self::$rule_txt[$rule_name]);
-							YCore::throw_exception($rule_exception_code, $errmsg);
+							YCore::exception($rule_exception_code, $errmsg);
 						}
 						break;
 					case 'number_between':
@@ -134,14 +134,16 @@ class Validator {
 							continue;
 						}
 						if (!isset($arr_rule_item[2])) {
-							YCore::throw_exception(5001006, 'Number_between validator must set the minimum value');
+							YCore::exception(5001006, 'Number_between validator must set the minimum value');
 						}
 						if (!isset($arr_rule_item[3])) {
-							YCore::throw_exception(5001007, 'Number_between validator must set the maximum value');
+							YCore::exception(5001007, 'Number_between validator must set the maximum value');
 						}
-						if (!self::is_number_between($vali_value, $arr_rule_item[1], $arr_rule_item[2])) {
+						if (!self::is_number_between($vali_value, $arr_rule_item[2], $arr_rule_item[3])) {
 							$errmsg = str_replace('%label%', $label_name, self::$rule_txt[$rule_name]);
-							YCore::throw_exception($rule_exception_code, $errmsg);
+							$errmsg = str_replace('%min%', $arr_rule_item[2], $errmsg);
+							$errmsg = str_replace('%max%', $arr_rule_item[3], $errmsg);
+							YCore::exception($rule_exception_code, $errmsg);
 						}
 						break;
 					case 'len':
@@ -149,19 +151,19 @@ class Validator {
 							continue;
 						}
 						if (!isset($arr_rule_item[2])) {
-							YCore::throw_exception(5001008, 'Len validator first parameter must be set');
+							YCore::exception(5001008, 'Len validator first parameter must be set');
 						}
 						if (!isset($arr_rule_item[3])) {
-							YCore::throw_exception(5001009, 'Len validator second parameter must be set');
+							YCore::exception(5001009, 'Len validator second parameter must be set');
 						}
 						if (!isset($arr_rule_item[4])) {
-							YCore::throw_exception(5001011, 'Len validator third parameter must be set');
+							YCore::exception(5001011, 'Len validator third parameter must be set');
 						}
 						if (!self::is_len($vali_value, $arr_rule_item[2], $arr_rule_item[3], $arr_rule_item[4])) {
 							$errmsg = str_replace('%label%', $label_name, self::$rule_txt[$rule_name]);
 							$errmsg = str_replace('%min%', $arr_rule_item[2], $errmsg);
 							$errmsg = str_replace('%max%', $arr_rule_item[3], $errmsg);
-							YCore::throw_exception($rule_exception_code, $errmsg);
+							YCore::exception($rule_exception_code, $errmsg);
 						}
 						break;
 					case 'date':
@@ -169,16 +171,16 @@ class Validator {
 							continue;
 						}
 						if (!isset($arr_rule_item[1])) {
-							YCore::throw_exception(5001012, 'Date validator first parameter must be set');
+							YCore::exception(5001012, 'Date validator first parameter must be set');
 						}
 						$format = $arr_rule_item[2]==1 ? 'Y-m-d H:i:s' : 'Y-m-d';
 						if (!self::is_date($vali_value, $format)) {
 							$errmsg = str_replace('%label%', $label_name, self::$rule_txt[$rule_name]);
-							YCore::throw_exception($rule_exception_code, $errmsg);
+							YCore::exception($rule_exception_code, $errmsg);
 						}
 						break;
 					default:
-						YCore::throw_exception(5003000, 'In the name of the validator illegally');
+						YCore::exception(5003000, 'In the name of the validator illegally');
 						break;
 				}
 			}
@@ -209,7 +211,7 @@ class Validator {
 	 * @param string $telphone
 	 * @return boolean
 	 */
-	public static function is_telphone($telphone) {
+	public static function is_telephone($telphone) {
 		return preg_match('/^((\(\d{2,3}\))|(\d{3}\-))?(\(0\d{2,3}\)|0\d{2,3}-)?[1-9]\d{6,7}(\-\d{1,4})?$/', $telphone) ? true : false;
 	}
 
@@ -262,7 +264,7 @@ class Validator {
 		if (is_numeric($value) === false || is_numeric($start_value) === false || is_numeric($end_value) === false) {
 			return false;
 		}
-		if ($start_value >= $end_value) {
+		if ($start_value > $end_value) {
 			return false;
 		}
 		if ($value < $start_value) {

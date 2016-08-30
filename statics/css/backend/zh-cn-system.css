@@ -34,7 +34,7 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 /*头部*/
 .crumbs,.tab-web-panel li a:hover,.tab-web-panel li.on a{background: url(../../images/backend/icon_use.png) no-repeat}
 .header {background:#3a6ea5 url(../../images/backend/h_bg.gif) repeat-x left bottom; height:80px; position:relative}
-.header .logo{float:left;width:136px;height:80px;margin-right:10px;_margin-right:7px;background: url(../../images/backend/logo_1.gif) no-repeat;}
+.header .logo{float:left;width:136px;height:80px;margin-right:10px;_margin-right:7px;background: url(../../images/backend/it_technology.png) no-repeat left 35px top 10px;}
 .header .logo a{display:block;height:80px;text-decoration: none;}
 .header .rt-col{position:absolute;top:0px; right:0px; width:280px; height:44px; z-index:10}
 .header .nav{ display:block; height:34px; position:relative; bottom:-10px}

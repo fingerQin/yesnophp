@@ -4,8 +4,9 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 ?>
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
-    	<a class="add fb" href="javascript:postDialog('addType', '<?php echo YUrl::createAdminUrl('Index', 'Dict', 'addType'); ?>', '添加字典', 450, 200)"><em>添加字典</em></a>
-    	<a href='javascript:;' class="on"><em>字典列表</em></a>    
+    	<a class="add fb" href="javascript:postDialog('addType', '<?php echo YUrl::createBackendUrl('', 'Dict', 'addType'); ?>', '添加字典', 450, 200)"><em>添加字典</em></a>
+    	<a href='javascript:;' class="on"><em>字典列表</em></a>
+    	<a style="float:right;" class="add fb" href="###" onclick="normalDialog('clearCache', '<?php echo YUrl::createBackendUrl('', 'Dict', 'clearCache'); ?>', '您确定要清除字典缓存吗？')" title="清除字典缓存"><em>清除字典缓存</em></a>
     </div>
 </div>
 <style type="text/css">
@@ -52,7 +53,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     		<td align="left"><?php echo $dict['description'] ?></td>
     		<td align="center">
     		<a href="###" onclick="edit(<?php echo $dict['dict_type_id'] ?>, '<?php echo $dict['type_name'] ?>')" title="修改">修改</a> |  
-    		<a href="###" onclick="deleteDialog('deleteType', '<?php echo YUrl::createAdminUrl('Index', 'Dict', 'deleteType', ['dict_type_id' => $dict['dict_type_id']]); ?>', '<?php echo $dict['type_name'] ?>')" title="删除">删除</a> |  
+    		<a href="###" onclick="deleteDialog('deleteType', '<?php echo YUrl::createBackendUrl('', 'Dict', 'deleteType', ['dict_type_id' => $dict['dict_type_id']]); ?>', '<?php echo $dict['type_name'] ?>')" title="删除">删除</a> |  
     		<a href="###" onclick="setDictValue(<?php echo $dict['dict_type_id'] ?>, '<?php echo $dict['type_name'] ?>')" title="字典值管理">字典值管理</a>
     		</td>
     	</tr>
@@ -71,12 +72,12 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 <script type="text/javascript">
 function edit(id, name) {
 	var title = '修改『' + name + '』';
-	var page_url = "<?php echo YUrl::createAdminUrl('Index', 'Dict', 'editType'); ?>?dict_type_id="+id;
+	var page_url = "<?php echo YUrl::createBackendUrl('', 'Dict', 'editType'); ?>?dict_type_id="+id;
 	postDialog('editType', page_url, title, 500, 200);
 }
 
 function setDictValue(id, name) {
-	page_url = '<?php echo YUrl::createAdminUrl('Index', 'Dict', 'dict'); ?>?dict_type_id='+id;
+	page_url = '<?php echo YUrl::createBackendUrl('', 'Dict', 'dict'); ?>?dict_type_id='+id;
 	title = '管理 『 '+name+' 』字典值';
 	postDialog(id, page_url, title, 900, 530, '', 'yes');
 }

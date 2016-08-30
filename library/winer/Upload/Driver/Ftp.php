@@ -41,7 +41,7 @@ class Ftp {
 
         /* 登录FTP服务器 */
         if (!$this->login()) {
-            YCore::throw_exception(-1, $this->error);
+            YCore::exception(-1, $this->error);
         }
     }
 

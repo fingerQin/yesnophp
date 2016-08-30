@@ -8,7 +8,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 </style>
 
 <div class="pad_10">
-<form action="<?php echo YUrl::createAdminUrl('Index', 'Ad', 'positionEdit'); ?>" method="post" name="myform" id="myform">
+<form action="<?php echo YUrl::createBackendUrl('', 'Ad', 'positionEdit'); ?>" method="post" name="myform" id="myform">
 <table cellpadding="2" cellspacing="1" class="table_form" width="100%">
 	<tr>
 		<th width="80">广告位置名称：</th>
@@ -25,7 +25,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     <tr>
 	    <td width="100%" align="center" colspan="2">
 	       <input type="hidden" name="pos_id" value="<?php echo $detail['pos_id']; ?>" />
-	       <input id="form_submit" type="button" name="dosubmit" value=" 提交 " />
+	       <input id="form_submit"  type="button" name="dosubmit" class="btn_submit"  value=" 提交 " />
 	    </td>
 	</tr>
 </table>

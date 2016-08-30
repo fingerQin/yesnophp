@@ -102,15 +102,15 @@ class Upload {
             $files = $_FILES;
         }
         if (empty($files)) {
-            YCore::throw_exception(3001101, '没有上传任何文件');
+            YCore::exception(3001101, '没有上传任何文件');
         }
         /* 检测上传根目录 */
         if (!$this->uploader->checkRootPath($this->rootPath)) {
-            YCore::throw_exception(3001102, $this->uploader->getError());
+            YCore::exception(3001102, $this->uploader->getError());
         }
         /* 检查上传目录 */
         if (!$this->uploader->checkSavePath($this->savePath)) {
-            YCore::throw_exception(3001103, $this->uploader->getError());
+            YCore::exception(3001103, $this->uploader->getError());
         }
         /* 逐个检测并上传文件 */
         $info = array();
@@ -147,7 +147,7 @@ class Upload {
             if (in_array($ext, array('gif','jpg','jpeg','bmp','png','swf'))) {
                 $imginfo = getimagesize($file['tmp_name']);
                 if (empty($imginfo) || ($ext == 'gif' && empty($imginfo['bits']))){
-                    YCore::throw_exception(3006230, '非法图像文件');
+                    YCore::exception(3006230, '非法图像文件');
                 }
             }
             /* 保存文件 并记录保存成功的文件 */
@@ -162,7 +162,7 @@ class Upload {
             finfo_close($finfo);
         }
         if (empty($info)) {
-        	YCore::throw_exception(3006400, '上传失败');
+        	YCore::exception(3006400, '上传失败');
         }
         return $info;
     }
@@ -201,12 +201,12 @@ class Upload {
      * @param array $config 驱动配置     
      */
     private function setDriver($driver = null, $config = null) {
-        $driver = $driver ? : ($this->driver       ? : YCore::config('upload.file_upload_type'));
-        $config = $config ? : ($this->driverConfig ? : YCore::config('upload.upload_type_config'));
+        $driver = $driver ? : ($this->driver       ? : YCore::appconfig('upload.file_upload_type'));
+        $config = $config ? : ($this->driverConfig ? : YCore::appconfig('upload.upload_type_config'));
         $class  = strpos($driver, '\\') ? $driver : 'winer\\Upload\\Driver\\' . ucfirst(strtolower($driver));
         $this->uploader = new $class($config);
         if (!$this->uploader) {
-            YCore::throw_exception(3006001, "不存在上传驱动：{$driver}");
+            YCore::exception(3006001, "不存在上传驱动：{$driver}");
         }
     }
 
@@ -222,24 +222,24 @@ class Upload {
         }
         /* 无效上传 */
         if (empty($file['name'])) {
-            YCore::throw_exception(3001105, '未知上传错误');
+            YCore::exception(3001105, '未知上传错误');
         }
         /* 检查是否合法上传 */
         if (!is_uploaded_file($file['tmp_name'])) {
-        	YCore::throw_exception(3001106, '非法上传文件');
+        	YCore::exception(3001106, '非法上传文件');
         }
         /* 检查文件大小 */
         if (!$this->checkSize($file['size'])) {
-            YCore::throw_exception(3001107, '上传文件大小不符');
+            YCore::exception(3001107, '上传文件大小不符');
         }
         /* 检查文件Mime类型 */
         //TODO:FLASH上传的文件获取到的mime类型都为application/octet-stream
         if (!$this->checkMime($file['type'])) {
-        	YCore::throw_exception(3001108, '上传文件MIME类型不允许');
+        	YCore::exception(3001108, '上传文件MIME类型不允许');
         }
         /* 检查文件后缀 */
         if (!$this->checkExt($file['ext'])) {
-            YCore::throw_exception(3001109, '上传文件后缀不允许');
+            YCore::exception(3001109, '上传文件后缀不允许');
         }
     }
 
@@ -250,25 +250,25 @@ class Upload {
     private function error($errorNo) {
         switch ($errorNo) {
             case 1:
-                YCore::throw_exception(3001200, '上传的文件超过了 php.ini 中 upload_max_filesize 选项限制的值');
+                YCore::exception(3001200, '上传的文件超过了 php.ini 中 upload_max_filesize 选项限制的值');
                 break;
             case 2:
-                YCore::throw_exception(3001201, '上传文件的大小超过了 HTML 表单中 MAX_FILE_SIZE 选项指定的值');
+                YCore::exception(3001201, '上传文件的大小超过了 HTML 表单中 MAX_FILE_SIZE 选项指定的值');
                 break;
             case 3:
-                YCore::throw_exception(3001202, '文件只有部分被上传');
+                YCore::exception(3001202, '文件只有部分被上传');
                 break;
             case 4:
-                YCore::throw_exception(3001203, '没有文件被上传');
+                YCore::exception(3001203, '没有文件被上传');
                 break;
             case 6:
-                YCore::throw_exception(3001204, '找不到临时文件夹');
+                YCore::exception(3001204, '找不到临时文件夹');
                 break;
             case 7:
-                YCore::throw_exception(3001205, '文件写入失败');
+                YCore::exception(3001205, '文件写入失败');
                 break;
             default:
-                YCore::throw_exception(3001206, '未知上传错误');
+                YCore::exception(3001206, '未知上传错误');
         }
     }
 
@@ -310,7 +310,7 @@ class Upload {
         } else {
             $savename = $this->getName($rule, $file['name']);
             if (empty($savename)) {
-                YCore::throw_exception(3001301, '文件命名规则错误');
+                YCore::exception(3001301, '文件命名规则错误');
             }
         }
         /* 文件保存后缀，支持强制更改文件后缀 */
@@ -328,7 +328,7 @@ class Upload {
         if ($this->autoSub && !empty($rule)) {
             $subpath = $this->getName($rule, $filename) . '/';
             if (!empty($subpath) && !$this->uploader->mkdir($this->savePath . $subpath)){
-                YCore::throw_exception(3001302, $this->uploader->getError());
+                YCore::exception(3001302, $this->uploader->getError());
             }
         }
         return $subpath;

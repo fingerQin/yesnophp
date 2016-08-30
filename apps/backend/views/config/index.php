@@ -5,8 +5,9 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
-    	<a class="add fb" href="javascript:postDialog('addConfig', '<?php echo YUrl::createAdminUrl('Index', 'Config', 'add'); ?>', '添加配置', 480, 240)"><em>添加配置</em></a>
+    	<a class="add fb" href="javascript:postDialog('addConfig', '<?php echo YUrl::createBackendUrl('', 'Config', 'add'); ?>', '添加配置', 480, 240)"><em>添加配置</em></a>
     	<a href='javascript:;' class="on"><em>配置列表</em></a>    
+    	<a style="float:right;" class="add fb" href="###" onclick="normalDialog('clearCache', '<?php echo YUrl::createBackendUrl('', 'Config', 'clearCache'); ?>', '您确定要清除配置缓存吗？')" title="清除配置缓存"><em>清除配置缓存</em></a>
     </div>
 </div>
 <style type="text/css">
@@ -39,7 +40,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 	<thead>
 		<tr>
 			<th align="center">ID</th>
-			<th align="left">配置标题</th>
+			<th width="180" align="left">配置标题</th>
 			<th align="left">配置编码</th>
 			<th align="left">配置值</th>
 			<th align="left">描述</th>
@@ -60,7 +61,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     		<td align="left"><?php echo date('Y-m-d H:i:s', $item['created_time']); ?></td>
     		<td align="center">
     		<a href="###" onclick="edit(<?php echo $item['config_id'] ?>, '<?php echo $item['ctitle'] ?>')" title="修改">修改</a> |  
-    		<a href="###" onclick="deleteDialog('deleteType', '<?php echo YUrl::createAdminUrl('Index', 'Config', 'delete', ['config_id' => $item['config_id']]); ?>', '<?php echo $item['ctitle'] ?>')" title="删除">删除</a>  
+    		<a href="###" onclick="deleteDialog('deleteType', '<?php echo YUrl::createBackendUrl('', 'Config', 'delete', ['config_id' => $item['config_id']]); ?>', '<?php echo $item['ctitle'] ?>')" title="删除">删除</a>  
     		</td>
     	</tr>
     <?php endforeach; ?>
@@ -78,7 +79,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 <script type="text/javascript">
 function edit(id, name) {
 	var title = '修改『' + name + '』';
-	var page_url = "<?php echo YUrl::createAdminUrl('Index', 'Config', 'edit'); ?>?config_id="+id;
+	var page_url = "<?php echo YUrl::createBackendUrl('', 'Config', 'edit'); ?>?config_id="+id;
 	postDialog('editType', page_url, title, 480, 240);
 }
 </script>

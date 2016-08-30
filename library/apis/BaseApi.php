@@ -7,31 +7,20 @@
 
 namespace apis;
 
+use common\YCore;
 abstract class BaseApi {
-
-	/**
-	 * 接口响应状态码。
-	 * @var number
-	 */
-	protected $errcode = '';
-
-	/**
-	 * 接口应用的数据。
-	 * @var array
-	 */
-	protected $ret_data = [];
-
-	/**
-	 * 接口结果描述。
-	 * @var string
-	 */
-	protected $errmsg = '';
 
 	/**
 	 * 请求参数。
 	 * @var array
 	 */
 	protected $params = [];
+
+	/**
+	 * 结果。
+	 * @var array
+	 */
+	protected $result = [];
 
 	/**
 	 * 构造方法。
@@ -42,24 +31,10 @@ abstract class BaseApi {
 	 * -- 4、参数格式判断。
 	 * -- 5、运行接口逻辑。
 	 */
-	public function __construct($data) {
+	public function __construct(&$data) {
 		$this->timestamp = $_SERVER['REQUEST_TIME'];
-		$this->errcode   = 0;
 		$this->params    = $data;
 		$this->runService();
-	}
-
-	/**
-	 * 初始化成员属性ret_data。
-	 * -- 只有当有错误码的时候才会进行初始化。否则不会进行任何操作。
-	 */
-	final protected function initRetData() {
-		if ($this->errcode != 0) {
-			$this->ret_data = [
-					'errcode' => $this->errcode,
-					'errmsg'  => $this->errmsg 
-			];
-		}
 	}
 
 	/**
@@ -70,10 +45,70 @@ abstract class BaseApi {
 	abstract protected function runService();
 
 	/**
+	 * 数据返回格式统一组装方法。
+	 * @param int $code 错误码，必须是int类型。
+	 * @param string $msg 提示信息。
+	 * @param array $data 数据。
+	 * @return void
+	 */
+	public function render($code, $msg, array $data = null) {
+	    if (!is_int($code)) {
+	        throw new \Exception ('code must is int');
+	    }
+	    $this->result = [
+	        'errcode' => $code,
+	        'errmsg'  => $msg
+	    ];
+	    if ($code == 0 && !is_null($data)) {
+	        $this->result['data'] = $data;
+	    }
+	}
+	
+	/**
 	 * 响应结果。
-	 * -- 1、调用该方法生成接口文档规定格式的数据。
-	 * -- 2、判断是否写日志，是则写日志到数据库表中。
 	 * @return string
 	 */
-	abstract public function render();
+	public function renderJson() {
+	    return json_encode($this->result);
+	}
+
+	/**
+	 * 从接口参数中获取一个整形数值。
+	 * @param string $name 名称。
+	 * @param int $default_value 默认值。
+	 * @return int
+	 */
+	public function getInt($name, $default_value = null) {
+		return YCore::getInt($this->params, $name, $default_value);
+	}
+
+	/**
+	 * 从接口参数中获取一个字符串值。
+	 * @param string $name 名称。
+	 * @param string $default_value 默认值。
+	 * @return string
+	 */
+	public function getString($name, $default_value = null) {
+		return YCore::getString($this->params, $name, $default_value);
+	}
+
+	/**
+	 * 从接口参数中获取一个浮点值。
+	 * @param string $name 名称。
+	 * @param float $default_value 默认值。
+	 * @return float
+	 */
+	public function getFloat($name, $default_value = null) {
+		return YCore::getFloat($this->params, $name, $default_value);
+	}
+
+	/**
+	 * 从接口参数中获取一个浮点值。
+	 * @param string $name 名称。
+	 * @param array $default_value 默认值。
+	 * @return array
+	 */
+	public function getArray($name, $default_value = null) {
+		return YCore::getArray($this->params, $name, $default_value);
+	}
 }

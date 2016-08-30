@@ -16,10 +16,10 @@ class IpController extends \common\controllers\Admin {
      */
     public function indexAction() {
         $keywords  = $this->getString('keywords', '');
-        $page      = $this->getInt(YCore::config('pager'), 1);
+        $page      = $this->getInt(YCore::appconfig('pager'), 1);
         $list      = IpService::getIpBanList($keywords, $page, 20);
         $paginator = new Paginator($list['total'], 20);
-        $page_html = $paginator->show();
+        $page_html = $paginator->backendPageShow();
         $this->_view->assign('page_html', $page_html);
         $this->_view->assign('keywords', $keywords);
         $this->_view->assign('list', $list['list']);

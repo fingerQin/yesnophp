@@ -291,7 +291,7 @@ class Calculation
         ),
         'ADDRESS' => array(
             'category' => Calculation\Categories::CATEGORY_LOOKUP_AND_REFERENCE,
-            'functionCall' => '\\PHPExcel\\Calculation\\LookupRef::CELL_ADDRESS',
+            'functionCall' => '\\PHPExcel\\Calculation\\LookupRef::cellAddress',
             'argumentCount' => '2-5'
         ),
         'AMORDEGRC' => array(
@@ -306,7 +306,7 @@ class Calculation
         ),
         'AND' => array(
             'category' => Calculation\Categories::CATEGORY_LOGICAL,
-            'functionCall' => '\\PHPExcel\\Calculation\\Logical::LOGICAL_AND',
+            'functionCall' => '\\PHPExcel\\Calculation\\Logical::logicalAnd',
             'argumentCount' => '1+'
         ),
         'AREAS' => array(
@@ -807,7 +807,7 @@ class Calculation
         ),
         'ERROR.TYPE' => array(
             'category' => Calculation\Categories::CATEGORY_INFORMATION,
-            'functionCall' => 'Calculation\Categories::ERROR_TYPE',
+            'functionCall' => 'Calculation\Categories::errorType',
             'argumentCount' => '1'
         ),
         'EVEN' => array(
@@ -993,7 +993,7 @@ class Calculation
         ),
         'IF' => array(
             'category' => Calculation\Categories::CATEGORY_LOGICAL,
-            'functionCall' => '\\PHPExcel\\Calculation\\Logical::STATEMENT_IF',
+            'functionCall' => '\\PHPExcel\\Calculation\\Logical::statementIf',
             'argumentCount' => '1-3'
         ),
         'IFERROR' => array(
@@ -1129,7 +1129,7 @@ class Calculation
         ),
         'ISBLANK' => array(
             'category' => Calculation\Categories::CATEGORY_INFORMATION,
-            'functionCall' => 'Calculation\Categories::IS_BLANK',
+            'functionCall' => 'Calculation\Categories::isBlank',
             'argumentCount' => '1'
         ),
         'ISERR' => array(
@@ -1144,32 +1144,32 @@ class Calculation
         ),
         'ISEVEN' => array(
             'category' => Calculation\Categories::CATEGORY_INFORMATION,
-            'functionCall' => 'Calculation\Categories::IS_EVEN',
+            'functionCall' => 'Calculation\Categories::isEven',
             'argumentCount' => '1'
         ),
         'ISLOGICAL' => array(
             'category' => Calculation\Categories::CATEGORY_INFORMATION,
-            'functionCall' => 'Calculation\Categories::IS_LOGICAL',
+            'functionCall' => 'Calculation\Categories::isLogical',
             'argumentCount' => '1'
         ),
         'ISNA' => array(
             'category' => Calculation\Categories::CATEGORY_INFORMATION,
-            'functionCall' => 'Calculation\Categories::IS_NA',
+            'functionCall' => 'Calculation\Categories::isNa',
             'argumentCount' => '1'
         ),
         'ISNONTEXT' => array(
             'category' => Calculation\Categories::CATEGORY_INFORMATION,
-            'functionCall' => 'Calculation\Categories::IS_NONTEXT',
+            'functionCall' => 'Calculation\Categories::isNonText',
             'argumentCount' => '1'
         ),
         'ISNUMBER' => array(
             'category' => Calculation\Categories::CATEGORY_INFORMATION,
-            'functionCall' => 'Calculation\Categories::IS_NUMBER',
+            'functionCall' => 'Calculation\Categories::isNumber',
             'argumentCount' => '1'
         ),
         'ISODD' => array(
             'category' => Calculation\Categories::CATEGORY_INFORMATION,
-            'functionCall' => 'Calculation\Categories::IS_ODD',
+            'functionCall' => 'Calculation\Categories::isOdd',
             'argumentCount' => '1'
         ),
         'ISPMT' => array(
@@ -1184,7 +1184,7 @@ class Calculation
         ),
         'ISTEXT' => array(
             'category' => Calculation\Categories::CATEGORY_INFORMATION,
-            'functionCall' => 'Calculation\Categories::IS_TEXT',
+            'functionCall' => 'Calculation\Categories::isText',
             'argumentCount' => '1'
         ),
         'JIS' => array(
@@ -1239,7 +1239,7 @@ class Calculation
         ),
         'LOG' => array(
             'category' => Calculation\Categories::CATEGORY_MATH_AND_TRIG,
-            'functionCall' => '\\PHPExcel\\Calculation\\MathTrig::LOG_BASE',
+            'functionCall' => '\\PHPExcel\\Calculation\\MathTrig::logBase',
             'argumentCount' => '1,2'
         ),
         'LOG10' => array(
@@ -1496,7 +1496,7 @@ class Calculation
         ),
         'OR' => array(
             'category' => Calculation\Categories::CATEGORY_LOGICAL,
-            'functionCall' => '\\PHPExcel\\Calculation\\Logical::LOGICAL_OR',
+            'functionCall' => '\\PHPExcel\\Calculation\\Logical::logicalOr',
             'argumentCount' => '1+'
         ),
         'PEARSON' => array(
@@ -2445,7 +2445,6 @@ class Calculation
             foreach (array_keys(self::$localeBoolean) as $excelBoolean) {
                 self::$functionReplaceFromExcel[] = '/(@?[^\w\.])'.preg_quote($excelBoolean).'([^\w\.])/Ui';
             }
-
         }
 
         if (self::$functionReplaceToLocale === null) {
@@ -2527,7 +2526,7 @@ class Calculation
             return '"'.$value.'"';
         //    Convert numeric errors to NaN error
         } elseif ((is_float($value)) && ((is_nan($value)) || (is_infinite($value)))) {
-            return Calculation\Functions::NaN();
+            return Calculation\Functions::NAN();
         }
 
         return $value;
@@ -2546,9 +2545,9 @@ class Calculation
             if ((isset($value{0})) && ($value{0} == '"') && (substr($value, -1) == '"')) {
                 return substr($value, 1, -1);
             }
-        //    Convert numeric errors to NaN error
+        //    Convert numeric errors to NAN error
         } elseif ((is_float($value)) && ((is_nan($value)) || (is_infinite($value)))) {
-            return Calculation\Functions::NaN();
+            return Calculation\Functions::NAN();
         }
         return $value;
     }
@@ -2646,7 +2645,7 @@ class Calculation
         if ($result === null) {
             return 0;
         } elseif ((is_float($result)) && ((is_nan($result)) || (is_infinite($result)))) {
-            return Calculation\Functions::NaN();
+            return Calculation\Functions::NAN();
         }
         return $result;
     }
@@ -3183,7 +3182,6 @@ class Calculation
                 ++$index;                                                    //    Drop the redundant plus symbol
             } elseif ((($opCharacter == '~') || ($opCharacter == '|')) && (!$isOperandOrFunction)) {    //    We have to explicitly deny a tilde or pipe, because they are legal
                 return $this->raiseFormulaError("Formula Error: Illegal character '~'");                //        on the stack but not in the input expression
-
             } elseif ((isset(self::$operators[$opCharacter]) or $isOperandOrFunction) && $expectingOperator) {    //    Are we putting an operator on the stack?
 //echo 'Element with value '.$opCharacter.' is an Operator', PHP_EOL;
                 while ($stack->count() > 0 &&
@@ -3195,7 +3193,6 @@ class Calculation
                 $stack->push('Binary Operator', $opCharacter);    //    Finally put our current operator onto the stack
                 ++$index;
                 $expectingOperator = false;
-
             } elseif ($opCharacter == ')' && $expectingOperator) {            //    Are we expecting to close a parenthesis?
 //echo 'Element is a Closing bracket', PHP_EOL;
                 $expectingOperand = false;
@@ -3278,7 +3275,6 @@ class Calculation
                     }
                 }
                 ++$index;
-
             } elseif ($opCharacter == ',') {            //    Is this the separator for function arguments?
 //echo 'Element is a Function argument separator', PHP_EOL;
                 while (($o2 = $stack->pop()) && $o2['value'] != '(') {        //    Pop off the stack back to the last (
@@ -3304,12 +3300,10 @@ class Calculation
                 $expectingOperator = false;
                 $expectingOperand = true;
                 ++$index;
-
             } elseif ($opCharacter == '(' && !$expectingOperator) {
 //                echo 'Element is an Opening Bracket<br />';
                 $stack->push('Brace', '(');
                 ++$index;
-
             } elseif ($isOperandOrFunction && !$expectingOperator) {    // do we now have a function/variable/number?
                 $expectingOperator = true;
                 $expectingOperand = false;
@@ -3422,7 +3416,6 @@ class Calculation
                     $output[] = $details;
                 }
                 $index += $length;
-
             } elseif ($opCharacter == '$') {    // absolute row or column range
                 ++$index;
             } elseif ($opCharacter == ')') {    // miscellaneous error checking
@@ -3692,7 +3685,6 @@ class Calculation
                 } else {
                     $this->executeNumericBinaryOperation($cellID, $multiplier, $arg, '*', 'arrayTimesEquals', $stack);
                 }
-
             } elseif (preg_match('/^'.self::CALCULATION_REGEXP_CELLREF.'$/i', $token, $matches)) {
                 $cellRef = null;
 //                echo 'Element '.$token.' is a Cell reference<br />';
@@ -3875,7 +3867,6 @@ class Calculation
                     }
                     $stack->push('Value', self::wrapResult($result));
                 }
-
             } else {
                 // if the token is a number, boolean, string or an Excel error, push it onto the stack
                 if (isset(self::$excelConstants[strtoupper($token)])) {
@@ -3938,7 +3929,7 @@ class Calculation
                     $stack->push('Value', $operand);
                     $this->_debugLog->writeDebugLog('Evaluation Result is ', $this->showTypeDetails($operand));
                     return false;
-                } elseif (!Shared\String::convertToNumberIfFraction($operand)) {
+                } elseif (!Shared\StringHelper::convertToNumberIfFraction($operand)) {
                     //    If not a numeric or a fraction, then it's a text string, and so can't be used in mathematical binary operations
                     $stack->push('Value', '#VALUE!');
                     $this->_debugLog->writeDebugLog('Evaluation Result is a ', $this->showTypeDetails('#VALUE!'));
@@ -4080,8 +4071,8 @@ class Calculation
      */
     private function strcmpLowercaseFirst($str1, $str2)
     {
-        $inversedStr1 = Shared\String::StrCaseReverse($str1);
-        $inversedStr2 = Shared\String::StrCaseReverse($str2);
+        $inversedStr1 = Shared\StringHelper::strCaseReverse($str1);
+        $inversedStr2 = Shared\StringHelper::strCaseReverse($str2);
 
         return strcmp($inversedStr1, $inversedStr2);
     }

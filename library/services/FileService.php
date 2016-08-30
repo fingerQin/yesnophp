@@ -9,9 +9,9 @@ namespace services;
 
 use models\Files;
 use models\Admin;
-use models\Users;
 use winer\Validator;
 use common\YCore;
+use models\User;
 class FileService extends BaseService {
 
     /**
@@ -35,16 +35,16 @@ class FileService extends BaseService {
                 $user_id = $admin ? $admin['admin_id'] : -1;
                 break;
             case 2:
-                $users_model = new Users();
+                $users_model = new User();
                 $user = $users_model->fetchOne([], ['username' => $user_name]);
                 $user_id = $user ? $user['user_id'] : -1;
                 break;
         }
         if (strlen($start_time) > 0 && !Validator::is_date($start_time, 'Y-m-d H:i:s')) {
-            YCore::throw_exception(-1, '开始时间查询有误');
+            YCore::exception(-1, '开始时间查询有误');
         }
         if (strlen($end_time) > 0 && !Validator::is_date($end_time, 'Y-m-d H:i:s')) {
-            YCore::throw_exception(-1, '结束时间查询有误');
+            YCore::exception(-1, '结束时间查询有误');
         }
         $files_model = new Files();
         $result = $files_model->getList($user_type, $user_id, $file_md5, $file_type, $start_time, $end_time, $page, $count);
@@ -58,7 +58,7 @@ class FileService extends BaseService {
                 $item['user_name'] = $admin ? "{$admin['realname']}[{$admin['username']}]" : '';
                 $item['user_type_label']= '管理员';
             } else if ($item['user_type'] == 2) {
-                $users_model = new Users();
+                $users_model = new User();
                 $user = $users_model->fetchOne([], ['user_id' => $item['user_id']]);
                 $item['user_name'] = $user ? "{$user['username']}" : '';
                 $item['user_type_label']= '普通用户';
@@ -78,7 +78,7 @@ class FileService extends BaseService {
         $files_model = new Files();
         $file = $files_model->fetchOne([], ['file_id' => $file_id, 'status' => 1]);
         if (empty($file)) {
-            YCore::throw_exception(-1, '文件不存在或已经删除');
+            YCore::exception(-1, '文件不存在或已经删除');
         }
         return $files_model->deleteFile($file_id);
     }

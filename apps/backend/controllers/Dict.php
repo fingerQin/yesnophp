@@ -16,10 +16,10 @@ class DictController extends \common\controllers\Admin {
 	 */
 	public function indexAction() {
 	    $keywords = $this->getString('keywords', '');
-	    $page = $this->getInt(YCore::config('pager'), 1);
+	    $page = $this->getInt(YCore::appconfig('pager'), 1);
         $list = DictService::getDictTypeList($keywords, $page, 10);
         $paginator = new Paginator($list['total'], 10);
-        $page_html = $paginator->show();
+        $page_html = $paginator->backendPageShow();
         $this->_view->assign('page_html', $page_html);
         $this->_view->assign('keywords', $keywords);
         $this->_view->assign('dict_list', $list);
@@ -31,10 +31,10 @@ class DictController extends \common\controllers\Admin {
 	public function dictAction() {
 	    $dict_type_id = $this->getInt('dict_type_id');
 	    $keywords = $this->getString('keywords', '');
-	    $page = $this->getInt(YCore::config('pager'), 1);
+	    $page = $this->getInt(YCore::appconfig('pager'), 1);
 	    $list = DictService::getDictList($dict_type_id, $keywords, $page, 10);
 	    $paginator = new Paginator($list['total'], 10);
-	    $page_html = $paginator->show();
+	    $page_html = $paginator->backendPageShow();
 	    $this->_view->assign('page_html', $page_html);
 	    $this->_view->assign('keywords', $keywords);
 	    $this->_view->assign('dict_type_id', $dict_type_id);
@@ -46,11 +46,11 @@ class DictController extends \common\controllers\Admin {
 	 */
 	public function addAction() {
 	    if ($this->_request->isPost()) {
-	        $dict_name    = $this->getString('dict_name');
+	        $dict_value   = $this->getString('dict_value');
 	        $dict_code    = $this->getString('dict_code');
 	        $description  = $this->getString('description');
 	        $dict_type_id = $this->getInt('dict_type_id');
-	        $ok = DictService::addDict($dict_type_id, $dict_code, $dict_name, $description, 0, $this->admin_id);
+	        $ok = DictService::addDict($dict_type_id, $dict_code, $dict_value, $description, 0, $this->admin_id);
 	        if ($ok) {
 	            $this->json($ok, '添加成功');
 	        } else {
@@ -67,11 +67,11 @@ class DictController extends \common\controllers\Admin {
 	public function editAction() {
 	    if ($this->_request->isPost()) {
 	        $dict_id      = $this->getInt('dict_id');
-	        $dict_name    = $this->getString('dict_name');
+	        $dict_value   = $this->getString('dict_value');
 	        $dict_code    = $this->getString('dict_code');
 	        $description  = $this->getString('description');
 	        $dict_type_id = $this->getInt('dict_type_id');
-	        $ok = DictService::editDict($dict_id, $dict_code, $dict_name, $description, 0, $this->admin_id);
+	        $ok = DictService::editDict($dict_id, $dict_code, $dict_value, $description, 0, $this->admin_id);
 	        if ($ok) {
 	            $this->json($ok, '修改成功');
 	        } else {
@@ -162,5 +162,15 @@ class DictController extends \common\controllers\Admin {
 	    $ok = DictService::deleteDictType($this->admin_id, $dict_type_id);
 	    $message = $ok ? '操作成功' : '操作失败';
 	    $this->json($ok, $message);
+	}
+
+	/**
+	 * 清除字典缓存。
+	 */
+	public function clearCacheAction() {
+		if ($this->_request->isXmlHttpRequest()) {
+			DictService::clearDictCache();
+			$this->json(true, '字典缓存清除成功');
+		}
 	}
 }

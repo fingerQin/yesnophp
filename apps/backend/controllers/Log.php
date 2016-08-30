@@ -23,12 +23,12 @@ class LogController extends \common\controllers\Admin {
             'endtime'   => $this->getString('endtime', ''),
             'errcode'   => $this->getString('errcode', ''),
             'content'   => $this->getString('content', ''),
-            'page'      => $this->getInt(YCore::config('pager'), 1),
+            'page'      => $this->getInt(YCore::appconfig('pager'), 1),
             'count'     => $this->getInt('count', 50),
         ];
         $result = LogService::getLogList($options);
         $paginator = new Paginator($result['total'], 50);
-        $page_html = $paginator->show();
+        $page_html = $paginator->backendPageShow();
         $this->_view->assign('search', $options);
         $this->_view->assign('page_html', $page_html);
         $this->_view->assign('list', $result['list']);

@@ -8,7 +8,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 </style>
 
 <div class="pad_10">
-<form action="<?php echo YUrl::createAdminUrl('Index', 'Ad', 'edit'); ?>" method="post" name="myform" id="myform">
+<form action="<?php echo YUrl::createBackendUrl('', 'Ad', 'edit'); ?>" method="post" name="myform" id="myform">
 <table cellpadding="2" cellspacing="1" class="table_form" width="100%">
 	<tr>
 		<th width="80">广告名称：</th>
@@ -49,7 +49,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     <tr>
 	    <td width="100%" align="center" colspan="2">
 	    	<input type="hidden" name="ad_id" value="<?php echo $detail['ad_id']; ?>" />
-	       <input id="form_submit" type="button" name="dosubmit" value=" 提交 " />
+	       <input id="form_submit"  type="button" name="dosubmit" class="btn_submit"  value=" 提交 " />
 	    </td>
 	</tr>
 </table>
@@ -104,7 +104,7 @@ $(document).ready(function(){
 	//previewImage.append('<img src="<?php echo YUrl::assets('js', '/AjaxUploader/upload_default.png') ?>">');
     var uploader = new ss.SimpleUpload({
       button: previewImage,
-      url: '<?php echo YUrl::createAdminUrl('Index', 'Index', 'upload'); ?>',
+      url: '<?php echo YUrl::createBackendUrl('', 'Index', 'upload'); ?>',
       name: 'uploadfile',
       multipart: true,
       hoverClass: 'hover',

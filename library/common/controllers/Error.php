@@ -8,6 +8,7 @@
 namespace common\controllers;
 
 use common\YCore;
+use common\YUrl;
 
 class Error extends \common\controllers\Common {
 
@@ -17,6 +18,7 @@ class Error extends \common\controllers\Common {
 	public function errorAction($exception) {
 		$errcode = $exception->getCode();
 		$errmsg  = $exception->getMessage();
+		$trace   = $this->logWrapper($errmsg); // $errmsg是展示给用户看的。而$trace是展示给开发人员查找BUG用的。
 
 		// 默认异常类别。
 		$errcode_type = -1;
@@ -59,28 +61,27 @@ class Error extends \common\controllers\Common {
 		// 根据不同的异常类型，写入不同的异常日志。
 		switch ($errcode_type) {
 			case 100:
-				YCore::yaf_log(\models\Log::LOG_TYPE_SYSTEM, $errmsg, 0, 0, $errcode);
+				YCore::log(\models\Log::LOG_TYPE_SYSTEM, $trace, 0, 0, $errcode);
 				break;
 			case 200:
-				YCore::yaf_log(\models\Log::LOG_TYPE_FRAMEWORK, $errmsg, 0, 0, $errcode);
+				YCore::log(\models\Log::LOG_TYPE_FRAMEWORK, $trace, 0, 0, $errcode);
 				break;
 			case 300:
-				YCore::yaf_log(\models\Log::LOG_TYPE_PACKAGE, $errmsg, 0, 0, $errcode);
+				YCore::log(\models\Log::LOG_TYPE_PACKAGE, $trace, 0, 0, $errcode);
 				break;
 			case 400:
-				YCore::yaf_log(\models\Log::LOG_TYPE_LANG, $errmsg, 0, 0, $errcode);
+				YCore::log(\models\Log::LOG_TYPE_LANG, $trace, 0, 0, $errcode);
 				break;
 			case 500:
-				YCore::yaf_log(\models\Log::LOG_TYPE_VALIDATOR, $errmsg, 0, 0, $errcode);
+				YCore::log(\models\Log::LOG_TYPE_VALIDATOR, $trace, 0, 0, $errcode);
 				break;
 			case 600:
-				YCore::yaf_log(\models\Log::LOG_TYPE_SERVICES, $errmsg, 0, 0, $errcode);
+				YCore::log(\models\Log::LOG_TYPE_SERVICES, $trace, 0, 0, $errcode);
 				break;
 			case -1:
 			default:
-			    $errmsg  = "Error Code:{$errcode}\n<br \>Error Message:<br \>{$errmsg}";
 			    $errcode = -1;
-				YCore::yaf_log(\models\Log::LOG_TYPE_BUSY, $errmsg, 0, 0, -1);
+				YCore::log(\models\Log::LOG_TYPE_BUSY, $trace, 0, 0, -1);
 				break;
 		}
 		if ($this->_request->isXmlHttpRequest()) {
@@ -91,7 +92,20 @@ class Error extends \common\controllers\Common {
 			echo json_encode($data);
 			$this->end();
 		} else {
-			$this->error("{$errcode}::{$errmsg}", '', 0);
+			$this->error("{$errcode}<br />{$errmsg}", '', 0);
 		}
+	}
+
+	/**
+	 * 错误信息包装器。
+	 * @param string $log_content 错误信息。
+	 * @return string
+	 */
+	protected function logWrapper(&$log_content) {
+	    $current_url = YUrl::get_url();
+	    $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+	    $ip = YCore::ip();
+	    $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+	    return "ip:{$ip}\ncurrent_url:{$current_url}\nreferer:{$referer}\nuser_agent:{$user_agent}\nlog_content:\n{$log_content}";
 	}
 }

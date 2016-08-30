@@ -8,8 +8,10 @@
 
 $SERVER_NAME = $_SERVER['HTTP_HOST'];
 $environ = 'dev';
-if ($SERVER_NAME == 'wx.yesnophp.ren') {
-	$environ = 'product';
+if ($SERVER_NAME == 'wx.testweixin.top') {
+	$environ = 'test';
+} else if ($SERVER_NAME == 'wx.budanmai.com') {
+    $environ = 'product';
 }
 
 define('APP_ENVIRON', $environ);
@@ -24,6 +26,9 @@ $app_name = array_pop($arr_pwd);
 define('APP_NAME', $app_name);
 
 define("APP_PATH",  realpath(dirname(__FILE__) . '/../../'));
+
+define('APP_SITE_PATH', APP_PATH . DIRECTORY_SEPARATOR . 'sites' . DIRECTORY_SEPARATOR . APP_NAME);
+
 define('APP_VIEW_PATH', APP_PATH . DIRECTORY_SEPARATOR . 'apps' . DIRECTORY_SEPARATOR . $app_name . DIRECTORY_SEPARATOR . 'views');
 $app  = new \Yaf\Application(APP_PATH . "/conf/application.ini", $environ);
 $app->bootstrap()->run();

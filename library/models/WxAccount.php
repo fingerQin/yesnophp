@@ -2,7 +2,7 @@
 /**
  * 微信公众号表。
  * @author winerQin
- * @date 2016-04-05
+ * @date 2016-05-03
  */
 
 namespace models;
@@ -13,7 +13,7 @@ class WxAccount extends DbBase {
 	 * 表名。
 	 * @var string
 	 */
-	protected $_table_name = 'ms_wx_account';
+	protected $_table_name = 'wx_account';
 
 	/**
 	 * 获取公众号列表。

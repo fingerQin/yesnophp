@@ -62,7 +62,7 @@ class YHtml {
      */
     public static function select($name, array $data, $selected_value = null, $class_name = '', $id_name = '', $is_output = true) {
         if (empty($data)) {
-            YCore::throw_exception(-1, '下拉数据不能为空');
+            YCore::exception(-1, '下拉数据不能为空');
         }
         $class_name    = (strlen($class_name) > 0) ? " class=\"{$class_name}\"" : '';
         $id_name       = (strlen($id_name) > 0) ? " id=\"{$id_name}\"" : '';

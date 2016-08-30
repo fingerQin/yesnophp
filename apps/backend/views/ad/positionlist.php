@@ -5,7 +5,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
-    	<a class="add fb" href="javascript:postDialog('addAdPostion', '<?php echo YUrl::createAdminUrl('Index', 'Ad', 'positionAdd'); ?>', '添加广告位置', 400, 150)"><em>添加广告位置</em></a>
+    	<a class="add fb" href="javascript:postDialog('addAdPostion', '<?php echo YUrl::createBackendUrl('', 'Ad', 'positionAdd'); ?>', '添加广告位置', 400, 150)"><em>添加广告位置</em></a>
     	<a href='javascript:;' class="on"><em>广告位置列表</em></a>    
     </div>
 </div>
@@ -57,7 +57,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     		<td align="center"><?php echo date('Y-m-d H:i:s', $item['created_time']); ?></td>
     		<td align="center">
     		<a href="###" onclick="edit(<?php echo $item['pos_id'] ?>, '<?php echo $item['pos_name'] ?>')" title="修改">修改</a> |  
-    		<a href="###" onclick="deleteDialog('positionDelete', '<?php echo YUrl::createAdminUrl('Index', 'Ad', 'positionDelete', ['pos_id' => $item['pos_id']]); ?>', '<?php echo $item['pos_name'] ?>')" title="删除">删除</a> | 
+    		<a href="###" onclick="deleteDialog('positionDelete', '<?php echo YUrl::createBackendUrl('', 'Ad', 'positionDelete', ['pos_id' => $item['pos_id']]); ?>', '<?php echo $item['pos_name'] ?>')" title="删除">删除</a> | 
     		<a href="###" onclick="setAdPosValue(<?php echo $item['pos_id'] ?>, '<?php echo $item['pos_name'] ?>')" title="广告管理">广告管理</a>  
     		</td>
     	</tr>
@@ -76,12 +76,12 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 <script type="text/javascript">
 function edit(id, name) {
 	var title = '修改『' + name + '』';
-	var page_url = "<?php echo YUrl::createAdminUrl('Index', 'Ad', 'positionEdit'); ?>?pos_id="+id;
+	var page_url = "<?php echo YUrl::createBackendUrl('', 'Ad', 'positionEdit'); ?>?pos_id="+id;
 	postDialog('positionEdit', page_url, title, 400, 140);
 }
 
 function setAdPosValue(id, name) {
-	page_url = '<?php echo YUrl::createAdminUrl('Index', 'Ad', 'index'); ?>?pos_id='+id;
+	page_url = '<?php echo YUrl::createBackendUrl('', 'Ad', 'index'); ?>?pos_id='+id;
 	title = '管理 『 '+name+' 』位置广告';
 	postDialog(id, page_url, title, 1000, 500, '', 'yes');
 }

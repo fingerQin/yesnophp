@@ -33,13 +33,13 @@ class IpService extends BaseService {
     public static function addIpBan($admin_id, $ip, $remark) {
         $data = self::getByIpToIpBanDetail($ip);
         if ($data) {
-            YCore::throw_exception(-1, '该IP地址已经存在');
+            YCore::exception(-1, '该IP地址已经存在');
         }
         if (!Validator::is_ip($ip)) {
-            YCore::throw_exception(-1, 'IP地址不正确');
+            YCore::exception(-1, 'IP地址不正确');
         }
         if (!Validator::is_len($remark, 0, 200, true)) {
-            YCore::throw_exception(-1, '备注内容必须200字以内');
+            YCore::exception(-1, '备注内容必须200字以内');
         }
         $ip_ban_model = new IpBan();
         return $ip_ban_model->addIp($admin_id, $ip, $remark);
@@ -57,13 +57,13 @@ class IpService extends BaseService {
         self::getIpBanDetail($id);
         $data = self::getByIpToIpBanDetail($ip);
         if ($data && $data['id'] != $id) {
-            YCore::throw_exception(-1, '该IP地址已经存在');
+            YCore::exception(-1, '该IP地址已经存在');
         }
         if (!Validator::is_ip($ip)) {
-            YCore::throw_exception(-1, 'IP地址不正确');
+            YCore::exception(-1, 'IP地址不正确');
         }
         if (!Validator::is_len($remark, 0, 200, true)) {
-            YCore::throw_exception(-1, '备注内容必须200字以内');
+            YCore::exception(-1, '备注内容必须200字以内');
         }
         $ip_ban_model = new IpBan();
         return $ip_ban_model->editIp($id, $admin_id, $ip, $remark);
@@ -101,7 +101,7 @@ class IpService extends BaseService {
         $ip_ban_model = new IpBan();
         $data = $ip_ban_model->fetchOne([], ['id' => $id]);
         if (empty($data)) {
-            YCore::throw_exception(-1, '记录不存在或已经删除');
+            YCore::exception(-1, '记录不存在或已经删除');
         }
         return $data;
     }

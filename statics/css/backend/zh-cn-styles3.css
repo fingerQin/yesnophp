@@ -1,7 +1,7 @@
 html.off,html.off body{background-image:url(../../images/backend/img3/left_bg.png); background-color:#edf2e3}
 html.on,html.on body,html.addbg,html.addbg body{background: #edf2e3;background-image:none}
 .header {background: #618d03 url(../../images/backend/img3/hdbg.gif) no-repeat right bottom}
-.header .logo{background-image: url(../../images/backend/img3/logo.gif)}
+.header .logo{background-image: url(../../images/backend/it_technology.png) no-repeat left 35px top 10px;}
 .header .nav li, .header .nav li a{background-image: url(../../images/backend/img3/nav_bg.png)}
 .header .nav li.on a{ color:#333}
 .header .nav li a{color:#e7f4cb}

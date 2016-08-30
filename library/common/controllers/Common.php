@@ -66,15 +66,15 @@ class Common extends \Yaf\Controller_Abstract {
 		$gp_value = $this->getGP($name);
 		if (is_null($gp_value)) {
 			if (is_null($default_value)) {
-				YCore::throw_exception(5009001, "{$name}值异常");
+				YCore::exception(5009001, "{$name}值异常");
 			} else if (!Validator::is_integer($default_value)) {
-				YCore::throw_exception(5009002, "{$name}默认值不是整型");
+				YCore::exception(5009002, "{$name}默认值不是整型");
 			} else {
 				return $default_value;
 			}
 		} else {
 			if (!Validator::is_integer($gp_value)) {
-				YCore::throw_exception(5009003, "{$name}值不是整型");
+				YCore::exception(5009003, "{$name}值不是整型");
 			} else {
 				return $gp_value;
 			}
@@ -94,15 +94,15 @@ class Common extends \Yaf\Controller_Abstract {
 	    $gp_value = $this->getGP($name);
 	    if (is_null($gp_value)) {
 	        if (is_null($default_value)) {
-	            YCore::throw_exception(5009001, "{$name}值异常");
+	            YCore::exception(5009001, "{$name}值异常");
 	        } else if (!is_array($default_value)) {
-	            YCore::throw_exception(5009002, "default_valuec参数不是数组");
+	            YCore::exception(5009002, "default_valuec参数不是数组");
 	        } else {
 	            return $default_value;
 	        }
 	    } else {
 	        if (!is_array($gp_value)) {
-	            YCore::throw_exception(5009003, "{$name}值不是数组");
+	            YCore::exception(5009003, "{$name}值不是数组");
 	        } else {
 	            return $gp_value;
 	        }
@@ -122,15 +122,15 @@ class Common extends \Yaf\Controller_Abstract {
 		$gp_value = $this->getGP($name);
 		if (is_null($gp_value)) {
 			if (is_null($default_value)) {
-				YCore::throw_exception(5009004, "{$name}值异常");
+				YCore::exception(5009004, "{$name}值异常");
 			} else if (!Validator::is_float($default_value)) {
-				YCore::throw_exception(5009005, "default_valuec参数不是浮点型");
+				YCore::exception(5009005, "default_valuec参数不是浮点型");
 			} else {
 				return $default_value;
 			}
 		} else {
 			if (!Validator::is_float($gp_value)) {
-				YCore::throw_exception(5009006, "{$name}值不是浮点型");
+				YCore::exception(5009006, "{$name}值不是浮点型");
 			} else {
 				return $gp_value;
 			}
@@ -149,7 +149,7 @@ class Common extends \Yaf\Controller_Abstract {
 		$gp_value = $this->getGP($name);
 		if (is_null($gp_value)) {
 			if (is_null($default_value)) {
-				YCore::throw_exception(5009007, "{$name}值异常");
+				YCore::exception(5009007, "{$name}值异常");
 			} else {
 				return $default_value;
 			}
@@ -157,14 +157,18 @@ class Common extends \Yaf\Controller_Abstract {
 			return $gp_value;
 		}
 	}
-	
+
 	/**
-	 * 获取GET、POST里面的值。
-	 * -- 1、先读GET、再读POST。
+	 * 获取GET、POST、路由里面的值。
+	 * -- 1、先读路由分解出来的参数、再读GET、其次读POST。
 	 * @param string $name
 	 * @return mixed
 	 */
 	final protected function getGP($name) {
+	    $value = $this->_request->getParam($name);
+	    if (strlen($value) > 0) {
+	        return $value;
+	    }
 		if (isset($_GET[$name])) {
 			return $this->_request->getQuery($name);
 		} else if (isset($_POST[$name])) {
@@ -173,7 +177,7 @@ class Common extends \Yaf\Controller_Abstract {
 			return null;
 		}
 	}
-	
+
 	public function beginTransaction() {
 		
 	}
@@ -214,6 +218,7 @@ class Common extends \Yaf\Controller_Abstract {
 	    }
 	    echo json_encode($result);
 	    $this->end();
+	    exit;
 	}
 
 	/**

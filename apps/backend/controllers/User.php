@@ -20,10 +20,10 @@ class UserController extends \common\controllers\Admin {
 	    $starttime   = $this->getString('starttime', '');
 	    $endtime     = $this->getString('endtime', '');
 	    $is_verify   = $this->getString('is_verify', -1);
-	    $page        = $this->getInt(YCore::config('pager'), 1);
+	    $page        = $this->getInt(YCore::appconfig('pager'), 1);
 	    $list        = UserService::getUserList($username, $mobilephone, $is_verify, $starttime, $endtime, $page, 20);
 	    $paginator = new Paginator($list['total'], 20);
-	    $page_html = $paginator->show();
+	    $page_html = $paginator->backendPageShow();
 	    $this->_view->assign('page_html', $page_html);
 	    $this->_view->assign('list', $list['list']);
 	    $this->_view->assign('mobilephone', $mobilephone);
@@ -38,6 +38,8 @@ class UserController extends \common\controllers\Admin {
 	 */
 	public function addAction() {
 	    if ($this->_request->isXmlHttpRequest()) {
+	    	$account     = $this->getString('account', '');
+	        $user_type   = $this->getString('user_type');
 	        $username    = $this->getString('username');
 	        $password    = $this->getString('password');
 	        $mobilephone = $this->getString('mobilephone', '');
@@ -45,11 +47,11 @@ class UserController extends \common\controllers\Admin {
 	        $realname    = $this->getString('realname', '');
 	        $avatar      = $this->getString('avatar', '');
 	        $signature   = $this->getString('signature', '');
-	        $status = UserService::addUser($username, $password, $mobilephone, $email, $realname, $avatar, $signature);
+	        $status = UserService::addUser($user_type, $username, $password, $mobilephone, $email, $realname, $avatar, $signature);
 	        if ($status) {
-	            $this->json($status, '封禁成功');
+	            $this->json($status, '添加成功');
 	        } else {
-	            $this->json($status, '封禁失败');
+	            $this->json($status, '添加失败');
 	        }
 	    }
 	}
@@ -89,7 +91,7 @@ class UserController extends \common\controllers\Admin {
 	        $ban_start_time = $this->getString('ban_start_time');
 	        $ban_end_time   = $this->getString('ban_end_time');
 	        $ban_reason     = $this->getString('ban_reason');
-	        $status = UserService::addBlacklist($this->_admin_id, $user_id, $ban_type, $ban_start_time, $ban_end_time, $ban_reason);
+	        $status = UserService::addBlacklist($this->admin_id, $user_id, $ban_type, $ban_start_time, $ban_end_time, $ban_reason);
 	        if ($status) {
 	            $this->json($status, '封禁成功');
 	        } else {
@@ -98,6 +100,21 @@ class UserController extends \common\controllers\Admin {
 	    }
 	    $user_id = $this->getInt('user_id');
 	    $this->_view->assign('user_id', $user_id);
+	}
+
+	/**
+	 * 解禁用户。
+	 */
+	public function unforbidAction() {
+	    if ($this->_request->isXmlHttpRequest()) {
+	        $user_id = $this->getInt('user_id');
+	        $status = UserService::unforbid($user_id, $this->admin_id);
+	        if ($status) {
+	            $this->json($status, '解禁成功');
+	        } else {
+	            $this->json($status, '解禁失败');
+	        }
+	    }
 	}
 
 	/**

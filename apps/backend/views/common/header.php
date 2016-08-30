@@ -23,11 +23,11 @@ use common\YUrl;
 <script src="<?php echo YUrl::assets('js', '/jquery-1.10.2.js'); ?>"></script>
 <!-- JQuery end -->
 
-<!-- AirDialog 对话框 start -->
+<!-- ArtDialog 对话框 start -->
 <link rel="stylesheet" href="<?php echo YUrl::assets('js', '/artDialog/css/ui-dialog.css'); ?>">
 <script src="<?php echo YUrl::assets('js', '/artDialog/dist/dialog-min.js'); ?>"></script>
 <script src="<?php echo YUrl::assets('js', '/artDialog/dist/dialog-plus-min.js'); ?>"></script>
-<!-- AirDialog 对话框 end -->
+<!-- ArtDialog 对话框 end -->
 
 <!-- SimpleAjaxUpload 插件 start -->
 <script src="<?php echo YUrl::assets('js', '/AjaxUploader/SimpleAjaxUploader.min.js'); ?>"></script>

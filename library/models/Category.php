@@ -32,9 +32,10 @@ class Category extends DbBase {
      * @param number $parent_id 父分类ID。
      * @param number $cat_type 分类类型。
      * @param number $is_get_hide 是否获取隐藏的分类。
+     * @param boolean $is_filter 是否过滤无用字段。
      * @return array
      */
-    public function getByParentToCategory($parent_id, $cat_type = -1, $is_get_hide = true) {
+    public function getByParentToCategory($parent_id, $cat_type = -1, $is_get_hide = true, $is_filter = false) {
         $where = [
             'parentid' => $parent_id,
             'cat_type' => $cat_type,
@@ -43,7 +44,13 @@ class Category extends DbBase {
         if ($is_get_hide == false) {
             $where['display'] = 1;
         }
+        $columns = [];
+        if ($is_filter) {
+        	$columns = [
+        		'cat_id', 'cat_name', 'parentid'
+        	];
+        }
         $order = 'listorder ASC,cat_id ASC';
-        return $this->fetchAll([], $where, 0, $order);
+        return $this->fetchAll($columns, $where, 0, $order);
     }
 }

@@ -33,7 +33,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 	</tr>
 	<tr>
 		<th width="100">日志内容：</th>
-		<td><textarea rows="5" cols="40" style="width:350px;height:200px;" readonly="readonly"><?php echo htmlspecialchars($detail['content']); ?></textarea></td>
+		<td><textarea rows="5" cols="40" style="width:650px;height:350px;" readonly="readonly"><?php echo htmlspecialchars($detail['content']); ?></textarea></td>
 	</tr>
     <tr>
 		<th width="100">日志入库时间：</th>

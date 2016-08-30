@@ -77,7 +77,7 @@ class AdminPermissionService extends BaseService {
 		$admin_role_model = new AdminRole();
 		$role_info = $admin_role_model->getRole($roleid);
 		if (empty($role_info) || $role_info['status'] != 1) {
-			YCore::throw_exception(6003013, '角色不存在或已经删除');
+			YCore::exception(6003013, '角色不存在或已经删除');
 		}
 		return $admin_role_model->editRole($roleid, $data);
 	}
@@ -91,17 +91,17 @@ class AdminPermissionService extends BaseService {
 		$admin_role_model = new AdminRole();
 		$role_info = $admin_role_model->getRole($roleid);
 		if (empty($role_info) || $role_info['status'] != 1) {
-			YCore::throw_exception(6003014, '角色不存在或已经删除');
+			YCore::exception(6003014, '角色不存在或已经删除');
 		}
 		if ($role_info['is_default'] == 1) {
-		    YCore::throw_exception(-1, '默认角色不能删除');
+		    YCore::exception(-1, '默认角色不能删除');
 		}
 		$admin_model = new Admin();
 		$admin_count = $admin_model->count(['roleid' => $roleid, 'status' => 1]);
 		if ($admin_count == 0) {
 		    return $admin_role_model->deleteRole($roleid);
 		} else {
-		    YCore::throw_exception(-1, '请将该角色下的管理员移动到其它角色下');
+		    YCore::exception(-1, '请将该角色下的管理员移动到其它角色下');
 		}
 	}
 
@@ -114,7 +114,7 @@ class AdminPermissionService extends BaseService {
 	    $admin_role_model = new AdminRole();
 	    $role_info = $admin_role_model->getRole($roleid);
 	    if (empty($role_info) || $role_info['status'] != 1) {
-	        YCore::throw_exception(6003014, '角色不存在或已经删除');
+	        YCore::exception(6003014, '角色不存在或已经删除');
 	    }
 	    return $role_info;
 	}
@@ -293,7 +293,7 @@ class AdminPermissionService extends BaseService {
 		$menu_model = new Menu();
 		$menu_info = $menu_model->getMenu($menu_id);
 		if (empty($menu_info)) {
-			YCore::throw_exception(6003027, '菜单不存在或已经删除');
+			YCore::exception(6003027, '菜单不存在或已经删除');
 		}
 		return $menu_model->editMenu($menu_id, $data);
 	}
@@ -307,11 +307,11 @@ class AdminPermissionService extends BaseService {
 		$menu_model = new Menu();
 		$menu_info = $menu_model->getMenu($menu_id);
 		if (empty($menu_info)) {
-			YCore::throw_exception(6003028, '菜单不存在或已经删除');
+			YCore::exception(6003028, '菜单不存在或已经删除');
 		}
 		$sub_menu = $menu_model->fetchAll([], ['parentid' => $menu_id]);
 		if ($sub_menu) {
-		    YCore::throw_exception(-1, '请先移除该菜单下的子菜单再删除');
+		    YCore::exception(-1, '请先移除该菜单下的子菜单再删除');
 		}
 		return $menu_model->deleteMenu($menu_id);
 	}
@@ -346,7 +346,7 @@ class AdminPermissionService extends BaseService {
 		$admin_role_model = new AdminRole();
 		$role_info = $admin_role_model->getRole($roleid);
 		if (empty($role_info) || $role_info['status'] != 1) {
-			YCore::throw_exception(6003029, '角色不存在或已经删除');
+			YCore::exception(6003029, '角色不存在或已经删除');
 		}
 		// [2] 清空角色之前的数据。
 		$admin_role_priv_model = new AdminRolePriv();
@@ -358,12 +358,12 @@ class AdminPermissionService extends BaseService {
 			$menu_info = $menu_model->getMenu($menu_id);
 			if (empty($menu_info)) {
 			    $admin_role_priv_model->rollBack();
-				YCore::throw_exception(6003030, '菜单不存在或已经删除');
+				YCore::exception(6003030, '菜单不存在或已经删除');
 			}
 			$ok = $admin_role_priv_model->addRolePriv($roleid, $menu_id);
 			if (!$ok) {
 			    $admin_role_priv_model->rollBack();
-				YCore::throw_exception(6003031, '权限添加失败，请重试');
+				YCore::exception(6003031, '权限添加失败，请重试');
 			}
 		}
 		$admin_role_priv_model->commit();
@@ -379,7 +379,7 @@ class AdminPermissionService extends BaseService {
 		$admin_role_model = new AdminRole();
 		$role_info = $admin_role_model->getRole($roleid);
 		if (empty($role_info) || $role_info['status'] != 1) {
-			YCore::throw_exception(6003032, '角色不存在或已经删除');
+			YCore::exception(6003032, '角色不存在或已经删除');
 		}
 		$admin_role_priv_model = new AdminRolePriv();
 		$list = $admin_role_priv_model->fetchAll([], ['roleid' => $roleid]);

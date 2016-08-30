@@ -5,7 +5,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
-    	<a class="add fb" href="javascript:postDialog('addLink', '<?php echo YUrl::createAdminUrl('Index', 'Link', 'add'); ?>', '添加友情链接', 400, 300)"><em>添加友情链接</em></a>
+    	<a class="add fb" href="javascript:postDialog('addLink', '<?php echo YUrl::createBackendUrl('', 'Link', 'add'); ?>', '添加友情链接', 400, 300)"><em>添加友情链接</em></a>
     	<a href='javascript:;' class="on"><em>友情链接列表</em></a>    
     </div>
 </div>
@@ -61,7 +61,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     		<td align="center"><?php echo date('Y-m-d H:i:s', $item['created_time']); ?></td>
     		<td align="center">
     		<a href="###" onclick="edit(<?php echo $item['link_id'] ?>, '<?php echo $item['link_name'] ?>')" title="修改">修改</a> |  
-    		<a href="###" onclick="deleteDialog('deleteLink', '<?php echo YUrl::createAdminUrl('Index', 'Link', 'delete', ['link_id' => $item['link_id']]); ?>', '<?php echo $item['link_name'] ?>')" title="删除">删除</a>  
+    		<a href="###" onclick="deleteDialog('deleteLink', '<?php echo YUrl::createBackendUrl('', 'Link', 'delete', ['link_id' => $item['link_id']]); ?>', '<?php echo $item['link_name'] ?>')" title="删除">删除</a>  
     		</td>
     	</tr>
     <?php endforeach; ?>
@@ -79,7 +79,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 <script type="text/javascript">
 function edit(id, name) {
 	var title = '修改『' + name + '』';
-	var page_url = "<?php echo YUrl::createAdminUrl('Index', 'Link', 'edit'); ?>?link_id="+id;
+	var page_url = "<?php echo YUrl::createBackendUrl('', 'Link', 'edit'); ?>?link_id="+id;
 	postDialog('editLink', page_url, title, 400, 300);
 }
 </script>

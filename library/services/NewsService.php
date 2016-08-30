@@ -27,13 +27,13 @@ class NewsService extends BaseService {
      */
     public static function getNewsList($title = '', $admin_name = '', $starttime = '', $endtime = '', $page = 1, $count = 20) {
         if (strlen($starttime) > 0 && !Validator::is_date($starttime, 'Y-m-d H:i:s')) {
-            YCore::throw_exception(-1, '开始时间格式不对');
+            YCore::exception(-1, '开始时间格式不对');
         }
         if (strlen($endtime) > 0 && !Validator::is_date($endtime, 'Y-m-d H:i:s')) {
-            YCore::throw_exception(-1, '结束时间格式不对');
+            YCore::exception(-1, '结束时间格式不对');
         }
         if (mb_strlen($title) > 100) {
-            YCore::throw_exception(-1, '标题查询条件长度不能大于100个字符');
+            YCore::exception(-1, '标题查询条件长度不能大于100个字符');
         }
         $admin_id = -1;
         if (strlen($admin_name) > 0) {
@@ -55,7 +55,7 @@ class NewsService extends BaseService {
         $news_model = new News();
         $data = $news_model->fetchOne([], ['news_id' => $news_id, 'status' => 1]);
         if (empty($data)) {
-            return [];
+            YCore::exception(-1, '文章不存在或已经删除');
         }
         if ($is_all) {
             $news_data_model = new NewsData();
@@ -63,7 +63,7 @@ class NewsService extends BaseService {
             if ($news_data) {
                 return array_merge($data, $news_data);
             } else {
-                YCore::throw_exception(-1, '文章数据异常');
+                YCore::exception(-1, '文章数据异常');
             }
         } else {
             return $data;
@@ -71,8 +71,29 @@ class NewsService extends BaseService {
     }
 
     /**
+     * 按文章编码获取文章详情。
+     * @param string $code 文章编码。
+     * @return array
+     */
+    public static function getByCodeDetail($code) {
+        $news_model = new News();
+        $data = $news_model->fetchOne([], ['code' => $code, 'status' => 1]);
+        if (empty($data)) {
+            YCore::exception(-1, '文章不存在或已经删除');
+        }
+        $news_data_model = new NewsData();
+        $news_data = $news_data_model->fetchOne([], ['news_id' => $data['news_id']]);
+        if ($news_data) {
+            return array_merge($data, $news_data);
+        } else {
+            YCore::exception(-1, '文章数据异常');
+        }
+    }
+
+    /**
      * 添加文章。
      * @param number $admin_id 管理员ID。
+     * @param string $code 文章编码。
      * @param number $cat_id 分类ID。
      * @param string $title 文章标题。
      * @param string $intro 文章简介。
@@ -83,14 +104,20 @@ class NewsService extends BaseService {
      * @param number $display 显示状态：1显示、0隐藏。
      * @return boolean
      */
-    public static function addNews($admin_id, $cat_id, $title, $intro, $keywords, $source, $image_url, $content, $display = 1) {
+    public static function addNews($admin_id, $code, $cat_id, $title, $intro, $keywords, $source, $image_url, $content, $display = 1) {
         $category_model = new Category();
         $cat_info = $category_model->fetchOne([], ['cat_id' => $cat_id, 'status' => 1]);
         if (empty($cat_info)) {
-            YCore::throw_exception(-1, '分类不存在或已经删除');
+            YCore::exception(-1, '分类不存在或已经删除');
+        }
+        $news_model  = new News();
+        $news_detail = $news_model->fetchOne([], ['code' => $code, 'status' => 1]);
+        if (!empty($news_detail)) {
+            YCore::exception(-1, '文章编码已经存在请更换');
         }
         $data = [
             'title'     => $title,
+            'code'      => $code,
             'intro'     => $intro,
             'keywords'  => $keywords,
             'source'    => $source,
@@ -100,6 +127,7 @@ class NewsService extends BaseService {
         ];
         $rules = [
             'title'     => '标题|require:1000000|len:1000000:1:80:1',
+            'code'      => '文章编码|require:1000000|len:1000000:1:20:1|alpha_dash:1000000',
             'intro'     => '文章简介|require:1000000|len:1000000:20:500:1',
             'keywords'  => '文章关键词|require:1000000|len:1000000:1:100:1',
             'source'    => '文章来源|require:1000000|len:1000000:1:50:1',
@@ -113,7 +141,6 @@ class NewsService extends BaseService {
         $data['cat_id']       = $cat_id;
         $data['status']       = 1;
         unset($data['content']);
-        $news_model = new News();
         $news_id = $news_model->insert($data);
         if ($news_id > 0) {
             $news_data_model = new NewsData();
@@ -132,6 +159,7 @@ class NewsService extends BaseService {
      * 文章编辑。
      * @param number $admin_id 管理员ID。
      * @param number $news_id 文章ID。
+     * @param string $code 文章编码。
      * @param number $cat_id 分类ID。
      * @param string $title 文章标题。
      * @param string $intro 文章简介。
@@ -142,19 +170,24 @@ class NewsService extends BaseService {
      * @param number $display 显示状态：1显示、0隐藏。
      * @return boolean
      */
-    public static function editNews($admin_id, $news_id, $cat_id, $title, $intro, $keywords, $source, $image_url, $content, $display = 1) {
-        $news = self::getNewsDetail($news_id);
-        if (empty($news)) {
-            YCore::throw_exception(-1, '文章不存在或已经删除');
+    public static function editNews($admin_id, $news_id, $code, $cat_id, $title, $intro, $keywords, $source, $image_url, $content, $display = 1) {
+        $news_model  = new News();
+        $news_detail = $news_model->fetchOne([], ['news_id' => $news_id, 'status' => 1]);
+        if (empty($news_detail)) {
+            YCore::exception(-1, '文章不存在或已经删除');
+        }
+        $news_detail_code = $news_model->fetchOne([], ['code' => $code, 'status' => 1]);
+        if ($news_detail_code && $news_detail['code'] != $code) {
+            YCore::exception(-1, '文章编码已经被占用请更换');
         }
         $category_model = new Category();
         $cat_info = $category_model->fetchOne([], ['cat_id' => $cat_id, 'status' => 1]);
         if (empty($cat_info)) {
-            YCore::throw_exception(-1, '分类不存在或已经删除');
+            YCore::exception(-1, '分类不存在或已经删除');
         }
-        $news_model = new News();
         $data = [
             'title'     => $title,
+            'code'      => $code,
             'intro'     => $intro,
             'keywords'  => $keywords,
             'source'    => $source,
@@ -164,6 +197,7 @@ class NewsService extends BaseService {
         ];
         $rules = [
             'title'     => '标题|require:1000000|len:1000000:1:80:1',
+            'code'      => '文章编码|require:1000000|len:1000000:1:20:0|alpha_dash:1000000',
             'intro'     => '文章简介|require:1000000|len:1000000:20:500:1',
             'keywords'  => '文章关键词|require:1000000|len:1000000:1:100:1',
             'source'    => '文章来源|require:1000000|len:1000000:1:50:1',
@@ -176,7 +210,6 @@ class NewsService extends BaseService {
         $data['modified_time'] = $_SERVER['REQUEST_TIME'];
         $data['cat_id']        = $cat_id;
         unset($data['content']);
-        $news_model = new News();
         $ok = $news_model->update($data, ['news_id' => $news_id, 'status' => 1]);
         if ($ok) {
             $news_data_model = new NewsData(); 
@@ -200,11 +233,11 @@ class NewsService extends BaseService {
      * @return boolean
      */
     public static function deleteNews($admin_id, $news_id) {
-        $news = self::getNewsDetail($news_id);
-        if (empty($news)) {
-            YCore::throw_exception(-1, '文章不存在或已经删除');
-        }
         $news_model = new News();
+        $news_detail = $news_model->fetchOne([], ['news_id' => $news_id, 'status' => 1]);
+        if (empty($news_detail)) {
+            YCore::exception(-1, '文章不存在或已经删除');
+        }
         $where = [
             'news_id' => $news_id
         ];
@@ -224,7 +257,7 @@ class NewsService extends BaseService {
      */
     public static function sortNews($admin_id, $listorders) {
         if (empty($listorders)) {
-            YCore::throw_exception(-1, '请选择要排序的文章');
+            YCore::exception(-1, '请选择要排序的文章');
         }
         $news_model = new News();
         foreach ($listorders as $news_id => $sort_value) {

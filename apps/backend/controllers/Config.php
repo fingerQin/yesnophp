@@ -16,10 +16,10 @@ class ConfigController extends \common\controllers\Admin {
      */
     public function indexAction() {
         $keywords  = $this->getString('keywords', '');
-        $page      = $this->getInt(YCore::config('pager'), 1);
+        $page      = $this->getInt(YCore::appconfig('pager'), 1);
         $list      = ConfigService::getConfigList($keywords, $page, 20);
         $paginator = new Paginator($list['total'], 20);
-        $page_html = $paginator->show();
+        $page_html = $paginator->backendPageShow();
         $this->_view->assign('page_html', $page_html);
         $this->_view->assign('keywords', $keywords);
         $this->_view->assign('list', $list['list']);
@@ -76,5 +76,15 @@ class ConfigController extends \common\controllers\Admin {
         } else {
             $this->json($status, '删除失败');
         }
+    }
+
+    /**
+     * 清除配置缓存。
+     */
+    public function clearCacheAction() {
+    	if ($this->_request->isXmlHttpRequest()) {
+    		ConfigService::clearConfigCache();
+    		$this->json(true, '配置缓存清除成功');
+    	}
     }
 }

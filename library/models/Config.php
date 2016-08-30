@@ -21,8 +21,9 @@ class Config extends DbBase {
 	 * @return string|null
 	 */
 	public function getValue($cname) {
-		$data = $this->fetchOne(['cvalue'], ['cname' => $cname]);
-		return $data ? $data['cvalue'] : null;
+	    $value_name = APP_ENVIRON . '_value';
+		$data = $this->fetchOne([$value_name], ['cname' => $cname]);
+		return $data ? $data[$value_name] : null;
 	}
 
 	/**
@@ -33,8 +34,9 @@ class Config extends DbBase {
 	 * @return array
 	 */
 	public function getConfigList($keyword = '', $page = 1, $count = 10) {
+	    $value_field = APP_ENVIRON . '_value';
 	    $offset  = $this->getPaginationOffset($page, $count);
-	    $columns = ' config_id,ctitle,cname,cvalue,description,created_time,modified_time ';
+	    $columns = " config_id,ctitle,cname,{$value_field} AS cvalue,description,created_time,modified_time ";
 	    $where   = ' WHERE status = :status ';
 	    $params = [
 	        ':status' => 1,
@@ -46,14 +48,10 @@ class Config extends DbBase {
 	    }
 	    $order_by = ' ORDER BY config_id ASC ';
 	    $sql = "SELECT COUNT(1) AS count FROM {$this->_table_name} {$where}";
-	    $sth = $this->link->prepare($sql);
-	    $sth->execute($params);
-	    $count_data = $sth->fetch();
+	    $count_data = $this->rawQuery($sql, $params)->rawFetchOne();
 	    $total  = $count_data ? $count_data['count'] : 0;
 	    $sql = "SELECT {$columns} FROM {$this->_table_name} {$where} {$order_by} LIMIT {$offset},{$count}";
-	    $sth = $this->link->prepare($sql);
-	    $sth->execute($params);
-	    $list = $sth->fetchAll();
+	    $list = $this->rawQuery($sql, $params)->rawFetchAll();
 	    $result = array(
 	        'list'   => $list,
 	        'total'  => $total,
@@ -74,10 +72,11 @@ class Config extends DbBase {
 	 * @return boolean
 	 */
 	public function addConfig($admin_id, $ctitle, $cname, $cvalue, $description) {
+	    $value_field = APP_ENVIRON . '_value';
 		$data = [
 				'ctitle'       => $ctitle,
 				'cname'        => $cname,
-				'cvalue'       => $cvalue,
+				$value_field   => $cvalue,
 				'description'  => $description,
 				'status'       => 1,
 				'created_by'   => $admin_id,
@@ -98,10 +97,11 @@ class Config extends DbBase {
 	 * @return boolean
 	 */
 	public function editConfig($config_id, $admin_id, $ctitle, $cname, $cvalue, $description) {
+	    $value_field = APP_ENVIRON . '_value';
 		$data = [
 				'ctitle'        => $ctitle,
 				'cname'         => $cname,
-				'cvalue'        => $cvalue,
+				$value_field    => $cvalue,
 				'description'   => $description,
 				'modified_by'   => $admin_id,
 				'modified_time' => $_SERVER['REQUEST_TIME']

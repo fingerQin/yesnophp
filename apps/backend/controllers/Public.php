@@ -19,7 +19,7 @@ class PublicController extends \common\controllers\Guest {
 			$username = $this->getString('username', '');
 			$password = $this->getString('password', '');
 			AdminService::login($username, $password);
-			$url = YUrl::createAdminUrl('Index', 'Index', 'index');
+			$url = YUrl::createBackendUrl('', 'Index', 'index');
 			$this->success('登录成功', $url, 1);
 		}
 	}
@@ -29,7 +29,7 @@ class PublicController extends \common\controllers\Guest {
 	 */
 	public function logoutAction() {
 		AdminService::logout();
-		$url = YUrl::createAdminUrl('Index', 'Public', 'login');
+		$url = YUrl::createBackendUrl('', 'Public', 'login');
 		$this->success('退出成功', $url, 1);
 	}
 

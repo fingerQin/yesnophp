@@ -5,11 +5,13 @@
  * @date 2014-11-12
  */
 
-use \common\YCore;
-use \services\UserService;
+use common\YCore;
+use services\UserService;
 use services\UploadService;
 use services\CaptchaService;
 use models\Files;
+use common\YOffice;
+use services\SmsService;
 
 class TestController extends \common\controllers\Common {
 
@@ -17,7 +19,28 @@ class TestController extends \common\controllers\Common {
 	 * 默认首页。
 	 */
 	public function indexAction() {
-		// $this->error('用户名错误', '/', 3);
+		$title = [
+		    '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名',
+		    '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名', '姓名',
+		    '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄',
+		    '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄', '年龄',
+		];
+		$data[] = [ '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28' , '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28'];
+		$data[] = [ '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28' , '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28', '覃礼钧', '28'];
+		$save_path = APP_PATH . DIRECTORY_SEPARATOR . '/upload/files';
+		YOffice::excelExport($title, $data, 'age');
+		$this->end();
+	}
+	
+	public function smsAction() {
+	    SmsService::sendSmsCode('register', '18575202691');
+	    $this->end();
+	}
+
+	public function detailAction() {
+	    $code = $this->getString('code');
+	    var_dump($code);
+	    $this->end();
 	}
 
 	public function codeAction() {
@@ -128,16 +151,6 @@ class TestController extends \common\controllers\Common {
 	public function sessionAction() {
 		$this->_session->set('test', '123');
 		var_dump($this->_session->get('test'));
-		exit;
-	}
-
-	/**
-	 * IP判断。
-	 */
-	public function ipAction() {
-		$oip = new \winer\IP();
-		$ret = $oip->find('14.29.77.229');
-		var_dump($ret);
 		exit;
 	}
 

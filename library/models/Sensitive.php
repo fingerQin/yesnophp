@@ -81,7 +81,7 @@ class Sensitive extends DbBase {
 	    ];
 	    $data = $this->fetchOne([], $where);
 	    if (!empty($data)) {
-	        YCore::throw_exception(8500001, '敏感词已经存在,请勿重复添加');
+	        YCore::exception(8500001, '敏感词已经存在,请勿重复添加');
 	    }
 		$data = [
 				'lv'           => $lv,

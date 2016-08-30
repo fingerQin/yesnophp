@@ -1,5 +1,5 @@
 .header {background: #3c86c5 url(../../images/backend/img4/hdbg.gif) no-repeat right top;}
-.header .logo{background-image: url(../../images/backend/img4/logo.gif)}
+.header .logo{background-image: url(../../images/backend/it_technology.png) no-repeat left 35px top 10px;}
 .header .nav li, .header .nav li a{background-image: url(../../images/backend/img4/nav_bg.png)}
 .header .nav li.tab_web a, .header .nav li.tab_web a span{background-image: url(../../images/backend/img4/site.png);}
 .fav-help a{ background:none; height:auto; padding:0; margin:0 20px 0 0}

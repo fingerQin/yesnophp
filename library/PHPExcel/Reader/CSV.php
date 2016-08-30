@@ -163,10 +163,11 @@ class CSV extends BaseReader implements IReader
             return;
         }
 
-        if ((strlen(trim($line)) == 5) && (strpos($line, 'sep=') !== 0)) {
-            return $this->skipBOM();
+        if ((strlen(trim($line, "\r\n")) == 5) && (stripos($line, 'sep=') === 0)) {
+            $this->delimiter = substr($line, 4, 1);
+            return;
         }
-        $this->delimiter = substr($line, 4, 1);
+        return $this->skipBOM();
     }
 
     /**
@@ -280,7 +281,7 @@ class CSV extends BaseReader implements IReader
 
                     // Convert encoding if necessary
                     if ($this->inputEncoding !== 'UTF-8') {
-                        $rowDatum = \PHPExcel\Shared\String::ConvertEncoding($rowDatum, 'UTF-8', $this->inputEncoding);
+                        $rowDatum = \PHPExcel\Shared\StringHelper::convertEncoding($rowDatum, 'UTF-8', $this->inputEncoding);
                     }
 
                     // Set cell value

@@ -8,7 +8,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 </style>
 
 <div class="pad_10">
-<form action="<?php echo YUrl::createAdminUrl('Index', 'Dict', 'edit'); ?>" method="post" name="myform">
+<form action="<?php echo YUrl::createBackendUrl('', 'Dict', 'edit'); ?>" method="post" name="myform">
 <table cellpadding="2" cellspacing="1" class="table_form" width="100%">
     <tr>
 		<th width="100">字典编码：</th>
@@ -16,7 +16,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 	</tr>
     <tr>
 		<th width="100">字典值：</th>
-		<td><input type="text" name="dict_name" id="dict_name" size="40" class="input-text" value="<?php echo htmlspecialchars($dict['dict_name']); ?>"></td>
+		<td><input type="text" name="dict_value" id="dict_value" size="40" class="input-text" value="<?php echo htmlspecialchars($dict['dict_value']); ?>"></td>
 	</tr>
 	<tr>
 		<th width="100">字典值描述：</th>
@@ -25,7 +25,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 	<tr>
         <input type="hidden" name="dict_type_id" value="<?php echo $dict['dict_type_id']; ?>" />
         <input type="hidden" name="dict_id" value="<?php echo $dict['dict_id']; ?>" />
-	    <td width="100%" align="center" colspan="2"><input id="form_submit" type="button" name="dosubmit" value=" 提交 " /></td>
+	    <td width="100%" align="center" colspan="2"><input id="form_submit"  type="button" name="dosubmit" class="btn_submit"  value=" 提交 " /></td>
 	</tr>
 
 </table>

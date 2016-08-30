@@ -5,7 +5,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
-    	<a class="add fb" href="javascript:postDialog('addCategory', '<?php echo YUrl::createAdminUrl('Index', 'Category', 'add'); ?>', '添加分类', 400, 250)"><em>添加分类</em></a>
+    	<a class="add fb" href="javascript:postDialog('addCategory', '<?php echo YUrl::createBackendUrl('', 'Category', 'add'); ?>', '添加分类', 400, 250)"><em>添加分类</em></a>
     	<a href='javascript:;' class="on"><em>分类列表</em></a>
     </div>
 </div>
@@ -34,7 +34,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 </table>
 </form>
 
-	<form name="myform" action="<?php echo YUrl::createAdminUrl('Index', 'Category', 'sort'); ?>" method="post" id="sort_form">
+	<form name="myform" action="<?php echo YUrl::createBackendUrl('', 'Category', 'sort'); ?>" method="post" id="sort_form">
 			<div class="table-list">
 				<table width="100%" cellspacing="0">
 					<thead>
@@ -70,9 +70,9 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 							</td>
 							<td align='center'><?php echo $cat['cat_code']; ?></td>
 							<td align='center'>
-								<a href="javascript:postDialog('addCategory', '<?php echo YUrl::createAdminUrl('Index', 'Category', 'add', ['parentid' => $cat['cat_id']]); ?>', '添加子分类', 450, 280);">添加子分类</a> |
-								<a href="javascript:postDialog('editCategory', '<?php echo YUrl::createAdminUrl('Index', 'Category', 'edit', ['cat_id' => $cat['cat_id']]); ?>', '添加子分类', 450, 280);">修改</a> | 
-								<a href="javascript:deleteDialog('deleteCategory', '<?php echo YUrl::createAdminUrl('Index', 'Category', 'delete', ['cat_id' => $cat['cat_id']]); ?>', '<?php echo $cat['cat_name']; ?>');">删除</a>
+								<a href="javascript:postDialog('addCategory', '<?php echo YUrl::createBackendUrl('', 'Category', 'add', ['parentid' => $cat['cat_id']]); ?>', '添加子分类', 450, 280);">添加子分类</a> |
+								<a href="javascript:postDialog('editCategory', '<?php echo YUrl::createBackendUrl('', 'Category', 'edit', ['cat_id' => $cat['cat_id']]); ?>', '添加子分类', 450, 280);">修改</a> | 
+								<a href="javascript:deleteDialog('deleteCategory', '<?php echo YUrl::createBackendUrl('', 'Category', 'delete', ['cat_id' => $cat['cat_id']]); ?>', '<?php echo $cat['cat_name']; ?>');">删除</a>
 							</td>
 						</tr>
 						<?php if (isset($cat['sub'])): ?>
@@ -96,9 +96,9 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 							</td>
 							<td align='center'><?php echo $sub_m['cat_code']; ?></td>
 							<td align='center'>
-								<a href="javascript:postDialog('addCategory', '<?php echo YUrl::createAdminUrl('Index', 'Category', 'add', ['parentid' => $sub_m['cat_id']]); ?>', '添加子分类', 450, 280);">添加子分类</a> |
-								<a href="javascript:postDialog('editCategory', '<?php echo YUrl::createAdminUrl('Index', 'Category', 'edit', ['cat_id' => $sub_m['cat_id']]); ?>', '添加子分类', 450, 280);">修改</a> | 
-								<a href="javascript:deleteDialog('deleteCategory', '<?php echo YUrl::createAdminUrl('Index', 'Category', 'delete', ['cat_id' => $sub_m['cat_id']]); ?>', '<?php echo $sub_m['cat_name']; ?>');">删除</a>
+								<a href="javascript:postDialog('addCategory', '<?php echo YUrl::createBackendUrl('', 'Category', 'add', ['parentid' => $sub_m['cat_id']]); ?>', '添加子分类', 450, 280);">添加子分类</a> |
+								<a href="javascript:postDialog('editCategory', '<?php echo YUrl::createBackendUrl('', 'Category', 'edit', ['cat_id' => $sub_m['cat_id']]); ?>', '添加子分类', 450, 280);">修改</a> | 
+								<a href="javascript:deleteDialog('deleteCategory', '<?php echo YUrl::createBackendUrl('', 'Category', 'delete', ['cat_id' => $sub_m['cat_id']]); ?>', '<?php echo $sub_m['cat_name']; ?>');">删除</a>
 							</td>
 						</tr>
 						<?php if (isset($sub_m['sub'])): ?>
@@ -123,9 +123,9 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 							</td>
 							<td align='center'><?php echo $ss_m['cat_code']; ?></td>
 							<td align='center'>
-								<a href="javascript:postDialog('addCategory', '<?php echo YUrl::createAdminUrl('Index', 'Category', 'add', ['parentid' => $ss_m['cat_id']]); ?>', '添加子分类', 450, 280);">添加子分类</a> |
-								<a href="javascript:postDialog('editCategory', '<?php echo YUrl::createAdminUrl('Index', 'Category', 'edit', ['cat_id' => $ss_m['cat_id']]); ?>', '添加子分类', 450, 280);">修改</a> | 
-								<a href="javascript:deleteDialog('deleteCategory', '<?php echo YUrl::createAdminUrl('Index', 'Category', 'delete', ['cat_id' => $ss_m['cat_id']]); ?>', '<?php echo $ss_m['cat_name']; ?>');">删除</a>
+								<a href="javascript:postDialog('addCategory', '<?php echo YUrl::createBackendUrl('', 'Category', 'add', ['parentid' => $ss_m['cat_id']]); ?>', '添加子分类', 450, 280);">添加子分类</a> |
+								<a href="javascript:postDialog('editCategory', '<?php echo YUrl::createBackendUrl('', 'Category', 'edit', ['cat_id' => $ss_m['cat_id']]); ?>', '添加子分类', 450, 280);">修改</a> | 
+								<a href="javascript:deleteDialog('deleteCategory', '<?php echo YUrl::createBackendUrl('', 'Category', 'delete', ['cat_id' => $ss_m['cat_id']]); ?>', '<?php echo $ss_m['cat_name']; ?>');">删除</a>
 							</td>
 						</tr>
 						<?php endforeach; ?>

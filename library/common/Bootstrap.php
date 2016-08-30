@@ -27,6 +27,18 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract{
 	}
 
 	/**
+	 * 错误相关操作初始化。
+	 * -- 1、开/关PHP错误。
+	 * -- 2、接管PHP错误。
+	 */
+	public function _initError() {
+		$config = \Yaf\Registry::get("config");
+		$error_switch = $config->error_switch;
+		ini_set('display_errors', $error_switch);
+		set_error_handler(['\common\YCore', 'errot_handler']);
+	}
+
+	/**
 	 * 设置默认模块、控制器、动作。
 	 * @param Yaf_Dispatcher $dispatcher
 	 */
@@ -38,11 +50,11 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract{
 	}
 
 	/**
-	 * 初始化session到ssdb中。
+	 * 初始化session到reids中。
 	 * --------------------------------------
-	 * 1、实现SessionHandlerInterface接口，将session保存到ssdb中。
+	 * 1、实现SessionHandlerInterface接口，将session保存到reids中。
 	 * 2、重新开启session，让默认的session切换到自已的session接口。
-	 * 3、第二步中直接影响Yaf\Session的工作方式。
+	 * 3、第二步中直接影响\Yaf\Session的工作方式。
 	 * 4、SESSION在多机情况下会有小概率出现生成的SESSION ID冲突的情况。
 	 * 5、可以使用代理机器来生成SESSION或单独使用一台机专门生产SESSION ID。
 	 * 6、或者直接关闭SESSION的使用。

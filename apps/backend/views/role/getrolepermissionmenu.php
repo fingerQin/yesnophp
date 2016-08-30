@@ -8,7 +8,7 @@ html {
 	_overflow-y: scroll
 }
 </style>
-	<form name="myform" action="<?php echo YUrl::createAdminUrl('Index', 'Role', 'setPermission'); ?>" method="post" id="setPermissionForm">
+	<form name="myform" action="<?php echo YUrl::createBackendUrl('', 'Role', 'setPermission'); ?>" method="post" id="setPermissionForm">
 		<div class="pad-lr-10">
 			<div class="table-list">
 				<table width="100%" cellspacing="0">

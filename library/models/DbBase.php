@@ -24,6 +24,14 @@ class DbBase {
 	protected $_table_name = '';
 
 	/**
+	 * 分表数量。 
+	 * -- 当大于0的时候,说明当前表是分表应用。数值代表分表的数量。
+	 * -- 分表的情况下,具体的表名为：表名_数字。如：log_1。
+	 * @var number
+	 */
+	protected $_split_table_count = 0;
+	
+	/**
 	 * 在使用预处理语句时使用。
 	 * -- 即建立一个只能向后的指针。
 	 * @var array
@@ -34,7 +42,7 @@ class DbBase {
 	 * @var 保存最后操作的PDOStatement对象。
 	 */
 	protected $stmt = null;
-
+	
 	/**
 	 * 构造方法。
 	 * @param string $db_options 数据库配置项。
@@ -106,7 +114,7 @@ class DbBase {
 	    if (!$is_active) {
 	        $bool = $this->link->beginTransaction();
 	        if (!$bool) {
-	            YCore::throw_exception(-1, '开启事务失败');
+	            YCore::exception(-1, '开启事务失败');
 	        }
 	    }
 	}
@@ -119,7 +127,7 @@ class DbBase {
 	    if ($is_active) {
 	        $bool = $this->link->commit();
 	        if (!$bool) {
-	            YCore::throw_exception(-1, '提交事务失败');
+	            YCore::exception(-1, '提交事务失败');
 	        }
 	    }
 	}
@@ -132,7 +140,7 @@ class DbBase {
 	    if ($is_active) {
 	        $bool = $this->link->rollBack();
 	        if (!$bool) {
-	            YCore::throw_exception(-1, '回滚事务失败');
+	            YCore::exception(-1, '回滚事务失败');
 	        }
 	    }
 	}
@@ -147,26 +155,26 @@ class DbBase {
 
 	/**
 	 * 执行sql查询
-	 * @param array $data 需要查询的字段值[例`name`,`gender`,`birthday`]
+	 * @param array $columns 需要查询的字段值[例`name`,`gender`,`birthday`]
 	 * @param array $where 查询条件[例`name`='$name']
 	 * @param int $limit 返回的结果条数。
 	 * @param string $order 排序方式	[默认按数据库默认方式排序]
 	 * @param string $group 分组方式	[默认为空]
 	 * @return array 查询结果集数组
 	 */
-	public function fetchAll(array $data = [], array $where = [], $limit = 0, $order = '', $group = '') {
+	public function fetchAll(array $columns = [], array $where = [], $limit = 0, $order = '', $group = '') {
 		// [1] 参数判断。
 	    if (strlen($this->_table_name) === 0 || !is_string($this->_table_name)) {
-			YCore::throw_exception(3002001, 'The table parameters is wrong');
+			YCore::exception(3002001, 'The table parameters is wrong');
 		}
 		if (!is_string($order)) {
-			YCore::throw_exception(3001002, 'The order parameters is wrong');
+			YCore::exception(3001002, 'The order parameters is wrong');
 		}
 		if (!is_string($group)) {
-			YCore::throw_exception(3001003, 'The group parameters is wrong');
+			YCore::exception(3001003, 'The group parameters is wrong');
 		}
 		if (!is_numeric($limit)) {
-			YCore::throw_exception(3001004, 'The limit parameter is wrong');
+			YCore::exception(3001004, 'The limit parameter is wrong');
 		}
 		// [2] where 条件生成。
 		$where_condition = ' 1 AND 1 ';
@@ -178,10 +186,10 @@ class DbBase {
 		$where_condition = trim($where_condition, ',');
 		// [3] 要查询的列名。
 		$column_condition = '';
-		if (empty($data)) {
+		if (empty($columns)) {
 			$column_condition = ' * ';
 		} else {
-			foreach ($data as $column_name) {
+			foreach ($columns as $column_name) {
 				$column_condition .= "`{$column_name}`,";
 			}
 		}
@@ -197,9 +205,11 @@ class DbBase {
 			$order_by = "ORDER BY {$order}";
 		}
 		if ($limit == 0) {
-			$sql = "SELECT {$column_condition} FROM `{$this->_table_name}` WHERE {$where_condition} {$group_by} {$order_by}";
+			$sql = "SELECT {$column_condition} FROM `{$this->_table_name}` "
+			     . "WHERE {$where_condition} {$group_by} {$order_by}";
 		} else {
-			$sql = "SELECT {$column_condition} FROM `{$this->_table_name}` WHERE {$where_condition} {$group_by} {$order_by} LIMIT {$limit}";
+			$sql = "SELECT {$column_condition} FROM `{$this->_table_name}` "
+			     . "WHERE {$where_condition} {$group_by} {$order_by} LIMIT {$limit}";
 		}
 		$sth = $this->link->prepare($sql);
 		$sth->execute($params);
@@ -209,25 +219,25 @@ class DbBase {
 
 	/**
 	 * 获取单条记录查询
-	 * @param array $data 需要查询的字段值。['username', 'sex', 'mobilephone']
+	 * @param array $columns 需要查询的字段值。['username', 'sex', 'mobilephone']
 	 * @param array $where 查询条件
 	 * @param string $order 排序方式	[默认按数据库默认方式排序]
 	 * @param string $group 分组方式	[默认为空]
 	 * @return array 数据查询结果集,如果不存在，则返回空数组。
 	 */
-	public function fetchOne(array $data, array $where, $order = '', $group = '') {
+	public function fetchOne(array $columns, array $where, $order = '', $group = '') {
 		// [1] 参数判断。
 	    if (strlen($this->_table_name) === 0 || !is_string($this->_table_name)) {
-			YCore::throw_exception(3002001, 'The table parameters is wrong');
+			YCore::exception(3002001, 'The table parameters is wrong');
 		}
 		if (empty($where)) {
-			YCore::throw_exception(3001002, 'The where parameters is wrong');
+			YCore::exception(3001002, 'The where parameters is wrong');
 		}
 		if (!is_string($order)) {
-			YCore::throw_exception(3001003, 'The order parameters is wrong');
+			YCore::exception(3001003, 'The order parameters is wrong');
 		}
 		if (!is_string($group)) {
-			YCore::throw_exception(3001004, 'The group parameters is wrong');
+			YCore::exception(3001004, 'The group parameters is wrong');
 		}
 		// [2] where 条件生成。
 		$where_condition = ' 1 = 1 ';
@@ -239,10 +249,10 @@ class DbBase {
 		$where_condition = trim($where_condition, ',');
 		// [3] 要查询的列名。
 		$column_condition = '';
-		if (empty($data)) {
+		if (empty($columns)) {
 			$column_condition = ' * ';
 		} else {
-			foreach ($data as $column_name) {
+			foreach ($columns as $column_name) {
 				$column_condition .= "`{$column_name}`,";
 			}
 		}
@@ -257,7 +267,8 @@ class DbBase {
 		if (strlen($order) > 0) {
 			$order_by = "ORDER BY {$order}";
 		}
-		$sql = "SELECT {$column_condition} FROM `{$this->_table_name}` WHERE {$where_condition} {$group_by} {$order_by} LIMIT 1";
+		$sql = "SELECT {$column_condition} FROM `{$this->_table_name}` "
+		     . "WHERE {$where_condition} {$group_by} {$order_by} LIMIT 1";
 		$sth = $this->link->prepare($sql);
 		$sth->execute($params);
 		$data = $sth->fetch(\PDO::FETCH_ASSOC);
@@ -272,10 +283,10 @@ class DbBase {
 	public function count(array $where) {
 	    // [1] 参数判断。
 	    if (strlen($this->_table_name) === 0 || !is_string($this->_table_name)) {
-			YCore::throw_exception(3002001, 'The table parameters is wrong');
+			YCore::exception(3002001, 'The table parameters is wrong');
 		}
 	    if (empty($where)) {
-	        YCore::throw_exception(3001002, 'The where parameters is wrong');
+	        YCore::exception(3001002, 'The where parameters is wrong');
 	    }
 	    // [2] where 条件生成。
 	    $where_condition = ' 1 = 1 ';
@@ -301,10 +312,10 @@ class DbBase {
 	 */
 	public function insert(array $data) {
 		if (strlen($this->_table_name) === 0 || !is_string($this->_table_name)) {
-			YCore::throw_exception(3002001, 'The table parameters is wrong');
+			YCore::exception(3002001, 'The table parameters is wrong');
 		}
 		if (empty($data)) {
-			YCore::throw_exception(3002002, 'The data parameter can\'t be empty');
+			YCore::exception(3002002, 'The data parameter can\'t be empty');
 		}
 		$column_condition = '';
 		$column_question  = '';
@@ -332,13 +343,13 @@ class DbBase {
 	public function update(array $data, array $where) {
 		// [1] 参数判断。
 	   if (strlen($this->_table_name) === 0 || !is_string($this->_table_name)) {
-			YCore::throw_exception(3002001, 'The table parameters is wrong');
+			YCore::exception(3002001, 'The table parameters is wrong');
 		}
 		if (empty($where)) {
-			YCore::throw_exception(3001001, 'The where parameters is wrong');
+			YCore::exception(3001001, 'The where parameters is wrong');
 		}
 		if (empty($data)) {
-			YCore::throw_exception(3001004, 'The data parameter cannot be empty');
+			YCore::exception(3001004, 'The data parameter cannot be empty');
 		}
 		// [2] SET 条件生成。
 		$set_condition = '';
@@ -369,10 +380,10 @@ class DbBase {
 	 */
 	public function delete(array $where) {
 	   if (strlen($this->_table_name) === 0 || !is_string($this->_table_name)) {
-			YCore::throw_exception(3002001, 'The table parameters is wrong');
+			YCore::exception(3002001, 'The table parameters is wrong');
 		}
 		if (empty($where)) {
-			YCore::throw_exception(3001001, 'The where parameters is wrong');
+			YCore::exception(3001001, 'The where parameters is wrong');
 		}
 		$sql = "DELETE FROM `{$this->_table_name}` WHERE 1 = 1 ";
 		$params = [];
@@ -393,7 +404,7 @@ class DbBase {
 	 */
 	public function createWhereIn($params) {
 		if (empty($params)) {
-			YCore::throw_exception(3001101, 'where in params 有误');
+			YCore::exception(3001101, 'where in params 有误');
 		}
 		$question = '';
 		$values   = [];
@@ -405,8 +416,8 @@ class DbBase {
 			$index++;
 		}
 		return [
-				'question' => trim($question, ','),
-				'values'   => $values
+			'question' => trim($question, ','),
+			'values'   => $values
 		];
 	}
 
@@ -459,13 +470,14 @@ class DbBase {
 	 * 更新、删除、添加。
 	 * @param string $sql 查询SQL。
 	 * @param array $params 绑定参数。
-	 * @param boolean $get_insert_id 获取插入时的ID。只有INSERT语句才会有。
 	 * @return boolean|int
 	 */
-	public function rawExec($sql, $params = [], $get_insert_id = false) {
+	public function rawExec($sql, $params = []) {
 	    $sth = $this->link->prepare($sql);
 	    $sth->execute($params);
-	    if ($get_insert_id) {
+	    $sql_type = strtolower(substr($sql, 0, 6));
+	    $is_insert_sql = ($sql_type == 'insert') ? true : false;
+	    if ($is_insert_sql) {
 	        return $this->lastInsertId();
 	    } else {
 	        $affected_row = $sth->rowCount();
@@ -479,7 +491,7 @@ class DbBase {
 	 */
 	public function rawFetchOne() {
 	    if (empty($this->stmt)) {
-	        YCore::throw_exception(-1, '请正确使用rawFetchOne()方法');
+	        YCore::exception(-1, '请正确使用rawFetchOne()方法');
 	    }
 	    $result = $this->stmt->fetch(\PDO::FETCH_ASSOC);
 	    return $result ? $result : [];
@@ -491,7 +503,7 @@ class DbBase {
 	 */
 	public function rawFetchAll() {
 	    if (empty($this->stmt)) {
-	        YCore::throw_exception(-1, '请正确使用rawFetchAll()方法');
+	        YCore::exception(-1, '请正确使用rawFetchAll()方法');
 	    }
 	    $result = $this->stmt->fetchAll(\PDO::FETCH_ASSOC);
 	    return $result ? $result : [];

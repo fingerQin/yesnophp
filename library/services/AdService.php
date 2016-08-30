@@ -12,6 +12,16 @@ use common\YCore;
 use models\AdPosition;
 use winer\Validator;
 class AdService extends BaseService {
+	
+	/**
+	 * 获取指定位置的广告。
+	 * @param string $position 广告位置。
+	 * @param number $count 广告数量。
+	 * @return array
+	 */
+	public static function getPositionAdList($position, $count = 1) {
+		
+	}
 
     /**
      * 获取广告位置列表。
@@ -34,7 +44,7 @@ class AdService extends BaseService {
         $ad_postion_model = new AdPosition();
         $data = $ad_postion_model->fetchOne([], ['pos_id' => $pos_id, 'status' => 1]);
         if (empty($data)) {
-            YCore::throw_exception(-1, '广告位置不存在或已经删除');
+            YCore::exception(-1, '广告位置不存在或已经删除');
         }
         return $data;
     }
@@ -51,7 +61,7 @@ class AdService extends BaseService {
         $ad_pos_model = new AdPosition();
         $ad_pos_detail = $ad_pos_model->fetchOne([], ['pos_code' => $pos_code, 'status' => 1]);
         if ($ad_pos_detail) {
-            YCore::throw_exception(-1, '广告编码已经存在请更换');
+            YCore::exception(-1, '广告编码已经存在请更换');
         }
         $data = [
             'pos_name'     => $pos_name,
@@ -83,11 +93,11 @@ class AdService extends BaseService {
         $ad_pos_model = new AdPosition();
         $ad_pos_detail = $ad_pos_model->fetchOne([], ['pos_id' => $pos_id, 'status' => 1]);
         if (empty($ad_pos_detail)) {
-            YCore::throw_exception(-1, '广告位置不存在或已经删除');
+            YCore::exception(-1, '广告位置不存在或已经删除');
         }
         $ad_pos_detail = $ad_pos_model->fetchOne([], ['pos_code' => $pos_code, 'status' => 1]);
         if ($ad_pos_detail['pos_id'] != $pos_id) {
-            YCore::throw_exception(-1, '广告编码已经被占用请更换');
+            YCore::exception(-1, '广告编码已经被占用请更换');
         }
         $data = [
             'pos_name'     => $pos_name,
@@ -115,12 +125,12 @@ class AdService extends BaseService {
         $ad_position_model = new AdPosition();
         $ad_detail = $ad_position_model->fetchOne([], ['pos_id' => $pos_id, 'status' => 1]);
         if (empty($ad_detail)) {
-            YCore::throw_exception(-1, '广告位置不存在或已经删除');
+            YCore::exception(-1, '广告位置不存在或已经删除');
         }
         $ad_model = new Ad();
         $ad_count = $ad_model->count(['pos_id' => $pos_id, 'status' => 1]);
         if ($ad_count > 0) {
-            YCore::throw_exception(-1, '请先清空该广告位置下的广告');
+            YCore::exception(-1, '请先清空该广告位置下的广告');
         }
         $data = [
             'status'        => 2,
@@ -157,7 +167,7 @@ class AdService extends BaseService {
         $ad_model = new Ad();
         $data = $ad_model->fetchOne([], ['ad_id' => $ad_id, 'status' => 1]);
         if (empty($data)) {
-            YCore::throw_exception(-1, '广告不存在或已经删除');
+            YCore::exception(-1, '广告不存在或已经删除');
         }
         return $data;
     }
@@ -179,7 +189,7 @@ class AdService extends BaseService {
         $ad_position_model = new AdPosition();
         $ad_pos_detail = $ad_position_model->fetchOne([], ['pos_id' => $pos_id, 'status' => 1]);
         if (empty($ad_pos_detail)) {
-            YCore::throw_exception(-1, '广告位置不存在或已经删除');
+            YCore::exception(-1, '广告位置不存在或已经删除');
         }
         $data = [
             'ad_name'      => $ad_name,
@@ -201,7 +211,7 @@ class AdService extends BaseService {
         ];
         Validator::valido($data, $rules);
         if ($end_time <= $start_time) {
-            YCore::throw_exception(-1, '生效时间必须小于失效时间');
+            YCore::exception(-1, '生效时间必须小于失效时间');
         }
         $data['pos_id']       = $pos_id;
         $data['status']       = 1;
@@ -230,7 +240,7 @@ class AdService extends BaseService {
         $ad_model = new Ad();
         $ad_detail = $ad_model->fetchOne([], ['ad_id' => $ad_id, 'status' => 1]);
         if (empty($ad_detail)) {
-            YCore::throw_exception(-1, '广告不存在或已经删除');
+            YCore::exception(-1, '广告不存在或已经删除');
         }
         $data = [
             'ad_name'      => $ad_name,
@@ -252,7 +262,7 @@ class AdService extends BaseService {
         ];
         Validator::valido($data, $rules);
         if ($end_time <= $start_time) {
-            YCore::throw_exception(-1, '生效时间必须小于失效时间');
+            YCore::exception(-1, '生效时间必须小于失效时间');
         }
         $data['start_time']    = strtotime($start_time);
         $data['end_time']      = strtotime($end_time);
@@ -275,7 +285,7 @@ class AdService extends BaseService {
         $ad_model = new Ad();
         $ad_detail = $ad_model->fetchOne([], ['ad_id' => $ad_id, 'status' => 1]);
         if (empty($ad_detail)) {
-            YCore::throw_exception(-1, '广告不存在或已经删除');
+            YCore::exception(-1, '广告不存在或已经删除');
         }
         $data = [
             'status'        => 2,

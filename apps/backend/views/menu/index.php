@@ -5,7 +5,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
-    	<a class="add fb" href="javascript:postDialog('addMenu', '<?php echo YUrl::createAdminUrl('Index', 'Menu', 'add'); ?>', '添加菜单', 400, 300)"><em>添加菜单</em></a>
+    	<a class="add fb" href="javascript:postDialog('addMenu', '<?php echo YUrl::createBackendUrl('', 'Menu', 'add'); ?>', '添加菜单', 400, 300)"><em>添加菜单</em></a>
     	<a href='javascript:;' class="on"><em>菜单列表</em></a>    
     </div>
 </div>
@@ -15,7 +15,7 @@ html {
 	_overflow-y: scroll
 }
 </style>
-	<form name="myform" action="<?php echo YUrl::createAdminUrl('Index', 'Menu', 'sort'); ?>" method="post">
+	<form name="myform" action="<?php echo YUrl::createBackendUrl('', 'Menu', 'sort'); ?>" method="post">
 		<div class="pad-lr-10">
 			<div class="table-list">
 				<table width="100%" cellspacing="0">
@@ -34,9 +34,9 @@ html {
 							<td align='center'><?php echo $menu['menu_id']; ?></td>
 							<td><?php echo $menu['name']; ?></td>
 							<td align='center'>
-								<a href="javascript:postDialog('addMenu', '<?php echo YUrl::createAdminUrl('Index', 'Menu', 'add', ['parentid' => $menu['menu_id']]); ?>', '添加子菜单', 450, 280);">添加子菜单</a> |
-								<a href="javascript:postDialog('editMenu', '<?php echo YUrl::createAdminUrl('Index', 'Menu', 'edit', ['menu_id' => $menu['menu_id']]); ?>', '添加子菜单', 450, 280);">修改</a> | 
-								<a href="javascript:deleteDialog('deleteMenu', '<?php echo YUrl::createAdminUrl('Index', 'Menu', 'delete', ['menu_id' => $menu['menu_id']]); ?>', '<?php echo $menu['name']; ?>');">删除</a>
+								<a href="javascript:postDialog('addMenu', '<?php echo YUrl::createBackendUrl('', 'Menu', 'add', ['parentid' => $menu['menu_id']]); ?>', '添加子菜单', 450, 280);">添加子菜单</a> |
+								<a href="javascript:postDialog('editMenu', '<?php echo YUrl::createBackendUrl('', 'Menu', 'edit', ['menu_id' => $menu['menu_id']]); ?>', '添加子菜单', 450, 280);">修改</a> | 
+								<a href="javascript:deleteDialog('deleteMenu', '<?php echo YUrl::createBackendUrl('', 'Menu', 'delete', ['menu_id' => $menu['menu_id']]); ?>', '<?php echo $menu['name']; ?>');">删除</a>
 							</td>
 						</tr>
 						<?php if (isset($menu['sub'])): ?>
@@ -46,9 +46,9 @@ html {
 							<td align='center'><?php echo $sub_m['menu_id']; ?></td>
 							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <?php echo $sub_m['name']; ?></td>
 							<td align='center'>
-								<a href="javascript:postDialog('addMenu', '<?php echo YUrl::createAdminUrl('Index', 'Menu', 'add', ['parentid' => $sub_m['menu_id']]); ?>', '添加子菜单', 450, 280);">添加子菜单</a> |
-								<a href="javascript:postDialog('editMenu', '<?php echo YUrl::createAdminUrl('Index', 'Menu', 'edit', ['menu_id' => $sub_m['menu_id']]); ?>', '编辑子菜单', 450, 280);">修改</a> | 
-								<a href="javascript:deleteDialog('deleteMenu', '<?php echo YUrl::createAdminUrl('Index', 'Menu', 'delete', ['menu_id' => $sub_m['menu_id']]); ?>', '<?php echo $sub_m['name']; ?>');">删除</a>
+								<a href="javascript:postDialog('addMenu', '<?php echo YUrl::createBackendUrl('', 'Menu', 'add', ['parentid' => $sub_m['menu_id']]); ?>', '添加子菜单', 450, 280);">添加子菜单</a> |
+								<a href="javascript:postDialog('editMenu', '<?php echo YUrl::createBackendUrl('', 'Menu', 'edit', ['menu_id' => $sub_m['menu_id']]); ?>', '编辑子菜单', 450, 280);">修改</a> | 
+								<a href="javascript:deleteDialog('deleteMenu', '<?php echo YUrl::createBackendUrl('', 'Menu', 'delete', ['menu_id' => $sub_m['menu_id']]); ?>', '<?php echo $sub_m['name']; ?>');">删除</a>
 							</td>
 						</tr>
 						<?php if (isset($sub_m['sub'])): ?>
@@ -59,9 +59,9 @@ html {
 							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ <?php echo $ss_m['name']; ?></td>
 							<td align='center'>
-								<a href="javascript:postDialog('addMenu', '<?php echo YUrl::createAdminUrl('Index', 'Menu', 'add', ['parentid' => $ss_m['menu_id']]); ?>', '添加子菜单', 450, 280);">添加子菜单</a> |
-								<a href="javascript:postDialog('editMenu', '<?php echo YUrl::createAdminUrl('Index', 'Menu', 'edit', ['menu_id' => $ss_m['menu_id']]); ?>', '编辑子菜单', 450, 280);">修改</a> | 
-								<a href="javascript:deleteDialog('deleteMenu', '<?php echo YUrl::createAdminUrl('Index', 'Menu', 'delete', ['menu_id' => $ss_m['menu_id']]); ?>', '<?php echo $ss_m['name']; ?>');">删除</a>
+								<a href="javascript:postDialog('addMenu', '<?php echo YUrl::createBackendUrl('', 'Menu', 'add', ['parentid' => $ss_m['menu_id']]); ?>', '添加子菜单', 450, 280);">添加子菜单</a> |
+								<a href="javascript:postDialog('editMenu', '<?php echo YUrl::createBackendUrl('', 'Menu', 'edit', ['menu_id' => $ss_m['menu_id']]); ?>', '编辑子菜单', 450, 280);">修改</a> | 
+								<a href="javascript:deleteDialog('deleteMenu', '<?php echo YUrl::createBackendUrl('', 'Menu', 'delete', ['menu_id' => $ss_m['menu_id']]); ?>', '<?php echo $ss_m['name']; ?>');">删除</a>
 							</td>
 						</tr>
 						<?php endforeach; ?>

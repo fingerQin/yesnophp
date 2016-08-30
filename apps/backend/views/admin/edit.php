@@ -8,7 +8,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 </style>
 
 <div class="pad_10">
-<form action="<?php echo YUrl::createAdminUrl('Index', 'Admin', 'edit'); ?>" method="post" name="myform" id="myform" autocomplete="off">
+<form action="<?php echo YUrl::createBackendUrl('', 'Admin', 'edit'); ?>" method="post" name="myform" id="myform" autocomplete="off">
 <table cellpadding="2" cellspacing="1" class="table_form" width="100%">
 
 	<tr>
@@ -41,7 +41,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     <tr>
 	    <td width="100%" align="center" colspan="2">
 	       <input name="admin_id" type="hidden" value="<?php echo $detail['admin_id']; ?>" />
-	       <input id="form_submit" type="button" name="dosubmit" value=" 提交 " />
+	       <input id="form_submit"  type="button" name="dosubmit" class="btn_submit"  value=" 提交 " />
 	    </td>
 	</tr>
 </table>

@@ -96,7 +96,7 @@ class DictType extends DbBase {
 	    ];
 	    $dict_type_detail = $this->fetchOne([], $where);
 	    if (!empty($dict_type_detail)) {
-	        YCore::throw_exception(8500001, '字典编码已经存在,请不要重复添加');
+	        YCore::exception(8500001, '字典编码已经存在,请不要重复添加');
 	    }
 		$data = [
 				'type_code'    => $type_code,

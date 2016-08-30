@@ -5,7 +5,7 @@ html.on,html.on body{ background: #eee; background-image:none}
 #Skin .s1{background-position:0 -66px}
 #Skin .s2{background-position:-14px -55px;}
 .header {background: #333 url(../../images/backend/img2/hdbg.gif) no-repeat right bottom}
-.header .logo{background-image: url(../../images/backend/img2/logo.png)}
+.header .logo{background-image: url(../../images/backend/it_technology.png) no-repeat left 35px top 10px;}
 .header .nav li, .header .nav li a{background-image: url(../../images/backend/img2/nav_bg_gray.png)}
 .header .nav li.on a{ color:#333}
 .header .nav li a{color:#999}

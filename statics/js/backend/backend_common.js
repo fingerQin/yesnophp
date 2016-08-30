@@ -28,7 +28,7 @@ function selectall(name) {
  */
 function dialogTips(message, interval) {
 	var d = dialog({
-		id : 'dialog5Tips' + '_' + Math.random(),
+		id : 'dialogTips' + '_' + Math.random(),
 	    content: message
 	});
 	d.show();
@@ -89,7 +89,7 @@ function normalDialog(dialog_id, request_url, title) {
 				success: function(data){
 					if (data.errcode) {
 						d.close();
-						dialog5Tips(data.errmsg, 5);
+						dialogTips(data.errmsg, 5);
 					} else {
 						d.close({"refresh" : 1});
 					}
@@ -127,7 +127,7 @@ function deleteDialog(dialog_id, request_url, title) {
 				success: function(data){
 					if (data.errcode) {
 						d.close();
-						dialog5Tips(data.errmsg, 5);
+						dialogTips(data.errmsg, 5);
 					} else {
 						d.close({"refresh" : 1});
 					}
@@ -139,6 +139,32 @@ function deleteDialog(dialog_id, request_url, title) {
 			if (this.returnValue.refresh != undefined && this.returnValue.refresh == 1) {
 	    		location.reload();
 	    	}
+		}
+	});
+	d.showModal();
+}
+
+/**
+ * 普通文本提示框。
+ * @param dialog_id 弹出框的ID。
+ * @param title 弹出框标题。
+ * @param message 弹出框内容。
+ * @param dialog_width 弹出框宽度。
+ * @param dialog_height 弹出框高度。
+ */
+function textDialog(dialog_id, title, message, dialog_width, dialog_height) {
+	var d = top.dialog({
+		id : dialog_id + '_' + Math.random(),
+	    title: title,
+	    width: dialog_width,
+	    height: dialog_height,
+	    content: message, 
+		okValue: '关闭',
+		ok : function() {
+			// ...
+		},
+		onclose: function () {
+			// ...
 		}
 	});
 	d.showModal();

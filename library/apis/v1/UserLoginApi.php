@@ -1,7 +1,7 @@
 <?php
 /**
- * 用户登录API接口。
- * @author winer
+ * 用户登录接口。
+ * @author winerQin
  * @date 2016-04-30
  * @version 1.0
  */
@@ -19,25 +19,9 @@ class UserLoginApi extends BaseApi {
 	 * @return bool
 	 */
 	protected function runService() {
-		if ($this->errcode != 0) {
-			return false;
-		}
-		$username = $this->params['username'];
-		$password = $this->params['password'];
-		$type     = $this->params['type'];
-		$return = UserService::directLogin($username, $password, $type);
-		$this->errcode  = $return['errcode'];
-		$this->errmsg   = $return['errmsg'];
-		$this->ret_data = $return;
-		return true;
-	}
-
-	/**
-	 * 响应结果。
-	 * @return string
-	 */
-	public function render() {
-		$this->initRetData();
-		return json_encode($this->ret_data);
+		$username = $this->getString('username');
+		$password = $this->getString('password');
+		$return = UserService::login($username, $password, 2);
+		$this->render(0, '登录成功', $return);
 	}
 }

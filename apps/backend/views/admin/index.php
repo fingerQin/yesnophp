@@ -5,7 +5,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
-    	<a class="add fb" href="javascript:postDialog('addAdmin', '<?php echo YUrl::createAdminUrl('Index', 'Admin', 'add'); ?>', '添加管理员', 450, 240)"><em>添加管理员</em></a>
+    	<a class="add fb" href="javascript:postDialog('addAdmin', '<?php echo YUrl::createBackendUrl('', 'Admin', 'add'); ?>', '添加管理员', 450, 240)"><em>添加管理员</em></a>
     	<a href='javascript:;' class="on"><em>管理员列表</em></a>    
     </div>
 </div>
@@ -59,7 +59,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     		<td align="center"><?php echo date('Y-m-d H:i:s', $item['created_time']); ?></td>
     		<td align="center">
     		<a href="###" onclick="edit(<?php echo $item['admin_id'] ?>, '<?php echo $item['realname'] ?>')" title="修改">修改</a> |  
-    		<a href="###" onclick="deleteDialog('delteAdmin', '<?php echo YUrl::createAdminUrl('Index', 'Admin', 'delete', ['admin_id' => $item['admin_id']]); ?>', '<?php echo $item['realname'] ?>')" title="删除">删除</a>  
+    		<a href="###" onclick="deleteDialog('delteAdmin', '<?php echo YUrl::createBackendUrl('', 'Admin', 'delete', ['admin_id' => $item['admin_id']]); ?>', '<?php echo $item['realname'] ?>')" title="删除">删除</a>  
     		</td>
     	</tr>
     <?php endforeach; ?>
@@ -77,7 +77,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 <script type="text/javascript">
 function edit(id, name) {
 	var title = '修改『' + name + '』';
-	var page_url = "<?php echo YUrl::createAdminUrl('Index', 'Admin', 'edit'); ?>?admin_id="+id;
+	var page_url = "<?php echo YUrl::createBackendUrl('', 'Admin', 'edit'); ?>?admin_id="+id;
 	postDialog('editAdmin', page_url, title, 460, 240);
 }
 </script>

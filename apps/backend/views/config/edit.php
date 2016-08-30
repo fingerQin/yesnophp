@@ -8,7 +8,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 </style>
 
 <div class="pad_10">
-<form action="<?php echo YUrl::createAdminUrl('Index', 'Config', 'edit'); ?>" method="post" name="myform" id="myform">
+<form action="<?php echo YUrl::createBackendUrl('', 'Config', 'edit'); ?>" method="post" name="myform" id="myform">
 <table cellpadding="2" cellspacing="1" class="table_form" width="100%">
 
 	<tr>
@@ -16,7 +16,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 		<td><input type="text" name="ctitle" id="ctitle" size="20" class="input-text" value="<?php echo htmlspecialchars($detail['ctitle']); ?>">（简要说明）</td>
 	</tr>
 	<tr>
-		<th width="80">配置名称：</th>
+		<th width="80">配置编码：</th>
 		<td><input type="text" name="cname" id="cname" size="20" class="input-text" value="<?php echo htmlspecialchars($detail['cname']); ?>">（字母、数字、下划线组成）</td>
 	</tr>
 	<tr>
@@ -30,7 +30,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     <tr>
 	    <td width="100%" align="center" colspan="2">
 	       <input name="config_id" type="hidden" value="<?php echo $detail['config_id']; ?>" />
-	       <input id="form_submit" type="button" name="dosubmit" value=" 提交 " />
+	       <input id="form_submit"  type="button" name="dosubmit" class="btn_submit"  value=" 提交 " />
 	    </td>
 	</tr>
 </table>

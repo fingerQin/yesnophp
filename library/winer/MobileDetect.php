@@ -1048,7 +1048,7 @@ class MobileDetect
     {
         // make sure the name starts with 'is', otherwise
         if (substr($name, 0, 2) !== 'is') {
-            YCore::throw_exception(-1, "No such method exists: $name");
+            YCore::exception(-1, "No such method exists: $name");
         }
 
         $this->setDetectionType(self::DETECTION_TYPE_MOBILE);

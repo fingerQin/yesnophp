@@ -63,12 +63,12 @@ class Admin extends Common {
 		} catch (\Exception $e) {
 		    if ($e->getCode() == '6002104' || $e->getCode() == '6004003' || $e->getCode() == '6002103') {
 		        if ($this->_request->isXmlHttpRequest()) {
-		            YCore::throw_exception($e->getCode(), $e->getMessage());
+		            YCore::exception($e->getCode(), $e->getMessage());
 		        } else {
-		            $this->redirect(YUrl::createAdminUrl('Index', 'Public', 'Login'));
+		            $this->redirect(YUrl::createBackendUrl('', 'Public', 'Login'));
 		        }
 		    } else {
-		        YCore::throw_exception($e->getCode(), $e->getMessage());
+		        YCore::exception($e->getCode(), $e->getMessage());
 		    }
 		}
 	}

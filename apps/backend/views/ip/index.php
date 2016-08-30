@@ -5,7 +5,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
-    	<a class="add fb" href="javascript:postDialog('addIpBan', '<?php echo YUrl::createAdminUrl('Index', 'Ip', 'add'); ?>', '添加IP黑名单', 400, 140)"><em>添加IP黑名单</em></a>
+    	<a class="add fb" href="javascript:postDialog('addIpBan', '<?php echo YUrl::createBackendUrl('', 'Ip', 'add'); ?>', '添加IP黑名单', 400, 140)"><em>添加IP黑名单</em></a>
     	<a href='javascript:;' class="on"><em>IP黑名单列表</em></a>    
     </div>
 </div>
@@ -55,7 +55,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     		<td align="center"><?php echo date('Y-m-d H:i:s', $item['created_time']); ?></td>
     		<td align="center">
     		<a href="###" onclick="edit(<?php echo $item['id'] ?>, '<?php echo $item['ip'] ?>')" title="修改">修改</a> |  
-    		<a href="###" onclick="deleteDialog('deleteIp', '<?php echo YUrl::createAdminUrl('Index', 'Ip', 'delete', ['id' => $item['id']]); ?>', '<?php echo $item['ip'] ?>')" title="删除">删除</a>  
+    		<a href="###" onclick="deleteDialog('deleteIp', '<?php echo YUrl::createBackendUrl('', 'Ip', 'delete', ['id' => $item['id']]); ?>', '<?php echo $item['ip'] ?>')" title="删除">删除</a>  
     		</td>
     	</tr>
     <?php endforeach; ?>
@@ -73,7 +73,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 <script type="text/javascript">
 function edit(id, name) {
 	var title = '修改『' + name + '』';
-	var page_url = "<?php echo YUrl::createAdminUrl('Index', 'Ip', 'edit'); ?>?id="+id;
+	var page_url = "<?php echo YUrl::createBackendUrl('', 'Ip', 'edit'); ?>?id="+id;
 	postDialog('editIp', page_url, title, 400, 140);
 }
 </script>

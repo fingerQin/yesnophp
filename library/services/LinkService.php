@@ -63,7 +63,7 @@ class LinkService extends BaseService {
         $link_model = new Link();
         $data = $link_model->fetchOne([], ['link_id' => $link_id, 'status' => 1]);
         if (empty($data)) {
-            YCore::throw_exception(-1, '友情链接不存在或已经删除');
+            YCore::exception(-1, '友情链接不存在或已经删除');
         }
         return $data;
     }
@@ -120,7 +120,7 @@ class LinkService extends BaseService {
         ];
         $link_detail = $link_model->fetchOne([], $where);
         if (empty($link_detail)) {
-            YCore::throw_exception(-1, '友情链接不存在或已经删除');
+            YCore::exception(-1, '友情链接不存在或已经删除');
         }
         $data = [
             'link_name' => $link_name,
@@ -156,7 +156,7 @@ class LinkService extends BaseService {
         ];
         $link_detail = $link_model->fetchOne([], $where);
         if (empty($link_detail)) {
-            YCore::throw_exception(-1, '友情链接不存在或已经删除');
+            YCore::exception(-1, '友情链接不存在或已经删除');
         }
         $data = [
             'status'        => 2,

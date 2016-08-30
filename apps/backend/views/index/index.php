@@ -56,7 +56,7 @@ use common\YUrl;
         </div>
     </div>
     <div class="col-auto">
-    	<div class="log white cut_line">您好！<?php echo $username; ?>  [<?php echo $realname; ?>]<span>|</span><a href="<?php echo YUrl::createAdminUrl('Index', 'Public', 'logout'); ?>">[退出]</a><span>|</span>
+    	<div class="log white cut_line">您好！<?php echo $username; ?>  [<?php echo $realname; ?>]<span>|</span><a href="<?php echo YUrl::createBackendUrl('', 'Public', 'logout'); ?>">[退出]</a><span>|</span>
     		<!-- <a href="" target="_blank" id="site_homepage">站点首页</a> -->
     	</div>
         <ul class="nav white" id="top_menu">
@@ -186,7 +186,7 @@ $("#openClose").click(function(){
 });
 
 function _M(menuid, targetUrl) {
-	var site_url = '<?php echo YUrl::createAdminUrl('Index', 'Index', 'leftMenu'); ?>';
+	var site_url = '<?php echo YUrl::createBackendUrl('', 'Index', 'leftMenu'); ?>';
 	$("#leftMain").load(site_url + "?menu_id="+menuid, {limit: 25}, function(response) {
 		// 如果返回的是JS。说明已经登录超时。刷新窗口可以重新登录。
 	    try {
@@ -199,7 +199,7 @@ function _M(menuid, targetUrl) {
 	});
 	$('.top_menu').removeClass("on");
 	$('#_M'+menuid).addClass("on");
-	var arrow_url = '<?php echo YUrl::createAdminUrl('Index', 'Index', 'arrow'); ?>';
+	var arrow_url = '<?php echo YUrl::createBackendUrl('', 'Index', 'arrow'); ?>';
 	$.get(arrow_url + "?menu_id="+menuid, function(data){
 		$("#current_pos").html(data);
 	});
@@ -221,7 +221,7 @@ function _MP(menuid, targetUrl) {
 	$("#rightMain").attr('src', targetUrl + '?menuid=' + menuid);
 	$('.sub_menu').removeClass("on fb blue");
 	$('#_MP'+menuid).addClass("on fb blue");
-	var arrow_url = '<?php echo YUrl::createAdminUrl('Index', 'Index', 'arrow'); ?>';
+	var arrow_url = '<?php echo YUrl::createBackendUrl('', 'Index', 'arrow'); ?>';
 	$.get(arrow_url + "?&menu_id="+menuid, function(data){
 		$("#current_pos").html(data+'<span id="current_pos_attr"></span>');
 	});

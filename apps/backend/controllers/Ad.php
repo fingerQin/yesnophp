@@ -16,10 +16,10 @@ class AdController extends \common\controllers\Admin {
      */
     public function positionListAction() {
         $keywords  = $this->getString('keywords', '');
-        $page      = $this->getInt(YCore::config('pager'), 1);
+        $page      = $this->getInt(YCore::appconfig('pager'), 1);
         $list      = AdService::getAdPostionList($keywords, $page, 20);
         $paginator = new Paginator($list['total'], 20);
-        $page_html = $paginator->show();
+        $page_html = $paginator->backendPageShow();
         $this->_view->assign('page_html', $page_html);
         $this->_view->assign('keywords', $keywords);
         $this->_view->assign('list', $list['list']);
@@ -83,10 +83,10 @@ class AdController extends \common\controllers\Admin {
         $pos_id    = $this->getInt('pos_id');
         $ad_name   = $this->getString('ad_name', '');
         $display    = $this->getInt('display', -1);
-        $page      = $this->getInt(YCore::config('pager'), 1);
+        $page      = $this->getInt(YCore::appconfig('pager'), 1);
         $list      = AdService::getAdList($pos_id, $ad_name, $display, $page, 10);
         $paginator = new Paginator($list['total'], 10);
-        $page_html = $paginator->show();
+        $page_html = $paginator->backendPageShow();
         $this->_view->assign('page_html', $page_html);
         $this->_view->assign('ad_name', $ad_name);
         $this->_view->assign('display', $display);

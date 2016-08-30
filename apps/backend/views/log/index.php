@@ -86,7 +86,7 @@ Calendar.setup({
     		<td align="center"><?php echo $item['errcode']; ?></td>
     		<td align="left"><?php echo YCore::str_cut($item['content'], 80); ?></td>
     		<td align="center"><?php echo date('Y-m-d H:i:s', $item['created_time']); ?></td>
-    		<td align="center"><a href="javascript:postDialog('viewdetail', '<?php echo YUrl::createAdminUrl('Index', 'Log', 'detail', ['log_id' => $item['log_id']]); ?>', '查看日志详情', 500, 380);">[详情]</a></td>
+    		<td align="center"><a href="javascript:postDialog('viewdetail', '<?php echo YUrl::createBackendUrl('', 'Log', 'detail', ['log_id' => $item['log_id']]); ?>', '查看日志详情', 800, 600);">[详情]</a></td>
     	</tr>
     <?php endforeach; ?>
     </tbody>

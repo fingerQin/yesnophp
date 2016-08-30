@@ -1,6 +1,7 @@
 <?php
+use common\YCore;
 /**
- * 默认controller。
+ * 商城首页。
  * @author winerQin
  * @date 2015-01-28
  */
@@ -8,51 +9,21 @@
 class IndexController extends \common\controllers\Common {
 
 	/**
-	 * 首页。
+	 * 商城首页。
 	 */
 	public function indexAction() {
-		
-	}
-	
-	/**
-	 * 文章分类。
-	 */
-	public function categoryAction() {
-		
-	}
-	
-	/**
-	 * 文章列表。
-	 */
-	public function listAction() {
-		
-	}
-	
-	/**
-	 * 文章详情。
-	 */
-	public function detailAction() {
-		
-	}
-	
-	/**
-	 * 用户登录。
-	 */
-	public function loginAction() {
-		
-	}
-	
-	/**
-	 * 用户注册。
-	 */
-	public function registerAction() {
-		
-	}
-
-	/**
-	 * 用户协议。
-	 */
-	public function termsAction() {
-		
+		$this->end();
+		$code = $this->getString('code', '');
+		$create_home_page_code = YCore::appconfig('create.home.page.code');
+		if ($code != $create_home_page_code) {
+			header('HTTP/1.1 301 Moved Permanently');
+			header('Location:./index.html');
+		} else {
+			$tpl_path = APP_VIEW_PATH . '/index/index.php';
+			$html = $this->_view->render($tpl_path);
+			$index_html = APP_SITE_PATH . DIRECTORY_SEPARATOR . 'index.html';
+			file_put_contents($index_html, $html);
+			echo 'ok';
+		}
 	}
 }

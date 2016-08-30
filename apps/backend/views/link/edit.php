@@ -1,5 +1,6 @@
 <?php
 use common\YUrl;
+use common\YCore;
 require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 ?>
 
@@ -8,7 +9,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 </style>
 
 <div class="common-form">
-<form name="myform" id="myform" action="<?php echo YUrl::createAdminUrl('Index', 'Link', 'edit'); ?>" method="post">
+<form name="myform" id="myform" action="<?php echo YUrl::createBackendUrl('', 'Link', 'edit'); ?>" method="post">
 <table width="100%" class="table_form contentWrap">
       <tr>
         <th width="120">上级菜单：</th>
@@ -57,15 +58,20 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     <tr>
 	    <td width="100%" align="center" colspan="2">
 	       <input type="hidden" name="link_id" value="<?php echo $detail['link_id']; ?>" />
-	       <input id="form_submit" type="button" name="dosubmit" value=" 提交 " />
+	       <input id="form_submit"  type="button" name="dosubmit" class="btn_submit"  value=" 提交 " />
 	    </td>
 	</tr>
 </table>
 
 </form>
 
+<script src="<?php echo YUrl::assets('js', '/AjaxUploader/uploadImage.js'); ?>" ></script>
 <script type="text/javascript">
-<!--
+
+var uploadUrl = '<?php echo YUrl::createBackendUrl('', 'Index', 'upload'); ?>';
+var baseJsUrl = '<?php echo YUrl::assets('js', ''); ?>';
+var filUrl = '<?php echo YCore::config('files_domain_name'); ?>';
+uploadImage(filUrl, baseJsUrl, 'previewImage', 'input_voucher', 120, 120, uploadUrl);
 
 $(document).ready(function(){
 	$('#form_submit').click(function(){
@@ -83,52 +89,8 @@ $(document).ready(function(){
             }
 	    });
 	});
-
-	/* 图片上传 */
-	var previewImage = $('#previewImage');
-	//previewImage.css({"width": "120px", "height": "120px", "border": "2px solid #CCD"});
-	//previewImage.empty();
-	//previewImage.append('<img src="<?php echo YUrl::assets('js', '/AjaxUploader/upload_default.png') ?>">');
-    var uploader = new ss.SimpleUpload({
-      button: previewImage,
-      url: '<?php echo YUrl::createAdminUrl('Index', 'Index', 'upload'); ?>',
-      name: 'uploadfile',
-      multipart: true,
-      hoverClass: 'hover',
-      focusClass: 'focus',
-      responseType: 'json',
-      startXHR: function() {
-          // 开始上传。可以做一些初始化的工作。
-      },
-      onSubmit: function() {
-    	  previewImage.empty();
-    	  previewImage.append('<img src="<?php echo YUrl::assets('js', '/AjaxUploader/upload_loading.png') ?>">');
-        },
-      onComplete: function(filename, response) {
-          // 上传完成。
-          if (!response) {
-        	  previewImage.empty();
-        	  previewImage.append('<img src="<?php echo YUrl::assets('js', '/AjaxUploader/upload_error.png') ?>">');
-              return;
-          }
-          if (response.errcode == 0) {
-              $('#previewImage').empty();
-              $('#previewImage').append('<img style="max-width:119px;max-height:119px;" src="' + response.data[0]['image_url'] + '"/>');
-              $('#input_voucher').val(response.data[0]['relative_image_url']);
-          } else {
-        	  previewImage.empty();
-        	  previewImage.append('<img src="<?php echo YUrl::assets('js', '/AjaxUploader/upload_error.png') ?>">');
-              dialogTips(response.errmsg, 5);
-          }
-        },
-      onError: function() {
-    	  previewImage.empty();
-    	  previewImage.append('<img src="<?php echo YUrl::assets('js', '/AjaxUploader/upload_error.png') ?>">');
-        }
-	});
 });
 
-//-->
 </script>
 
 </body>

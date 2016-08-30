@@ -5,7 +5,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
-    	<a class="add fb" href="javascript:postDialog('addConfig', '<?php echo YUrl::createAdminUrl('Index', 'File', 'add'); ?>', '添加文件', 450, 240)"><em>添加文件</em></a>
+    	<a class="add fb" href="javascript:postDialog('addConfig', '<?php echo YUrl::createBackendUrl('', 'File', 'add'); ?>', '添加文件', 450, 240)"><em>添加文件</em></a>
     	<a href='javascript:;' class="on"><em>文件列表</em></a>    
     </div>
 </div>
@@ -93,7 +93,7 @@ Calendar.setup({
     		<td align="left"><?php echo $item['user_name']; ?></td>
     		<td align="left"><?php echo date('Y-m-d H:i:s', $item['created_time']); ?></td>
     		<td align="center">
-    		<a href="###" onclick="deleteDialog('deleteFile', '<?php echo YUrl::createAdminUrl('Index', 'File', 'delete', ['file_id' => $item['file_id']]); ?>', '图片')" title="删除">删除</a>  
+    		<a href="###" onclick="deleteDialog('deleteFile', '<?php echo YUrl::createBackendUrl('', 'File', 'delete', ['file_id' => $item['file_id']]); ?>', '图片')" title="删除">删除</a>  
     		</td>
     	</tr>
     <?php endforeach; ?>

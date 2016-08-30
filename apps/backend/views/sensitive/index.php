@@ -5,7 +5,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
-    	<a class="add fb" href="javascript:postDialog('addSensitive', '<?php echo YUrl::createAdminUrl('Index', 'Sensitive', 'add'); ?>', '添加敏感词', 350, 120)"><em>添加敏感词</em></a>
+    	<a class="add fb" href="javascript:postDialog('addSensitive', '<?php echo YUrl::createBackendUrl('', 'Sensitive', 'add'); ?>', '添加敏感词', 350, 120)"><em>添加敏感词</em></a>
     	<a href='javascript:;' class="on"><em>敏感词列表</em></a>    
     </div>
 </div>
@@ -55,7 +55,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     		<td align="center"><?php echo date('Y-m-d H:i:s', $item['created_time']); ?></td>
     		<td align="center">
     		<a href="###" onclick="edit(<?php echo $item['id'] ?>, '<?php echo $item['val'] ?>')" title="修改">修改</a> |  
-    		<a href="###" onclick="deleteDialog('deleteSensitive', '<?php echo YUrl::createAdminUrl('Index', 'Sensitive', 'delete', ['id' => $item['id']]); ?>', '<?php echo $item['val'] ?>')" title="删除">删除</a>  
+    		<a href="###" onclick="deleteDialog('deleteSensitive', '<?php echo YUrl::createBackendUrl('', 'Sensitive', 'delete', ['id' => $item['id']]); ?>', '<?php echo $item['val'] ?>')" title="删除">删除</a>  
     		</td>
     	</tr>
     <?php endforeach; ?>
@@ -73,7 +73,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 <script type="text/javascript">
 function edit(id, name) {
 	var title = '修改『' + name + '』';
-	var page_url = "<?php echo YUrl::createAdminUrl('Index', 'Sensitive', 'edit'); ?>?id="+id;
+	var page_url = "<?php echo YUrl::createBackendUrl('', 'Sensitive', 'edit'); ?>?id="+id;
 	postDialog('editSensitive', page_url, title, 350, 120);
 }
 </script>

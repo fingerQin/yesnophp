@@ -10,7 +10,7 @@ namespace services;
 use models\Log;
 use models\Admin;
 use common\YCore;
-use models\Users;
+use models\User;
 class LogService extends BaseService {
 
     /**
@@ -43,7 +43,7 @@ class LogService extends BaseService {
                 $admin_detail = $admin_model->getUserOfByUsername($options['log_user']);
                 $user_id      = $admin_detail ? $admin_detail['admin_id'] : -1;
             } else {
-                $user_model   = new Users();
+                $user_model   = new User();
                 $user_detail  = $user_model->getUserOfByUsername($options['log_user']);
                 $user_id      = $user_detail ? $user_detail['user_id'] : -1;
             }
@@ -52,7 +52,7 @@ class LogService extends BaseService {
         $endtime   = 0;
         if (strlen($options['starttime']) > 0 && strlen($options['endtime']) > 0) {
             if ($options['starttime'] > $options['endtime']) {
-                YCore::throw_exception(-1, '开始时间必须小于等于结束时间');
+                YCore::exception(-1, '开始时间必须小于等于结束时间');
             }
             $starttime = strtotime($options['starttime']);
             $endtime   = strtotime($options['endtime']);
@@ -71,7 +71,7 @@ class LogService extends BaseService {
         $log_model = new Log();
         $detail = $log_model->fetchOne([], ['log_id' => $log_id]);
         if (empty($detail)) {
-            YCore::throw_exception(-1, '日志不存在或已经删除');
+            YCore::exception(-1, '日志不存在或已经删除');
         }
         return $detail;
     }

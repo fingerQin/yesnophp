@@ -5,7 +5,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
-    	<a class="add fb" href="javascript:postDialog('addNews', '<?php echo YUrl::createAdminUrl('Index', 'News', 'add'); ?>', '添加文章', 800, 500, '', 'yes')"><em>添加文章</em></a>
+    	<a class="add fb" href="javascript:postDialog('addNews', '<?php echo YUrl::createBackendUrl('', 'News', 'add'); ?>', '添加文章', 800, 500, '', 'yes')"><em>添加文章</em></a>
     	<a href='javascript:;' class="on"><em>文章列表</em></a>    
     </div>
 </div>
@@ -87,7 +87,7 @@ Calendar.setup({
     		<td align="left"><?php echo date('Y-m-d H:i:s', $item['created_time']); ?></td>
     		<td align="center">
     		<a href="###" onclick="edit(<?php echo $item['news_id'] ?>, '<?php echo $item['title'] ?>')" title="修改">修改</a> |  
-    		<a href="###" onclick="deleteDialog('deleteDelete', '<?php echo YUrl::createAdminUrl('Index', 'News', 'delete', ['news_id' => $item['news_id']]); ?>', '<?php echo $item['title'] ?>')" title="删除">删除</a>  
+    		<a href="###" onclick="deleteDialog('deleteDelete', '<?php echo YUrl::createBackendUrl('', 'News', 'delete', ['news_id' => $item['news_id']]); ?>', '<?php echo $item['title'] ?>')" title="删除">删除</a>  
     		</td>
     	</tr>
     <?php endforeach; ?>
@@ -105,7 +105,7 @@ Calendar.setup({
 <script type="text/javascript">
 function edit(id, name) {
 	var title = '修改『' + name + '』';
-	var page_url = "<?php echo YUrl::createAdminUrl('Index', 'News', 'edit'); ?>?news_id="+id;
+	var page_url = "<?php echo YUrl::createBackendUrl('', 'News', 'edit'); ?>?news_id="+id;
 	postDialog('editNews', page_url, title, 800, 500, '', 'yes');
 }
 </script>

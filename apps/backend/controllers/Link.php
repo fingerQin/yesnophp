@@ -18,10 +18,10 @@ class LinkController extends \common\controllers\Admin {
     public function indexAction() {
         $keyword   = $this->getString('keyword', '');
         $cat_id    = $this->getString('cat_id', -1);
-        $page      = $this->getInt(YCore::config('pager'), 1);
+        $page      = $this->getInt(YCore::appconfig('pager'), 1);
         $list      = LinkService::getLinkList($keyword, $cat_id, $page, 20);
         $paginator = new Paginator($list['total'], 20);
-        $page_html = $paginator->show();
+        $page_html = $paginator->backendPageShow();
         $this->_view->assign('page_html', $page_html);
         $this->_view->assign('keyword', $keyword);
         $this->_view->assign('cat_id', $cat_id);
@@ -47,7 +47,7 @@ class LinkController extends \common\controllers\Admin {
         }
         $list = CategoryService::getCategoryList(0, 2);
         if (empty($list)) {
-            YCore::throw_exception(-1, '请立即创建友情链接分类');
+            YCore::exception(-1, '请立即创建友情链接分类');
         }
         $this->_view->assign('cat_list', $list);
     }
@@ -65,9 +65,9 @@ class LinkController extends \common\controllers\Admin {
             $display   = $this->getInt('display');
             $status = LinkService::editLink($this->admin_id, $link_id, $link_name, $link_url, $cat_id, $image_url, $display);
             if ($status) {
-                $this->json($status, '添加成功');
+                $this->json($status, '修改成功');
             } else {
-                $this->json($status, '添加失败');
+                $this->json($status, '修改失败');
             }
         }
         $link_id = $this->getInt('link_id');
@@ -75,7 +75,7 @@ class LinkController extends \common\controllers\Admin {
         $this->_view->assign('detail', $detail);
         $list = CategoryService::getCategoryList(0, 2);
         if (empty($list)) {
-            YCore::throw_exception(-1, '请立即创建友情链接分类');
+            YCore::exception(-1, '请立即创建友情链接分类');
         }
         $this->_view->assign('cat_list', $list);
     }

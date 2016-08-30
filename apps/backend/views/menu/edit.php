@@ -8,7 +8,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 </style>
 
 <div class="common-form">
-<form name="myform" id="myform" action="<?php echo YUrl::createAdminUrl('Index', 'Menu', 'add'); ?>" method="post">
+<form name="myform" id="myform" action="<?php echo YUrl::createBackendUrl('', 'Menu', 'add'); ?>" method="post">
 <table width="100%" class="table_form contentWrap">
       <tr>
         <th width="120">上级菜单：</th>
@@ -61,7 +61,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     <tr>
 	    <td width="100%" align="center" colspan="2">
 	       <input type="hidden" name="menu_id" value="<?php echo $detail['menu_id']; ?>" />
-	       <input id="form_submit" type="button" name="dosubmit" value=" 提交 " />
+	       <input id="form_submit"  type="button" name="dosubmit" class="btn_submit"  value=" 提交 " />
 	    </td>
 	</tr>
 </table>

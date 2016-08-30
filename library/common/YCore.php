@@ -6,7 +6,150 @@
  */
 namespace common;
 
+use services\ConfigService;
+use services\DictService;
+use winer\Validator;
+use winer\WeChat\WeChatApp;
 class YCore {
+    
+	/**
+	 * 定义一个PHP set_error_handler 的错误回调函数。
+	 * @param number $errno 错误的级别。
+	 * @param string $errstr 错误的信息。
+	 * @param string $errfile 发生错误的文件名。
+	 * @param number $errline 错误发生的行号。
+	 * @return void
+	 */
+	public static function errot_handler($errno, $errstr, $errfile, $errline) {
+		$trace = "error:{$errno}\nerrstr:{$errstr}\nerrfile:{$errfile}\nerrline:{$errline}";
+		YCore::log(\models\Log::LOG_TYPE_BUSY, $trace, 0, 0, -1);
+		self::exception(-1, '服务器繁忙,请稍候重试');
+	}
+
+	/**
+	 * 获取WeChatAPP对象。
+	 * @return \winer\WeChat;
+	 */
+	public static function getWeChatApp() {
+		$name = 'system_wechat_app_ojb';
+		if (\Yaf\Registry::has($name)) {
+			return \Yaf\Registry::get($name);
+		}
+		$config = new \Yaf\Config\Ini(APP_PATH .DIRECTORY_SEPARATOR . '/conf/wxpay/wechat.ini', APP_ENVIRON);
+		$options = $config->wechat->toArray();
+		$app = new WeChatApp($options);
+		\Yaf\Registry::set($name, $app);
+		return $app;
+	}
+
+	/**
+	 * 从数组中读取一个数组。
+	 * @param array $data 数组。
+	 * @param string $name 参数名称。
+	 * @param array $default_value 默认值。
+	 * @return number
+	 */
+	public static function getArray($data, $name, $default_value = null) {
+		if (empty($data) || !is_array($data)) {
+			self::exception(-1, '值为空');
+		}
+		if (!isset($data[$name])) {
+			if (is_null($default_value)) {
+				YCore::exception(-1, "{$name} cannot be empty");
+			} else if (!Validator::is_array($default_value)) {
+				YCore::exception(-1, "{$name} of the default value is not a array");
+			} else {
+				return $default_value;
+			}
+		} else {
+			$value = $data[$name];
+			if (!Validator::is_array($value)) {
+				YCore::exception(5009003, "{$name} value is not a array");
+			} else {
+				return $value;
+			}
+		}
+	}
+
+	/**
+	 * 从数组中读取一个整型数值。
+	 * @param array $data 数组。
+	 * @param string $name 参数名称。
+	 * @param number $default_value 默认值。
+	 * @return number
+	 */
+	public static function getInt($data, $name, $default_value = null) {
+		if (empty($data) || !is_array($data)) {
+			self::exception(-1, '值为空');
+		}
+		if (!isset($data[$name])) {
+			if (is_null($default_value)) {
+				YCore::exception(-1, "{$name} cannot be empty");
+			} else if (!Validator::is_integer($default_value)) {
+				YCore::exception(-1, "{$name} of the default value is not a integer");
+			} else {
+				return $default_value;
+			}
+		} else {
+			$value = $data[$name];
+			if (!Validator::is_integer($value)) {
+				YCore::exception(5009003, "{$name} value is not a integer");
+			} else {
+				return $value;
+			}
+		}
+	}
+
+	/**
+	 * 从数组中读取一个字符串数值。
+	 * @param array $data 数组。
+	 * @param string $name 参数名称。
+	 * @param string $default_value 默认值。
+	 * @return number
+	 */
+	public static function getString($data, $name, $default_value = null) {
+		if (empty($data) || !is_array($data)) {
+			self::exception(-1, '值为空');
+		}
+		if (!isset($data[$name])) {
+			if (is_null($default_value)) {
+				YCore::exception(-1, "{$name} cannot be empty");
+			} else {
+				return $default_value;
+			}
+		} else {
+			return $data[$name];
+		}
+	}
+
+	/**
+	 * 从数组中读取一个整型数值。
+	 * @param array $data 数组。
+	 * @param string $name 参数名称。
+	 * @param float $default_value 默认值。
+	 * @return float
+	 */
+	public static function getFloat($data, $name, $default_value = null) {
+		if (empty($data) || !is_array($data)) {
+			self::exception(-1, '值为空');
+		}
+		if (!isset($data[$name])) {
+			if (is_null($default_value)) {
+				YCore::exception(-1, "{$name} cannot be empty");
+			} else if (!Validator::is_float($default_value)) {
+				YCore::exception(-1, "{$name} of the default value is not a float");
+			} else {
+				return $default_value;
+			}
+		} else {
+			$value = $data[$name];
+			if (!Validator::is_integer($value)) {
+				YCore::exception(5009003, "{$name} value is not a float");
+			} else {
+				return $value;
+			}
+		}
+	}
 
     /**
      * 获取系统缓存对象。
@@ -28,6 +171,103 @@ class YCore {
             $redis->select($redis_index);
             \Yaf\Registry::set('redis', $redis);
             return $redis;
+        }
+    }
+
+    /**
+     * 服务降级处理。
+     * -- 位置说明：
+     * -- register : 注册
+     * -- login : 登录
+     * -- findpwd : 找回密码
+     * -- editpwd : 修改密码
+     * -- pay : 支付通道
+     * -- sms : 短信通道
+     * -- email : 邮件通道
+     * -- appraise : 评价通道
+     * -- upload : 上传通道
+     * -- orderview : 订单查看
+     * -- withdrawal : 提现通道
+     * -- api : API入口通道
+     * -- wechat : 微信入口通道
+     * -- all : 整站
+     * @param string $location 被降级位置。
+     * @return void
+     */
+    public static function serviceDegradation($location) {
+        $system_status = self::config('system_status');
+        $system_service_level = self::config('system_service_level');
+        if (!$system_status) {
+            // @todo 如果根据页面不同进行跳转。
+            self::exception(-1, '系统暂时关闭');
+        }
+        $arr_level = explode(',', $system_service_level);
+        foreach ($arr_level as $key => $level) {
+            $arr_level[$key] = trim($level);
+        }
+        switch ($location) {
+            case 'all':
+                $server_level = 8192;
+                $server_msg   = '服务器维护中';
+                break;
+            case 'register':
+                $server_level = 1;
+                $server_msg   = '注册功能已关闭';
+                break;
+            case 'login':
+                $server_level = 2;
+                $server_msg   = '登录功能已关闭';
+                break;
+            case 'findpwd':
+                $server_level = 4;
+                $server_msg   = '找回密码功能已关闭';
+                break;
+            case 'editpwd':
+                $server_level = 8;
+                $server_msg   = '密码修改功能已关闭';
+                break;
+            case 'pay':
+                $server_level = 16;
+                $server_msg   = '支付功能已关闭';
+                break;
+            case 'sms':
+                $server_level = 32;
+                $server_msg   = '短信功能已关闭';
+                break;
+            case 'email':
+                $server_level = 64;
+                $server_msg   = '邮件功能已关闭';
+                break;
+            case 'appraise':
+                $server_level = 128;
+                $server_msg   = '评价功能已关闭';
+                break;
+            case 'upload':
+                $server_level = 256;
+                $server_msg   = '上传功能已关闭';
+                break;
+            case 'orderview':
+                $server_level = 512;
+                $server_msg   = '订单查看功能已关闭';
+                break;
+            case 'withdrawal':
+                $server_level = 1024;
+                $server_msg   = '提现功能已关闭';
+                break;
+            case 'api':
+                $server_level = 2048;
+                $server_msg   = 'API接口功能已关闭';
+                break;
+            case 'wechat':
+                $server_level = 4096;
+                $server_msg   = '微信应用已关闭';
+                break;
+            default:
+                $server_level = 0;
+                break;
+        }
+        if (in_array($server_level, $arr_level)) {
+            self::exception(-1, $server_msg);
         }
     }
 
@@ -58,35 +298,12 @@ class YCore {
 
 	/**
 	 * 获取系统字典数据。
-	 * @param string $dict_name 字典名称。
+	 * @param string $dict_type_code 字典类型编码。
+	 * @param string $dict_code 字典编码。
 	 * @return array
 	 */
-	public static function dict($dict_name) {
-	    $dict_type_model = new \models\DictType();
-	    $dict_type = $dict_type_model->fetchOne([], ['type_code' => $dict_name, 'status' => 1]);
-	    if (empty($dict_type)) {
-	        self::throw_exception(-1, "系统字典[{$dict_name}]未设置");
-	    }
-		$dict_model = new \models\Dict();
-		$columns = [
-		    'dict_code',
-		    'dict_name'
-		];
-		$where = [
-		    'dict_type_id' => $dict_type['dict_type_id'], 
-		    'status'       => 1
-		];
-		$dict_list = $dict_model->fetchAll($columns, $where, 0, 'listorder ASC');
-		if (is_null($dict_list)) {
-			self::throw_exception(3001201, "系统字典[{$dict_name}]的字典值未设置");
-		} else {
-		    $data = [];
-		    foreach ($dict_list as $dict) {
-		        $data[$dict['dict_code']] = $dict['dict_name'];
-		    }
-		    unset($dict_list);
-			return $data;
-		}
+	public static function dict($dict_type_code, $dict_code = '') {
+	    return DictService::getSystemDict($dict_type_code, $dict_code);
 	}
 
 	/**
@@ -95,18 +312,28 @@ class YCore {
 	 * @param string $default_value 如果取不到时的默认值。注意数据类型。
 	 * @return string
 	 */
-	public static function sys_config($cname, $default_value = null) {
-		$config_model = new \models\Config();
-		$config_value = $config_model->getValue($cname);
-		if (is_null($config_value)) {
+	public static function config($cname, $default_value = null) {
+	    $configs = ConfigService::getAllConfig();
+		if (!isset($configs[$cname])) {
 			if (is_null($default_value)) {
-				self::throw_exception(3001200, "系统配置（{$cname}）未设置");
+				self::exception(3001200, "系统配置（{$cname}）未设置");
 			} else {
 				return $default_value;
 			}
 		} else {
-			return $config_value;
+			return $configs[$cname];
 		}
+	}
+
+	/**
+	 * 设置系统配置表的值。
+	 * -- 1、主要用于一些需要程序运行后记录值。
+	 * @param string $cname 配置name。
+	 * @param string $value 配置值。
+	 * @return boolean
+	 */
+	public static function setconfig($cname, $value) {
+	    return ConfigService::updateConfigValue($cname, $value);
 	}
 
 	/**
@@ -118,7 +345,7 @@ class YCore {
 	 * @param int $errcode 错误编号。
 	 * @return void
 	 */
-	public static function yaf_log($log_type, $log_content, $user_id = 0, $log_time = 0, $errcode = 0) {
+	public static function log($log_type, $log_content, $user_id = 0, $log_time = 0, $errcode = 0) {
 		$model = new \models\Log();
 		$log_time = $log_time > 0 ? $log_time : $_SERVER['REQUEST_TIME'];
 		$model->addLog($log_type, $log_content, $user_id, $log_time, $errcode);
@@ -129,7 +356,7 @@ class YCore {
 	 * @param mixed $var
 	 * @return string
 	 */
-	public static function  export($var) {
+	public static function export($var) {
 		return "<?php\nreturn " . var_export($var, true) . ";";
 	}
 
@@ -223,7 +450,7 @@ class YCore {
 	 * @param string $val 当值不存在返回此值。
 	 * @return mixed
 	 */
-	public static function config($key, $val = null) {
+	public static function appconfig($key, $val = null) {
 		$config = \Yaf\Registry::get("config");
 		$cval = $config->get($key);
 		if (is_string($cval)) {
@@ -242,7 +469,7 @@ class YCore {
 	 * @param string $log_data 发生异常时，涉及到的日志数据（用于分析异常）。
 	 * @throws Exception
 	 */
-	public static function throw_exception($err_code, $err_msg, $log_data = '') {
+	public static function exception($err_code, $err_msg, $log_data = '') {
 		throw new \Exception($err_msg, $err_code);
 	}
 
@@ -486,7 +713,7 @@ class YCore {
 	 */
 	public static function sys_auth($string, $operation = 'ENCODE', $key = '', $expiry = 0) {
 		$key_length = 4;
-		$key = md5($key != '' ? $key : self::config('authkey'));
+		$key = md5($key != '' ? $key : self::appconfig('authkey'));
 		$fixedkey = md5($key);
 		$egiskeys = md5(substr($fixedkey, 16, 16));
 		$runtokey = $key_length ? ($operation == 'ENCODE' ? substr(md5(microtime(true)), -$key_length) : substr($string, 0, $key_length)) : '';
@@ -582,80 +809,6 @@ class YCore {
 				] 
 		]);
 		return @file_get_contents($url, 0, $stream);
-	}
-
-	/**
-	 * 转换目录下面的所有文件编码格式
-	 * @param string $in_charset 原字符集
-	 * @param string $out_charset 目标字符集
-	 * @param string $dir 目录地址
-	 * @param string $fileexts 转换的文件格式
-	 * @return string 如果原字符集和目标字符集相同则返回false，否则为true
-	 */
-	public static function dir_iconv($in_charset, $out_charset, $dir, $fileexts = 'php|html|htm|shtml|shtm|js|txt|xml') {
-		if ($in_charset == $out_charset) {
-			return false;
-		}
-		$list = self::dir_list($dir);
-		foreach ($list as $v) {
-			if (pathinfo($v, PATHINFO_EXTENSION) == $fileexts && is_file($v)) {
-				file_put_contents($v, iconv($in_charset, $out_charset, file_get_contents($v)));
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * 列出目录下所有文件
-	 *
-	 * @param string $path 路径
-	 * @param string $exts 扩展名
-	 * @param array $list 增加的文件列表
-	 * @return array 所有满足条件的文件
-	 */
-	public static function dir_list($path, $exts = '', $list = []) {
-		$path = self::dir_path($path);
-		$files = glob($path . '*');
-		foreach ($files as $v) {
-			if (!$exts || pathinfo($v, PATHINFO_EXTENSION) == $exts) {
-				$list[] = $v;
-				if (is_dir($v)) {
-					$list = self::dir_list($v, $exts, $list);
-				}
-			}
-		}
-		return $list;
-	}
-
-	/**
-	 * 删除目录及目录下面的所有文件
-	 *
-	 * @param   string  $dir        路径
-	 * @return  bool    如果成功则返回 TRUE，失败则返回 FALSE
-	 */
-	public static function dir_delete($dir) {
-		$dir = self::dir_path($dir);
-		if (!is_dir($dir)) {
-			return FALSE;
-		}
-		$list = glob($dir . '*');
-		foreach ($list as $v) {
-			is_dir($v) ? self::dir_delete($v) : @unlink($v);
-		}
-		return @rmdir($dir);
-	}
-
-	/**
-	 * 转化 \ 为 /
-	 *
-	 * @param   string  $path   路径
-	 * @return  string  路径
-	 */
-	public static function dir_path($path) {
-		$path = str_replace('\\', '/', $path);
-		if (substr($path, -1) != '/')
-			$path = $path . '/';
-		return $path;
 	}
 
 	/**
@@ -819,5 +972,212 @@ class YCore {
 	        $r = $a;
 	    }
 	    return $r;
+	}
+
+	/**
+	 * xss过滤函数
+	 * @param $string
+	 * @return string
+	 */
+	public static function remove_xss($string) {
+	    $string = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]+/S', '', $string);
+	    $parm1 = [
+	        'javascript',
+	        'vbscript',
+	        'expression',
+	        'applet',
+	        'meta',
+	        'xml',
+	        'blink',
+	        'link',
+	        'script',
+	        'embed',
+	        'object',
+	        'iframe',
+	        'frame',
+	        'frameset',
+	        'ilayer',
+	        'layer',
+	        'bgsound',
+	        'title',
+	        'base'
+	    ];
+	    $parm2 = [
+	        'onabort',
+	        'onactivate',
+	        'onafterprint',
+	        'onafterupdate',
+	        'onbeforeactivate',
+	        'onbeforecopy',
+	        'onbeforecut',
+	        'onbeforedeactivate',
+	        'onbeforeeditfocus',
+	        'onbeforepaste',
+	        'onbeforeprint',
+	        'onbeforeunload',
+	        'onbeforeupdate',
+	        'onblur',
+	        'onbounce',
+	        'oncellchange',
+	        'onchange',
+	        'onclick',
+	        'oncontextmenu',
+	        'oncontrolselect',
+	        'oncopy',
+	        'oncut',
+	        'ondataavailable',
+	        'ondatasetchanged',
+	        'ondatasetcomplete',
+	        'ondblclick',
+	        'ondeactivate',
+	        'ondrag',
+	        'ondragend',
+	        'ondragenter',
+	        'ondragleave',
+	        'ondragover',
+	        'ondragstart',
+	        'ondrop',
+	        'onerror',
+	        'onerrorupdate',
+	        'onfilterchange',
+	        'onfinish',
+	        'onfocus',
+	        'onfocusin',
+	        'onfocusout',
+	        'onhelp',
+	        'onkeydown',
+	        'onkeypress',
+	        'onkeyup',
+	        'onlayoutcomplete',
+	        'onload',
+	        'onlosecapture',
+	        'onmousedown',
+	        'onmouseenter',
+	        'onmouseleave',
+	        'onmousemove',
+	        'onmouseout',
+	        'onmouseover',
+	        'onmouseup',
+	        'onmousewheel',
+	        'onmove',
+	        'onmoveend',
+	        'onmovestart',
+	        'onpaste',
+	        'onpropertychange',
+	        'onreadystatechange',
+	        'onreset',
+	        'onresize',
+	        'onresizeend',
+	        'onresizestart',
+	        'onrowenter',
+	        'onrowexit',
+	        'onrowsdelete',
+	        'onrowsinserted',
+	        'onscroll',
+	        'onselect',
+	        'onselectionchange',
+	        'onselectstart',
+	        'onstart',
+	        'onstop',
+	        'onsubmit',
+	        'onunload'
+	    ];
+	    $parm = array_merge($parm1, $parm2);
+	    for ($i = 0; $i < sizeof($parm); $i++) {
+	        $pattern = '/';
+	        for ($j = 0; $j < strlen($parm[$i]); $j++) {
+	            if ($j > 0) {
+	                $pattern .= '(';
+	                $pattern .= '(&#[x|X]0([9][a][b]);?)?';
+	                $pattern .= '|(&#0([9][10][13]);?)?';
+	                $pattern .= ')?';
+	            }
+	            $pattern .= $parm[$i][$j];
+	        }
+	        $pattern .= '/i';
+	        $string = preg_replace($pattern, '', $string);
+	    }
+	    return $string;
+	}
+	
+	/**
+	 * 转义 javascript 代码标记
+	 * @param $str
+	 * @return mixed
+	 */
+	public static function trim_script($str) {
+	    if (is_array($str)) {
+	        foreach ($str as $key => $val) {
+	            $str[$key] = self::trim_script($val);
+	        }
+	    } else {
+	        $str = preg_replace('/\<([\/]?)script([^\>]*?)\>/si', '&lt;\\1script\\2&gt;', $str);
+	        $str = preg_replace('/\<([\/]?)iframe([^\>]*?)\>/si', '&lt;\\1iframe\\2&gt;', $str);
+	        $str = preg_replace('/\<([\/]?)frame([^\>]*?)\>/si', '&lt;\\1frame\\2&gt;', $str);
+	        $str = str_replace('javascript:', 'javascript：', $str);
+	    }
+	    return $str;
+	}
+	
+	/**
+	 * 安全过滤函数
+	 * @param $string
+	 * @return string
+	 */
+	public static function  safe_replace($string) {
+	    $string = str_replace('%20', '', $string);
+	    $string = str_replace('%27', '', $string);
+	    $string = str_replace('%2527', '', $string);
+	    $string = str_replace('*', '', $string);
+	    $string = str_replace('"', '&quot;', $string);
+	    $string = str_replace("'", '', $string);
+	    $string = str_replace('"', '', $string);
+	    $string = str_replace(';', '', $string);
+	    $string = str_replace('<', '&lt;', $string);
+	    $string = str_replace('>', '&gt;', $string);
+	    $string = str_replace("{", '', $string);
+	    $string = str_replace('}', '', $string);
+	    $string = str_replace('\\', '', $string);
+	    return $string;
+	}
+	
+	/**
+	 * 将文本格式成适合js输出的字符串
+	 * @param string $string 需要处理的字符串
+	 * @param intval $isjs 是否执行字符串格式化，默认为执行
+	 * @return string 处理后的字符串
+	 */
+	public static function  format_js($string, $isjs = 1) {
+	    $string = addslashes(str_replace([
+	        "\r",
+	        "\n",
+	        "\t"
+	    ], [
+	        '',
+	        '',
+	        ''
+	    ], $string));
+	    return $isjs ? 'document.write("' . $string . '");' : $string;
+	}
+
+	/**
+	 * 移除两个数组中相同的元素并返回不同部分的数组。
+	 * @param array $array1
+	 * @param array $array2
+	 * @return array
+	 */
+	public static function array_remove_equal(array $array1, array $array2) {
+	    $diff_array = [];
+	    foreach ($array1 as $val) {
+	        if (!in_array($val, $array2)) {
+	            $diff_array[] = $val;
+	        }
+	    }
+	    foreach ($array2 as $val) {
+	        if (!in_array($val, $array1)) {
+	            $diff_array[] = $val;
+	        }
+	    }
+	    return $diff_array;
 	}
 }

@@ -1,0 +1,328 @@
+body {
+	font:12px/150% Arial,Verdana,"\5b8b\4f53";
+	color:#666;
+	background:#fff;
+	_background-image:url(about:blank);
+	_background-attachment:fixed;
+}
+a, address, b, big, blockquote, body, center, cite, code, dd, del, div, dl, dt, em, fieldset, font, form, h1, h2, h3, h4, h5, h6, html, i, iframe, img, ins, label, legend, li, ol, p, pre, small, span, strong, u, ul {
+	margin: 0;
+    padding: 0;
+}
+.form .label, .form button, .form input, .form label, .form select, .form textarea {
+	float: left;
+    font-size: 12px;
+}
+.form label {
+	float: none;
+}
+:focus {
+	outline: 0
+}
+ol, ul {
+    list-style: none;
+}
+h4, h5, h6 {
+	font-size: 12px;
+}
+a {
+    color: #666;
+    text-decoration: none;
+}
+a:hover {
+	color: #E4393C;
+    text-decoration: underline;
+}
+a img {
+    border: 0;
+}
+img {
+    vertical-align: middle;
+}
+table {
+	empty-cells: show
+}
+
+ins {
+	text-decoration: none
+}
+
+del {
+	text-decoration: line-through
+}
+em {
+	font-style: normal
+}
+.w {
+	width: 990px;
+    margin: 0 auto;
+}
+.m, .mb, .mc, .mt, .sm, .smb, .smc, .smt {
+	overflow: hidden;
+    zoom: 1;
+}
+.hide {
+    display: none;
+}
+#logo {
+    position: relative;
+    width: 300px;
+    margin: 10px 0 0;
+    height: 60px;
+}
+#logo b {
+    display: block;
+    width: 110px;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    top: 10px;
+    background: url(l-icon.png) no-repeat;
+}
+.login-wrap {
+	position: relative;
+    height: 475px;
+    margin: 10px 0 20px;
+    z-index: 5;
+}
+.login-wrap .login-form {
+	float:right;top:40px
+}
+.login-form {
+	position: relative;
+    z-index: 4;
+    width: 306px;
+    background: #fff;
+    padding: 20px;
+    overflow: visible;
+}
+.login-form .login-box .mt {
+	display: inline-block;
+    display: block;
+    width: 306px;
+    overflow: visible;
+    height: 27px;
+}
+.login-form .login-box .mt h1 {
+    position: relative;
+    height: 27px;
+    line-height: 27px;
+    top: -5px;
+    float: left;
+    color: rgb(102, 102, 102);
+    font-family: "microsoft yahei";
+    font-size: 20px;
+}
+.login-form .login-box .mt .extra-r {
+	float: right;
+}
+.login-form .login-box .mt .regist-link {
+	color: #b61d1d;
+    font-size: 14px;
+}
+.login-form .login-box .mt .regist-link a {
+	color: #b61d1d;
+}
+.login-form .login-box .mt .regist-link b {
+	display: inline-block;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+    background: url(pwd-icons-new.png) -104px -75px no-repeat;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.login-form .msg-wrap {
+	min-height: 31px;
+    height: auto!important;
+    height: 31px;
+    margin: 2px 0 5px;
+}
+.login-form .msg-warn {
+	position: relative;
+    background: #fff6d2;
+    color: #666;
+    border: 1px solid #ffe57d;
+    padding: 3px 10px 3px 40px;
+    line-height: 18px;
+    height: 18px;
+}
+.login-form .msg-warn b {
+	position: absolute;
+    top: 50%;
+    left: 10px;
+    display: block;
+    margin-top: -8px;
+    width: 16px;
+    height: 17px;
+    overflow: hidden;
+    background: url(pwd-icons-new.png) -104px -22px no-repeat;
+}
+.login-form .msg-error {
+	position: relative;
+    background: #ffebeb;
+    color: #e4393c;
+    border: 1px solid #e4393c;
+    padding: 3px 10px 3px 40px;
+    line-height: 18px;
+    min-height: 18px;
+    _height: 18px;
+}
+.login-form .msg-error b {
+	position: absolute;
+    top: 50%;
+    left: 10px;
+    display: block;
+    margin-top: -8px;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+    background: url(pwd-icons-new.png) -104px -49px no-repeat;
+}
+.login-form .login-box .mc {
+	overflow: visible;
+}
+.form .item-fore1 {
+	z-index: 6;
+}
+.form .item-fore1, .form .item-fore2 {
+	border: 1px solid #bdbdbd;
+    height: 38px;
+    width: 304px;
+}
+.form .item .name-label {
+	background-position: 0 0;
+}
+.form .item .login-label {
+	position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    width: 38px;
+    height: 38px;
+    border-right: 1px solid #bdbdbd;
+    background: url(pwd-icons-new.png) no-repeat;
+}
+.form .item {
+	position: relative;
+    margin-bottom: 20px;
+    z-index: 1;
+}
+.form .itxt {
+	line-height: 18px;
+    height: 18px;
+    border: 0;
+    padding: 10px 0 10px 50px;
+    width: 254px;
+    float: none;
+    overflow: hidden;
+    font-size: 14px;
+    font-family: '\5b8b\4f53';
+}
+.login-form .login-box .coagent {
+	line-height: 22px;
+    height: auto;
+}
+.login-form .login-box .coagent h5 {
+	font-weight: 400;
+    color: #999;
+}
+.login-form .login-box .coagent ul {
+	display: inline-block;
+    display: block;
+}
+.login-form .login-box .coagent li {
+	float: left;
+}
+.login-form .qrcode-login {
+	display: none;
+    text-align: center;
+}
+.login-form .btn-2qrcode {
+	background-position: -60px 0;
+}
+.login-form .btn-2login, .login-form .btn-2qrcode {
+	display: block;
+    width: 60px;
+    height: 60px;
+    line-height: 99em;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background: url(login-qricon-01.png) no-repeat;
+    -webkit-transition: background-position .2s cubic-bezier(0.25,.5,.5,.9);
+    -moz-transition: background-position .2s cubic-bezier(0.25,.5,.5,.9);
+    transition: background-position .2s cubic-bezier(0.25,.5,.5,.9);
+}
+.login-wrap .login-banner {
+	position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 475px;
+    background: #e93854;
+}
+.login-wrap .i-inner {
+	position: relative;
+    z-index: 3;
+    height: 475px;
+}
+.btn-img, .button {
+	display: inline-block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-align: center;
+    cursor: pointer;
+}
+.login-form .login-box .login-btn {
+	border: 1px solid #cb2a2d;
+    margin: 0 auto;
+    height: 33px;
+    position: relative;
+}
+.login-form .login-box .login-btn .btn-img {
+	border: 1px solid #e85356;
+    display: block;
+    width: 302px;
+    background: #e4393c;
+    height: 31px;
+    line-height: 31px;
+    color: #fff;
+    font-size: 20px;
+    font-family: 'Microsoft YaHei';
+}
+.login-form .login-box .login-btn .btn-img:hover {
+	text-decoration: none;
+}
+.form .jdcheckbox, .form .jdradio {
+	float: none;
+    vertical-align: middle;
+    _vertical-align: -1px;
+    margin: 0 3px 0 0;
+    padding: 0;
+}
+.login-form .login-box .safe {
+	position: relative;
+	color: #666
+}
+.login-form .login-box .safe span {
+	margin-right: 15px
+}
+.login-form .login-box .safe .forget-pw-safe {
+	position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0;
+}
+#footer-2013 {
+	padding-bottom: 30px;
+    text-align: center;
+}
+#footer-2013 .links a, #footer-2013 .links span {
+	margin: 0 10px;
+}
+#footer-2013 .copyright {
+	margin: 10px 0;
+}

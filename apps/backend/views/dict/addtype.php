@@ -8,7 +8,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 </style>
 
 <div class="pad_10">
-<form action="<?php echo YUrl::createAdminUrl('Index', 'Dict', 'addType'); ?>" method="post" name="dialog_form" id="myform">
+<form action="<?php echo YUrl::createBackendUrl('', 'Dict', 'addType'); ?>" method="post" name="dialog_form" id="myform">
 <table cellpadding="2" cellspacing="1" class="table_form" width="100%">
 	<tr>
 		<th width="100">字典名称：</th>
@@ -23,7 +23,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 		<td><textarea name="description" id="dict_description" style="width:292px;" rows="5" cols="50"></textarea></td>
 	</tr>
 	<tr>
-	   <td width="100%" align="center" colspan="2"><input id="form_submit" type="button" name="dosubmit" value=" 提交 " /></td>
+	   <td width="100%" align="center" colspan="2"><input id="form_submit"  type="button" name="dosubmit" class="btn_submit"  value=" 提交 " /></td>
 	</tr>
 </table>
 

@@ -11,6 +11,10 @@ use services\GameService;
  */
 
 class TestController extends \common\controllers\Admin {
+    
+    public function mdAction() {
+        
+    }
 
     public function indexAction() {
         $lock_key = 'user_key';

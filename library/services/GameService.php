@@ -7,14 +7,14 @@
 
 namespace services;
 
-use models\Game;
 use common\YCore;
 use models\DbBase;
-use models\Users;
-use models\BetRecord;
-use models\BetRecordNumber;
-use models\Ledou;
-use models\LedouConsume;
+use models\GmLedou;
+use models\GmLedouConsume;
+use models\GmGame;
+use models\GmBetRecord;
+use models\GmBetRecordNumber;
+use models\User;
 
 class GameService extends BaseService {
 
@@ -38,7 +38,7 @@ class GameService extends BaseService {
      * @return boolean
      */
     public static function ledouConsume($user_id, $ledou, $consume_type, $consume_code) {
-        $ledou_model = new Ledou();
+        $ledou_model = new GmLedou();
         $user_ledou_info = $ledou_model->fetchOne([], ['user_id' => $user_id]);
         if ($consume_type == 1) {
             if (empty($user_ledou_info)) {
@@ -49,7 +49,7 @@ class GameService extends BaseService {
                 ];
                 $ok = $ledou_model->insert($data);
                 if (!$ok) {
-                    YCore::throw_exception(-1, '服务器繁忙,请稍候重试');
+                    YCore::exception(-1, '服务器繁忙,请稍候重试');
                 }
             } else {
                 $data = [
@@ -62,12 +62,12 @@ class GameService extends BaseService {
                 ];
                 $ok = $ledou_model->insert($data);
                 if (!$ok) {
-                    YCore::throw_exception(-1, '服务器繁忙,请稍候重试');
+                    YCore::exception(-1, '服务器繁忙,请稍候重试');
                 }
             }
         } else if ($consume_type == 2) {
             if (empty($user_ledou_info) || $user_ledou_info['ledou'] < $ledou) {
-                YCore::throw_exception(-1, '乐豆数量不足');
+                YCore::exception(-1, '乐豆数量不足');
             }
             $data = [
                 'ledou'         => $user_ledou_info['ledou'] - $ledou,
@@ -79,10 +79,10 @@ class GameService extends BaseService {
             ];
             $ok = $ledou_model->update($data, $where);
             if (!$ok) {
-                YCore::throw_exception(-1, '服务器繁忙,请稍候重试');
+                YCore::exception(-1, '服务器繁忙,请稍候重试');
             }
         }
-        $ledou_consume_model = new LedouConsume();
+        $ledou_consume_model = new GmLedouConsume();
         $data = [
             'user_id'      => $user_id,
             'consume_type' => $consume_type,
@@ -92,7 +92,7 @@ class GameService extends BaseService {
         ];
         $ok = $ledou_consume_model->insert($data);
         if (!$ok) {
-            YCore::throw_exception(-1, '服务器繁忙,请稍候重试');
+            YCore::exception(-1, '服务器繁忙,请稍候重试');
         }
         return true;
     }
@@ -114,10 +114,10 @@ class GameService extends BaseService {
         $where      = ' WHERE 1 ';
         $params     = [];
         if (strlen($game_code) > 0) {
-            $game_model = new Game();
+            $game_model = new GmGame();
             $game_info = $game_model->fetchOne([], ['game_code' => $game_code]);
             if (empty($game_info)) {
-                YCore::throw_exception(-1, '游戏不存在');
+                YCore::exception(-1, '游戏不存在');
             }
             $where .= ' AND game_id = :game_id ';
             $params[':game_id'] = $game_info['game_id'];
@@ -141,7 +141,7 @@ class GameService extends BaseService {
         $total  = $count_data ? $count_data['count'] : 0;
         $sql = "SELECT {$columns} {$from_table} {$where} {$order_by} LIMIT {$offset},{$count}";
         $list = $default_db->rawQuery($sql, $params)->rawFetchAll();
-        $user_model = new Users();
+        $user_model = new User();
         foreach ($list as $key => $item) {
             $userinfo = $user_model->fetchOne([], ['user_id' => $item['user_id']]);
             $item['username']    = $userinfo ? $userinfo['username'] : '-';
@@ -163,7 +163,7 @@ class GameService extends BaseService {
      * @return array
      */
     public static function getAllGame() {
-        $game_model = new Game();
+        $game_model = new GmGame();
         $columns = [
             'game_id',
             'game_name',
@@ -201,7 +201,7 @@ class GameService extends BaseService {
         $total  = $count_data ? $count_data['count'] : 0;
         $sql = "SELECT {$columns} {$from_table} {$where} {$order_by} LIMIT {$offset},{$count}";
         $list = $default_db->rawQuery($sql, $params)->rawFetchAll();
-        $user_model = new Users();
+        $user_model = new User();
         foreach ($list as $key => $item) {
             $userinfo = $user_model->fetchOne([], ['user_id' => $item['user_id']]);
             $item['username']    = $userinfo ? $userinfo['username'] : '-';
@@ -236,27 +236,27 @@ class GameService extends BaseService {
      * @return boolean
      */
     public static function userBet($user_id, $game_id, $bet_ledou, $bet_number_or_money) {
-        $game_model = new Game();
+        $game_model = new GmGame();
         $game_info = $game_model->fetchOne([], ['game_id' => $game_id]);
         if (empty($game_info)) {
-            YCore::throw_exception(-1, '游戏不存在');
+            YCore::exception(-1, '游戏不存在');
         }
         if ($bet_ledou <= 0) {
-            YCore::throw_exception(-1, '投注乐豆必须大于0');
+            YCore::exception(-1, '投注乐豆必须大于0');
         }
         $total_bet_ledou = 0; // 保存每行投注号码的乐豆。
         foreach ($bet_number_or_money as $bet) {
             $bet_times = self::checkBetNumber($game_info['game_code'], $bet['bet_number']);
             if ($bet_times == 0) {
-                YCore::throw_exception(-1, '投注号码有误');
+                YCore::exception(-1, '投注号码有误');
             }
             if ($bet['bet_ledou'] != $bet_times * self::$single_ledou) {
-                YCore::throw_exception(-1, '投注乐逗数量有误');
+                YCore::exception(-1, '投注乐逗数量有误');
             }
             $total_bet_ledou += $bet['bet_ledou'];
         }
         $default_db = new DbBase();
-        $bet_record_model = new BetRecord();
+        $bet_record_model = new GmBetRecord();
         $data = [
             'user_id'      => $user_id,
             'game_id'      => $game_id,
@@ -269,9 +269,9 @@ class GameService extends BaseService {
         $bet_id = $bet_record_model->insert($data);
         if (!$bet_id) {
             $default_db->rollBack();
-            YCore::throw_exception(-1, '服务器异常,请稍候重试');
+            YCore::exception(-1, '服务器异常,请稍候重试');
         }
-        $bet_record_number_model = new BetRecordNumber();
+        $bet_record_number_model = new GmBetRecordNumber();
         foreach ($bet_number_or_money as $bet) {
             $data = [
                 'bet_id'       => $bet_id,
@@ -284,13 +284,13 @@ class GameService extends BaseService {
             $ok = $bet_record_number_model->insert($data);
             if (!$ok) {
                 $default_db->rollBack();
-                YCore::throw_exception(-1, '服务器繁忙,请稍候重试');
+                YCore::exception(-1, '服务器繁忙,请稍候重试');
             }
         }
         $ok = self::ledouConsume($user_id, $total_bet_ledou, self::CONSUME_TYPE_CUT, "cut_{$game_info['game_code']}_bet");
         if (!$ok) {
             $default_db->rollBack();
-            YCore::throw_exception(-1, '服务器繁忙,请稍候重试');
+            YCore::exception(-1, '服务器繁忙,请稍候重试');
         }
         $default_db->commit();
         return true;
@@ -314,7 +314,7 @@ class GameService extends BaseService {
                 return self::ssc_check_be_number($bet_number);
                 break;
             default:
-                YCore::throw_exception(-1, '游戏编码不正确');
+                YCore::exception(-1, '游戏编码不正确');
                 break;
         }
     }

@@ -13,20 +13,25 @@ use models\News;
 use models\Link;
 class CategoryService extends BaseService {
 
+	const CAT_NEWS  = 1; // 文章分类。
+	const CAT_LINK  = 2; // 友情链接分类。
+	const CAT_GOODS = 3; // 商品分类。
+
     /**
      * 获取分类列表。
      * @param number $parentid 父ID。默认值0。
      * @param number $cat_type 分类类型。
+     * @param boolean $is_filter 是否过滤无用字段。
      * @return array
      */
-    public static function getCategoryList($parentid = 0, $cat_type = 1) {
+    public static function getCategoryList($parentid = 0, $cat_type = self::CAT_NEWS, $is_filter = false) {
         $category_model = new Category();
-        $category_list  = $category_model->getByParentToCategory($parentid, $cat_type);
+        $category_list  = $category_model->getByParentToCategory($parentid, $cat_type, true, $is_filter);
         if (empty($category_list)) {
             return $category_list;
         } else {
             foreach ($category_list as $key => $menu) {
-                $category_list[$key]['sub'] = self::getCategoryList($menu['cat_id'], $cat_type);
+                $category_list[$key]['sub'] = self::getCategoryList($menu['cat_id'], $cat_type, $is_filter);
             }
             return $category_list;
         }
@@ -49,7 +54,7 @@ class CategoryService extends BaseService {
         if ($parentid != 0) {
             $parent_cat_info = $category_model->fetchOne([], ['cat_id' => $parentid, 'status' => 1]);
             if (empty($parent_cat_info)) {
-                YCore::throw_exception(-1, '父分类不存在或已经删除');
+                YCore::exception(-1, '父分类不存在或已经删除');
             }
             $lv = $parent_cat_info['lv'] + 1;
             // 当是添加子分类的时候。子分类的分类类型继续父分类的类型。
@@ -86,7 +91,7 @@ class CategoryService extends BaseService {
         $category_model = new Category();
         $cat_info = $category_model->fetchOne([], ['cat_id' => $cat_id, 'status' => 1]);
         if (empty($cat_info)) {
-            YCore::throw_exception(-1, '分类不存在或已经删除');
+            YCore::exception(-1, '分类不存在或已经删除');
         }
         $data = [
             'cat_name'      => $cat_name,
@@ -113,18 +118,18 @@ class CategoryService extends BaseService {
         $category_model = new Category();
         $data = $category_model->fetchOne([], ['cat_id' => $cat_id, 'status' => 1]);
         if (empty($data)) {
-            YCore::throw_exception(-1, '分类不存在或已经删除');
+            YCore::exception(-1, '分类不存在或已经删除');
         }
         // [2] 目前只检查文章与友情链接，后续如果关联了其他功能，这里要做适当调整。
         $news_model = new News();
         $news_count = $news_model->count(['cat_id' => $cat_id, 'status' => 1]);
         if ($news_count > 0) {
-            YCore::throw_exception(-1, '请先清空该分类下的文章');
+            YCore::exception(-1, '请先清空该分类下的文章');
         }
         $link_model = new Link();
         $link_count = $link_model->count(['cat_id' => $cat_id, 'status' => 1]);
         if ($link_count > 0) {
-            YCore::throw_exception(-1, '请先清空该分类下的友情链接');
+            YCore::exception(-1, '请先清空该分类下的友情链接');
         }
         $where = [
             'cat_id' => $cat_id
@@ -146,7 +151,7 @@ class CategoryService extends BaseService {
         $category_model = new Category();
         $data = $category_model->fetchOne([], ['cat_id' => $cat_id, 'status' => 1]);
         if (empty($data)) {
-            YCore::throw_exception(-1, '分类不存在或已经删除');
+            YCore::exception(-1, '分类不存在或已经删除');
         }
         return $data;
     }
@@ -206,7 +211,7 @@ class CategoryService extends BaseService {
         } else {
             $cat_info = $category_model->fetchOne([], ['cat_id' => $parentid, 'status' => 1]);
             if (empty($cat_info)) {
-                YCore::throw_exception(-1, '父分类不存在或已经删除');
+                YCore::exception(-1, '父分类不存在或已经删除');
             }
             $code_prefix = substr($cat_info['cat_code'], 0, $cat_info['lv'] * 3);
             $sql = 'SELECT * FROM ms_category WHERE cat_code LIKE :cat_code ORDER BY cat_code DESC LIMIT 1';

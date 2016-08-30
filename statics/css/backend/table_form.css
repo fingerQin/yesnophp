@@ -42,7 +42,7 @@ select{ vertical-align:middle;background:none repeat scroll 0 0 #F9F9F9;border-c
 .table_form th{font-weight:normal; text-align:right;padding-right:10px; color:#777}
 .table_form td label{ vertical-align:middle}
 .table_form td,.table_form th{padding:4px 0 4px 8px}
-.table_form tbody td,.table_form tbody th{border-bottom:1px solid #eee; }
+.table_form tbody td,.table_form tbody th{border-bottom:none; }
 .colorpanel tbody td,.colorpanel tbody th{ padding:0;border-bottom: none;}
 /*select美化*/
 .js ul.newList {left:-9999px;}
@@ -97,3 +97,5 @@ div#areaid{border:1px solid #A7A6AA;height:18px;margin:0 5px 0 0;padding:2px 5px
 .common-form .tpl_style{}
 .common-form .tpl_style li{float:left; margin-right:10px; clear: none; border: 1px solid #ddd; background-color: #F5FAFE; padding:4px 12px; cursor: pointer;}
 .common-form .tpl_style li.ac{border:1px solid #639DCF;}
+
+.btn_submit { width: 100px; height: 28px; line-height: 28px; background: #2db7f5; color: #fff; font-size: 14px; border: 0; border-radius: 5px; cursor: pointer; }

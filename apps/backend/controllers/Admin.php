@@ -20,7 +20,7 @@ class AdminController extends \common\controllers\Admin {
 	    $page      = $this->getString('page', 1);
 	    $result    = AdminService::getAdminList($keywords, $page, 10);
 	    $paginator = new Paginator($result['total'], 20);
-	    $page_html = $paginator->show();
+	    $page_html = $paginator->backendPageShow();
 	    $this->_view->assign('page_html', $page_html);
 	    $this->_view->assign('keywords', $keywords);
 	    $this->_view->assign('list', $result['list']);
@@ -107,10 +107,10 @@ class AdminController extends \common\controllers\Admin {
 	 * 登录历史。
 	 */
 	public function loginHistoryAction() {
-	    $page   = $this->getString(YCore::config('pager'), 1);
+	    $page   = $this->getString(YCore::appconfig('pager'), 1);
 	    $result = AdminService::getAdminLoginHistoryList($this->admin_id, $page, 20);
 	    $paginator = new Paginator($result['total'], 20);
-	    $page_html = $paginator->show();
+	    $page_html = $paginator->backendPageShow();
 	    $this->_view->assign('page_html', $page_html);
 	    $this->_view->assign('list', $result['list']);
 	}

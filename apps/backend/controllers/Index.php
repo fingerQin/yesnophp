@@ -7,6 +7,8 @@
 
 use services\AdminPermissionService;
 use services\UploadService;
+use common\YCore;
+use common\YUrl;
 
 class IndexController extends \common\controllers\Admin {
 
@@ -54,5 +56,19 @@ class IndexController extends \common\controllers\Admin {
 	    $result = UploadService::uploadImage(1, $this->admin_id, 'voucher', 2);
 	    $this->json(true, '上传成功', $result);
 	    $this->end();
+	}
+
+	/**
+	 * 生成首页。
+	 */
+	public function createHomePageAction() {
+		$code = YCore::appconfig('create.home.page.code');
+		$frontend_home_page_url = YUrl::createFrontendUrl('', 'Index', 'Index', ['code' => $code]);
+		$ret = YCore::pc_file_get_contents($frontend_home_page_url, 10);
+		if ($ret != 'ok') {
+			YCore::exception(-1, '生成首页失败');
+		} else {
+			$this->success('生成首页成功', '', 0);
+		}
 	}
 }

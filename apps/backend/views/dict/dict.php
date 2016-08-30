@@ -5,7 +5,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
-    	<a class="add fb" href="javascript:postDialog('add', '<?php echo YUrl::createAdminUrl('Index', 'Dict', 'add', ['dict_type_id' => $dict_type_id]); ?>', '添加', 500, 250)"><em>添加</em></a>　    
+    	<a class="add fb" href="javascript:postDialog('add', '<?php echo YUrl::createBackendUrl('', 'Dict', 'add', ['dict_type_id' => $dict_type_id]); ?>', '添加', 500, 250)"><em>添加</em></a>　    
     </div>
 </div>
 <style type="text/css">
@@ -31,7 +31,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 </form>
 
 
-<form name="myform" id="myform" action="<?php echo YUrl::createAdminUrl('Index', 'Dict', 'dict', ['dict_type_id' => $dict_type_id]); ?>" method="post" >
+<form name="myform" id="myform" action="<?php echo YUrl::createBackendUrl('', 'Dict', 'dict', ['dict_type_id' => $dict_type_id]); ?>" method="post" >
 <input type="hidden" value="<?php echo $dict_type_id; ?>" name="dict_type_id" />
 <div class="table-list">
 <table width="100%" cellspacing="0">
@@ -57,11 +57,11 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 			<input name="listorders[<?php echo $dict['dict_id']; ?>]" autocomplete="off" type="text" size="3" value="<?php echo $dict['listorder']; ?>" class="input-text-c input-text" />
 		</td>
 		<td align="left"><?php echo $dict['dict_code'] ?></td>
-		<td align="left"><?php echo $dict['dict_name'] ?></td>
+		<td align="left"><?php echo $dict['dict_value'] ?></td>
 		<td align="left"><?php echo $dict['description'] ?></td>
 		<td align="center">
-		  <a href="###" onclick="edit(<?php echo $dict['dict_id'] ?>, '<?php echo $dict['dict_name'] ?>')" title="修改">修改</a> |  
-		  <a href="javascript:deleteDialog('deleteDictValue', '<?php echo YUrl::createAdminUrl('Index', 'Dict', 'delete', ['dict_id' => $dict['dict_id']]); ?>', '『 <?php echo $dict['dict_name'] ?> 』');">删除</a>
+		  <a href="###" onclick="edit(<?php echo $dict['dict_id'] ?>, '<?php echo $dict['dict_code'] ?>')" title="修改">修改</a> |  
+		  <a href="javascript:deleteDialog('deleteDictValue', '<?php echo YUrl::createBackendUrl('', 'Dict', 'delete', ['dict_id' => $dict['dict_id']]); ?>', '『 <?php echo $dict['dict_code'] ?> 』');">删除</a>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -69,8 +69,8 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 </table>
 </div>
 <div class="btn"> 
-	<input type="submit" class="button" name="dosubmit" onclick="document.myform.action='<?php echo YUrl::createAdminUrl('Index', 'Dict', 'delete'); ?>'" value="删除" />&nbsp;&nbsp;
-	<input type="submit" class="button" name="dosubmit" onclick="document.myform.action='<?php echo YUrl::createAdminUrl('Index', 'Dict', 'sortDict', ['dict_type_id' => $dict_type_id]); ?>'" value="排序" />
+	<input type="submit" class="button" name="dosubmit" onclick="document.myform.action='<?php echo YUrl::createBackendUrl('', 'Dict', 'delete'); ?>'" value="删除" />&nbsp;&nbsp;
+	<input type="submit" class="button" name="dosubmit" onclick="document.myform.action='<?php echo YUrl::createBackendUrl('', 'Dict', 'sortDict', ['dict_type_id' => $dict_type_id]); ?>'" value="排序" />
 </div>
 <div id="pages">
 <?php echo $page_html; ?>
@@ -80,7 +80,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 
 <script type="text/javascript">
 function edit(id, name) {
-	var page_url = '<?php echo YUrl::createAdminUrl('Index', 'Dict', 'edit'); ?>?dict_id='+id+'&dict_type_id=<?php echo $dict_type_id; ?>';
+	var page_url = '<?php echo YUrl::createBackendUrl('', 'Dict', 'edit'); ?>?dict_id='+id+'&dict_type_id=<?php echo $dict_type_id; ?>';
 	var title = "修改【" + name + "】";
     postDialog(id, page_url, title, 500, 250);
 }

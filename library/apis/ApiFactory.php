@@ -7,6 +7,7 @@
 
 namespace apis;
 
+use common\YCore;
 class ApiFactory {
 
 	/**
@@ -19,10 +20,10 @@ class ApiFactory {
 	 */
 	public static function factory($api_data) {
 		if (!isset($api_data['method']) || strlen($api_data['method']) === 0) {
-			throw new \Exception ('method does not exist', 1100001);
+			YCore::exception(1100001, 'method does not exist');
 		}
 		if (!isset($api_data['v']) || strlen($api_data['v']) === 0 || is_numeric($api_data['v']) === false) {
-			throw new \Exception ('version number is wrong', 1100002);
+			YCore::exception(1100002, 'version number is wrong');
 		}
 		// 将method参数转换为实际的接口类名称。
 		$api_name = $api_data['method'];
@@ -38,7 +39,7 @@ class ApiFactory {
 		if (strlen($api_name) && class_exists($classname)) {
 			return new $classname($api_data);
 		} else {
-			throw new \Exception('Interface does not exist', 1100003);
+			YCore::exception(1100003, 'Interface does not exist');
 		}
 	}
 }

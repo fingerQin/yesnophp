@@ -35,12 +35,12 @@ class Settings
     const ZIPARCHIVE = '\\ZipArchive';
 
     /**    Optional Chart Rendering libraries */
-    const CHART_RENDERER_JPGRAPH = 'jpgraph';
+    const CHART_RENDERER_JPGRAPH = 'JpGraph';
 
     /**    Optional PDF Rendering libraries */
-    const PDF_RENDERER_TCPDF  = 'tcPDF';
+    const PDF_RENDERER_TCPDF  = 'TcPDF';
     const PDF_RENDERER_DOMPDF = 'DomPDF';
-    const PDF_RENDERER_MPDF   = 'mPDF';
+    const PDF_RENDERER_MPDF   = 'MPDF';
 
 
     private static $chartRenderers = array(

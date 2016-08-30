@@ -10,16 +10,16 @@ use common\YCore;
 class RedisMutexLock {
 
     /**
-     * 锁的超时时间。
+     * 锁的超时时间(秒)。
      * @var number
      */
-    const TIMEOUT = 20;
+    public static $timeout = 20;
 
     /**
-     * 锁被锁定的时候，
-     * @var unknown
+     * KEY锁定之后再次尝试获取锁的间隔时间。
+     * @var number
      */
-    const SLEEP = 100000;
+    public static $sleep = 100000;
 
     /**
      * 当前锁的过期时间。
@@ -41,16 +41,18 @@ class RedisMutexLock {
      */
     public static function lock($key, $timeout = null) {
         if (strlen($key) === 0) {
-            YCore::throw_exception(-1, '缓存KEY没有设置');
+            YCore::exception(-1, '缓存KEY没有设置');
         }
         $start = $_SERVER['REQUEST_TIME'];
         $redis = self::getRedis();
         do {
             self::$expire = self::timeout();
+            // 如果$key不存在则设置。设置成功返回TRUE。
             $acquired = $redis->setnx("Lock:{$key}", self::$expire);
             if ($acquired) {
                 break;
             }
+            // 如果锁已经过了锁定的时间，则恢复。
             $acquired = self::recover($key);
             if ($acquired) {
                 break;
@@ -59,10 +61,9 @@ class RedisMutexLock {
                 // 如果超时时间为0，即为
                 break;
             }
-            usleep(self::SLEEP);
+            usleep(self::$sleep);
         } while (!is_numeric($timeout) || time() < $start + $timeout);
         if (!$acquired) {
-            // 超时
             return false;
         }
         return true;
@@ -70,18 +71,25 @@ class RedisMutexLock {
 
     /**
      * 释放锁
-     * @param mixed $key 加锁的KEY。
+     * @param mixed $key 被加锁的KEY。
      * @return void
      */
     public static function release($key) {
         if (strlen($key) === 0) {
-            YCore::throw_exception(-1, '缓存KEY没有设置');
+            YCore::exception(-1, '缓存KEY没有设置');
         }
         $redis = self::getRedis();
         // 只释放未过期的锁。过期了不需要释放。
-        if (self::$expire > time()) {
-            $redis->del("Lock:{$key}");
-        }
+        $redis->del("Lock:{$key}");
+    }
+
+    /**
+     * 设置超时时间。单位(秒)。
+     * @param number $timeount
+     * @return void
+     */
+    public static function setTimeout($timeount) {
+		self::$timeout = $timeount;
     }
 
     /**
@@ -89,7 +97,7 @@ class RedisMutexLock {
      * @return int timeout
      */
     protected static function timeout() {
-        return (int) (time() + self::TIMEOUT + 1);
+        return (int) (time() + self::$timeout + 1);
     }
 
     /**

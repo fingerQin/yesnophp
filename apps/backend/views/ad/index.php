@@ -5,7 +5,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
-    	<a class="add fb" href="javascript:postDialog('addAd', '<?php echo YUrl::createAdminUrl('Index', 'Ad', 'add', ['pos_id' => $pos_id]); ?>', '添加广告', 420, 400)"><em>添加广告</em></a>
+    	<a class="add fb" href="javascript:postDialog('addAd', '<?php echo YUrl::createBackendUrl('', 'Ad', 'add', ['pos_id' => $pos_id]); ?>', '添加广告', 420, 400)"><em>添加广告</em></a>
     	<a href='javascript:;' class="on"><em>广告列表</em></a>    
     </div>
 </div>
@@ -33,7 +33,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 </form>
 
 
-<form name="myform" id="myform" action="<?php echo YUrl::createAdminUrl('Index', 'Ad', 'sortAd'); ?>" method="post" >
+<form name="myform" id="myform" action="<?php echo YUrl::createBackendUrl('', 'Ad', 'sortAd'); ?>" method="post" >
 <div class="table-list">
 <table width="100%" cellspacing="0">
 	<thead>
@@ -64,7 +64,7 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
     		<td align="center"><?php echo date('Y-m-d H:i:s', $item['created_time']); ?></td>
     		<td align="center">
     		<a href="###" onclick="edit(<?php echo $item['ad_id'] ?>, '<?php echo $item['ad_name'] ?>')" title="修改">修改</a> |  
-    		<a href="###" onclick="deleteDialog('adDelete', '<?php echo YUrl::createAdminUrl('Index', 'Ad', 'delete', ['ad_id' => $item['ad_id']]); ?>', '<?php echo $item['ad_name'] ?>')" title="删除">删除</a> 
+    		<a href="###" onclick="deleteDialog('adDelete', '<?php echo YUrl::createBackendUrl('', 'Ad', 'delete', ['ad_id' => $item['ad_id']]); ?>', '<?php echo $item['ad_name'] ?>')" title="删除">删除</a> 
     		</td>
     	</tr>
     <?php endforeach; ?>
@@ -105,7 +105,7 @@ $(document).ready(function(){
 
 function edit(id, name) {
 	var title = '修改『' + name + '』';
-	var page_url = "<?php echo YUrl::createAdminUrl('Index', 'Ad', 'edit'); ?>?ad_id="+id;
+	var page_url = "<?php echo YUrl::createBackendUrl('', 'Ad', 'edit'); ?>?ad_id="+id;
 	postDialog('adEdit', page_url, title, 420, 400);
 }
 

@@ -39,27 +39,23 @@ class Dict extends DbBase {
      */
 	public function getDictList($dict_type_id, $keywords = '', $page = 1, $count = 10) {
 	    $offset  = $this->getPaginationOffset($page, $count);
-	    $columns = ' dict_id,dict_type_id,dict_code,dict_name,description,listorder ';
+	    $columns = " dict_id,dict_type_id,dict_code,dict_value,description,listorder ";
 	    $where   = ' WHERE status = :status AND dict_type_id = :dict_type_id ';
 	    $params = [
-	        ':status' => 1,
+	        ':status'       => 1,
 	        ':dict_type_id' => $dict_type_id
 	    ];
 	    if (strlen($keywords) > 0) {
-	        $where .= ' AND (dict_code LIKE :dict_code OR dict_name LIKE :dict_name )';
-	        $params['dict_code'] = "%{$keywords}%";
-	        $params['dict_name'] = "%{$keywords}%";
+	        $where .= ' AND (dict_code LIKE :dict_code OR dict_value LIKE :dict_value )';
+	        $params[':dict_code'] = "%{$keywords}%";
+	        $params[':dict_value'] = "%{$keywords}%";
 	    }
 	    $order_by = ' ORDER BY listorder ASC,dict_id ASC ';
 	    $sql = "SELECT COUNT(1) AS count FROM {$this->_table_name} {$where}";
-	    $sth = $this->link->prepare($sql);
-	    $sth->execute($params);
-	    $count_data = $sth->fetch();
+	    $count_data = $this->rawQuery($sql, $params)->rawFetchOne();
 	    $total  = $count_data ? $count_data['count'] : 0;
 	    $sql = "SELECT {$columns} FROM {$this->_table_name} {$where} {$order_by} LIMIT {$offset},{$count}";
-	    $sth = $this->link->prepare($sql);
-	    $sth->execute($params);
-	    $list = $sth->fetchAll();
+	    $list = $this->rawQuery($sql, $params)->rawFetchAll();
 	    $result = array(
 	        'list'   => $list,
 	        'total'  => $total,
@@ -76,7 +72,16 @@ class Dict extends DbBase {
 	 * @return array
 	 */
 	public function getDict($dict_id) {
-	    $data = $this->fetchOne([], ['dict_id' => $dict_id]);
+	    $columnds = [
+	        'dict_id',
+	        'dict_value',
+	        'dict_type_id',
+	        'dict_code',
+	        'description',
+	        'listorder',
+	        'status'
+	    ];
+	    $data = $this->fetchOne($columnds, ['dict_id' => $dict_id]);
 	    return empty($data) ? [] : $data;
 	}
 
@@ -91,7 +96,7 @@ class Dict extends DbBase {
 	        'dict_type_id' => $dict_type_id
 	    ];
 	    $column = [
-	        'dict_name',
+	        'dict_value',
 	        'dict_code'
 	    ];
 	    $order = 'listorder ASC, dict_id ASC';
@@ -99,7 +104,7 @@ class Dict extends DbBase {
 		if ($result) {
 			$data = [];
 			foreach ($result as $val) {
-				$data[$val['dict_code']] = $val['dict_name'];
+				$data[$val['dict_code']] = $val['dict_value'];
 			}
 			return $data;
 		} else {
@@ -117,11 +122,11 @@ class Dict extends DbBase {
 	 * @param int $listorder 排序。
 	 * @return boolean
 	 */
-	public function addDict($admin_id, $dict_type_id, $dict_code, $dict_name, $description = '', $listorder = 0) {
+	public function addDict($admin_id, $dict_type_id, $dict_code, $dict_value, $description = '', $listorder = 0) {
 		$data = [
 				'dict_type_id' => $dict_type_id,
 				'dict_code'    => $dict_code,
-				'dict_name'    => $dict_name,
+				'dict_value'   => $dict_value,
 				'description'  => $description,
 				'listorder'    => $listorder,
 				'status'       => 1,
@@ -138,15 +143,15 @@ class Dict extends DbBase {
 	 * @param number $admin_id 管理员ID。
 	 * @param number $dict_type_id 字典类型ID。
 	 * @param string $dict_code 字典编码。
-	 * @param string $dict_name 字典名称。
+	 * @param string $dict_value 字典值。
 	 * @param string $description 字典描述。
 	 * @param number $listorder 排序。
 	 * @return boolean
 	 */
-	public function editDict($dict_id, $admin_id, $dict_code, $dict_name, $description = '', $listorder = 0) {
+	public function editDict($dict_id, $admin_id, $dict_code, $dict_value, $description = '', $listorder = 0) {
 		$data = [
 				'dict_code'     => $dict_code,
-				'dict_name'     => $dict_name,
+				'dict_value'    => $dict_value,
 				'description'   => $description,
 				'listorder'     => $listorder,
 				'status'        => 1,
