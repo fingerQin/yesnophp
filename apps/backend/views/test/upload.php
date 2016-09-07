@@ -5,10 +5,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="" enctype="multipart/form-data" method="post" >
-<input type="text" name="name" />
-<input type="file" name="photo" />
-<input type="submit" value="提交" >
-</form>
+	<form action="" enctype="multipart/form-data" method="post">
+		<input type="text" name="name" /> <input type="file" name="photo" /> <input
+			type="submit" value="锟结交">
+	</form>
 </body>
 </html>

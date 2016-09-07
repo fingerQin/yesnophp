@@ -10,21 +10,17 @@ use services\LogService;
 use winer\Paginator;
 
 class LogController extends \common\controllers\Admin {
-
+    
     /**
      * 日志查看 。
      */
     public function indexAction() {
         $options = [
-            'log_type'  => $this->getInt('log_type', -1),
-            'log_user'  => $this->getString('log_user', ''),
-            'user_type' => $this->getInt('user_type', 1),
-            'starttime' => $this->getString('starttime', ''),
-            'endtime'   => $this->getString('endtime', ''),
-            'errcode'   => $this->getString('errcode', ''),
-            'content'   => $this->getString('content', ''),
-            'page'      => $this->getInt(YCore::appconfig('pager'), 1),
-            'count'     => $this->getInt('count', 50),
+                'log_type' => $this->getInt('log_type', - 1),'log_user' => $this->getString('log_user', ''),
+                'user_type' => $this->getInt('user_type', 1),'starttime' => $this->getString('starttime', ''),
+                'endtime' => $this->getString('endtime', ''),'errcode' => $this->getString('errcode', ''),
+                'content' => $this->getString('content', ''),'page' => $this->getInt(YCore::appconfig('pager'), 1),
+                'count' => $this->getInt('count', 50) 
         ];
         $result = LogService::getLogList($options);
         $paginator = new Paginator($result['total'], 50);
@@ -34,7 +30,7 @@ class LogController extends \common\controllers\Admin {
         $this->_view->assign('list', $result['list']);
         $this->_view->assign('search', $options);
     }
-
+    
     /**
      * 日志详情。
      */

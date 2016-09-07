@@ -6,7 +6,7 @@
  */
 
 class TestController extends \common\controllers\Guest {
-
+    
     public function indexAction() {
         $this->end();
     }

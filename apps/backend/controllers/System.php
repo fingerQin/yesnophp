@@ -6,12 +6,12 @@
  */
 
 class SystemController extends \common\controllers\Admin {
-
-	/**
-	 * 首页。
-	 */
-	public function indexAction() {
-
-	}
+    
+    /**
+     * 首页。
+     */
+    public function indexAction() {
+    
+    }
 
 }

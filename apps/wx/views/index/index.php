@@ -1,19 +1,22 @@
 <?php
-use common\YCore; 
+use common\YCore;
 use common\YUrl;
 ?>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>不单卖</title>
-    <link rel="stylesheet" href="<?php echo YUrl::assets('css', '/wx/weui.min.css'); ?>"/>
-    <link rel="stylesheet" href="<?php echo YUrl::assets('css', '/wx/example.css'); ?>"/>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,user-scalable=0">
+<title>不单卖</title>
+<link rel="stylesheet"
+	href="<?php echo YUrl::assets('css', '/wx/weui.min.css'); ?>" />
+<link rel="stylesheet"
+	href="<?php echo YUrl::assets('css', '/wx/example.css'); ?>" />
 </head>
 <body ontouchstart>
-    <div class="container" id="container"></div>
-    <script type="text/html" id="tpl_home">
+	<div class="container" id="container"></div>
+	<script type="text/html" id="tpl_home">
 <div class="hd">
     <h1 class="page_title">WeUI</h1>
     <p class="page_desc">为微信Web服务量身设计</p>
@@ -119,7 +122,7 @@ use common\YUrl;
     </div>
 </div>
 </script>
-    <script type="text/html" id="tpl_button">
+	<script type="text/html" id="tpl_button">
 <div class="hd">
     <h1 class="page_title">Button</h1>
 </div>
@@ -139,7 +142,7 @@ use common\YUrl;
     </div>
 </div>
 </script>
-    <script type="text/html" id="tpl_cell">
+	<script type="text/html" id="tpl_cell">
 <div class="hd">
     <h1 class="page_title">Cell</h1>
 </div>
@@ -428,7 +431,7 @@ use common\YUrl;
 
 </div>
 </script>
-    <script type="text/html" id="tpl_toast">
+	<script type="text/html" id="tpl_toast">
 <div class="hd">
     <h1 class="page_title">Toast</h1>
 </div>
@@ -468,7 +471,7 @@ use common\YUrl;
     </div>
 </div>
 </script>
-    <script type="text/html" id="tpl_dialog">
+	<script type="text/html" id="tpl_dialog">
 <div class="hd">
     <h1 class="page_title">Dialog</h1>
 </div>
@@ -502,7 +505,7 @@ use common\YUrl;
 </div>
 <!--END dialog2-->
 </script>
-    <script type="text/html" id="tpl_progress">
+	<script type="text/html" id="tpl_progress">
 <div class="hd">
     <h1 class="page_title">Progress</h1>
 </div>
@@ -538,7 +541,7 @@ use common\YUrl;
     </div>
 </div>
 </script>
-    <script type="text/html" id="tpl_msg">
+	<script type="text/html" id="tpl_msg">
 <div class="weui_msg">
     <div class="weui_icon_area"><i class="weui_icon_success weui_icon_msg"></i></div>
     <div class="weui_text_area">
@@ -556,7 +559,7 @@ use common\YUrl;
     </div>
 </div>
 </script>
-    <script type="text/html" id="tpl_article">
+	<script type="text/html" id="tpl_article">
 <div class="hd">
     <h1 class="page_title">Article</h1>
 </div>
@@ -587,7 +590,7 @@ use common\YUrl;
     </article>
 </div>
 </script>
-    <script type="text/html" id="tpl_tab">
+	<script type="text/html" id="tpl_tab">
 <div class="bd">
     <div class="weui_cells_title">Tab</div>
     <div class="weui_cells weui_cells_access">
@@ -608,7 +611,7 @@ use common\YUrl;
     </div>
 </div>
 </script>
-    <script type="text/html" id="tpl_navbar">
+	<script type="text/html" id="tpl_navbar">
 <div class="bd" style="height: 100%;">
     <div class="weui_tab">
         <div class="weui_navbar">
@@ -628,7 +631,7 @@ use common\YUrl;
     </div>
 </div>
 </script>
-    <script type="text/html" id="tpl_tabbar">
+	<script type="text/html" id="tpl_tabbar">
 <div class="weui_tab">
     <div class="weui_tab_bd">
 
@@ -661,7 +664,7 @@ use common\YUrl;
     </div>
 </div>
 </script>
-    <script type="text/html" id="tpl_panel">
+	<script type="text/html" id="tpl_panel">
 <div class="hd">
     <h1 class="page_title">Panel</h1>
 </div>
@@ -743,7 +746,7 @@ use common\YUrl;
     </div>
 </div>
 </script>
-    <script type="text/html" id="tpl_actionsheet">
+	<script type="text/html" id="tpl_actionsheet">
 <div class="hd">
     <h1 class="page_title">ActionSheet</h1>
 </div>
@@ -767,7 +770,7 @@ use common\YUrl;
 </div>
 <!--END actionSheet-->
 </script>
-    <script type="text/html" id="tpl_icons">
+	<script type="text/html" id="tpl_icons">
 <div class="hd">
     <h1 class="page_title">Icons</h1>
 </div>
@@ -795,7 +798,7 @@ use common\YUrl;
     </div>
 </div>
 </script>
-    <script type="text/html" id="tpl_searchbar">
+	<script type="text/html" id="tpl_searchbar">
 <div class="hd">
     <h1 class="page_title">searchBar</h1>
 </div>
@@ -839,8 +842,8 @@ use common\YUrl;
     </div>
 </div>
 </script>
-    <script src="<?php echo YUrl::assets('js', '/zepto.min.js'); ?>"></script>
-    <script src="<?php echo YUrl::assets('js', '/wx/router.min.js'); ?>"></script>
-    <script src="<?php echo YUrl::assets('js', '/wx/example.js'); ?>"></script>
+	<script src="<?php echo YUrl::assets('js', '/zepto.min.js'); ?>"></script>
+	<script src="<?php echo YUrl::assets('js', '/wx/router.min.js'); ?>"></script>
+	<script src="<?php echo YUrl::assets('js', '/wx/example.js'); ?>"></script>
 </body>
 </html>

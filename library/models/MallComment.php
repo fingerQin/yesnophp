@@ -8,10 +8,11 @@
 namespace models;
 
 class MallComment extends DbBase {
-
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'mall_comment';
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'mall_comment';
 }

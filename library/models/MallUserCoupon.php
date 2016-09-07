@@ -8,10 +8,11 @@
 namespace models;
 
 class MallUserCoupon extends DbBase {
-
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'mall_user_coupon';
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'mall_user_coupon';
 }

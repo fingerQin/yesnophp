@@ -4,7 +4,8 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/dialog_header.php');
 ?>
 
 <div class="site-form">
-	<form action="<?php echo YUrl::createShopUrl('', 'Freight', 'add'); ?>" method="post" name="myform" id="myform">
+	<form action="<?php echo YUrl::createShopUrl('', 'Freight', 'add'); ?>"
+		method="post" name="myform" id="myform">
 
 		<div class="row">
 			<div class="col-1" align="right">
@@ -12,7 +13,8 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/dialog_header.php');
 			</div>
 			<div class="cc">
 				<div class="input">
-					<input type="text" style="width:200px;" class="form-input" name="freight_name" value="">
+					<input type="text" style="width: 200px;" class="form-input"
+						name="freight_name" value="">
 				</div>
 			</div>
 		</div>
@@ -48,18 +50,19 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/dialog_header.php');
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="col-1" align="right">
 				<div class="label">包邮金额：</div>
 			</div>
 			<div class="cc">
 				<div class="input">
-					<input type="text" style="width:50px;" class="form-input" name="baoyou_fee" value="0">（0代表不包邮，100代表满100包邮）
+					<input type="text" style="width: 50px;" class="form-input"
+						name="baoyou_fee" value="0">（0代表不包邮，100代表满100包邮）
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="col-1" align="right">
 				<div class="label">计费类型：</div>
@@ -73,17 +76,20 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/dialog_header.php');
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="col-1" align="right">
 				<div class="label">计费规则：</div>
 			</div>
 			<div class="cc">
 				<div class="input">
-					<input type="text" style="width:30px;" class="form-input" name="base_step" value="1" /> 件内，
-					<input type="text" style="width:30px;" class="form-input" name="base_freight" value="" /> 元，
-					每增加 <input type="text" style="width:30px;" class="form-input" name="rate_step" value="1" /> 件，
-					增加运费 <input type="text" style="width:30px;" class="form-input" name="step_freight" value="" /> 元
+					<input type="text" style="width: 30px;" class="form-input"
+						name="base_step" value="1" /> 件内， <input type="text"
+						style="width: 30px;" class="form-input" name="base_freight"
+						value="" /> 元， 每增加 <input type="text" style="width: 30px;"
+						class="form-input" name="rate_step" value="1" /> 件， 增加运费 <input
+						type="text" style="width: 30px;" class="form-input"
+						name="step_freight" value="" /> 元
 				</div>
 			</div>
 		</div>
@@ -94,10 +100,13 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/dialog_header.php');
 			</div>
 			<div class="cc">
 				<div class="input">
-					<input type="text" style="width:50px;" class="form-input" name="base_step" value="1000" /> g内，
-					<input type="text" style="width:30px;" class="form-input" name="base_freight" value="" /> 元，
-					每增加 <input type="text" style="width:50px;" class="form-input" name="rate_step" value="1000" /> g，
-					增加运费 <input type="text" style="width:30px;" class="form-input" name="step_freight" value="" /> 元
+					<input type="text" style="width: 50px;" class="form-input"
+						name="base_step" value="1000" /> g内， <input type="text"
+						style="width: 30px;" class="form-input" name="base_freight"
+						value="" /> 元， 每增加 <input type="text" style="width: 50px;"
+						class="form-input" name="rate_step" value="1000" /> g， 增加运费 <input
+						type="text" style="width: 30px;" class="form-input"
+						name="step_freight" value="" /> 元
 				</div>
 			</div>
 		</div>
@@ -108,7 +117,8 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/dialog_header.php');
 			</div>
 			<div class="cc">
 				<div class="input">
-					<input type="text" style="width:50px;" class="form-input" name="no_area" value="">
+					<input type="text" style="width: 50px;" class="form-input"
+						name="no_area" value="">
 				</div>
 			</div>
 		</div>
@@ -119,7 +129,8 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/dialog_header.php');
 			</div>
 			<div class="col-8">
 				<div class="ctrl">
-					<input id="form_submit" type="button" value="保存" class="form-submit">
+					<input id="form_submit" type="button" value="保存"
+						class="form-submit">
 				</div>
 			</div>
 		</div>

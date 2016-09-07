@@ -25,10 +25,9 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/left_menu.php');
 						</div>
 						<div class="col-9">
 							<fieldset id="custom_data">
-					            <select class="first slct"></select>
-					            <select class="second slct"></select>
-					            <select name="cat_id" class="third slct"></select>
-						     </fieldset>
+								<select class="first slct"></select> <select class="second slct"></select>
+								<select name="cat_id" class="third slct"></select>
+							</fieldset>
 						</div>
 					</div>
 					<div class="row">
@@ -186,9 +185,12 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/left_menu.php');
 	</div>
 </div>
 
-<script type="text/javascript" src="<?php echo YUrl::assets('js', '/jquery.cxselect.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo YUrl::assets('js', '/AjaxUploader/SimpleAjaxUploader.min.js'); ?>"></script>
-<script src="<?php echo YUrl::assets('js', '/AjaxUploader/ShopCenterUploadImage.js'); ?>"></script>
+<script type="text/javascript"
+	src="<?php echo YUrl::assets('js', '/jquery.cxselect.min.js'); ?>"></script>
+<script type="text/javascript"
+	src="<?php echo YUrl::assets('js', '/AjaxUploader/SimpleAjaxUploader.min.js'); ?>"></script>
+<script
+	src="<?php echo YUrl::assets('js', '/AjaxUploader/ShopCenterUploadImage.js'); ?>"></script>
 <script type="text/javascript">
 
 var uploadUrl = '<?php echo YUrl::createShopUrl('', 'Index', 'upload'); ?>';

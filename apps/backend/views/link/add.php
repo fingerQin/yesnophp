@@ -1,20 +1,23 @@
 <?php
 use common\YUrl;
 use common\YCore;
-require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
+require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 ?>
 
 <style type="text/css">
-	html{_overflow-y:scroll}
+html {
+	_overflow-y: scroll
+}
 </style>
 
 <div class="common-form">
-<form name="myform" id="myform" action="<?php echo YUrl::createBackendUrl('', 'Link', 'add'); ?>" method="post">
-<table width="100%" class="table_form contentWrap">
-      <tr>
-        <th width="120">上级菜单：</th>
-        <td>
-        <select name="cat_id">
+	<form name="myform" id="myform"
+		action="<?php echo YUrl::createBackendUrl('', 'Link', 'add'); ?>"
+		method="post">
+		<table width="100%" class="table_form contentWrap">
+			<tr>
+				<th width="120">上级菜单：</th>
+				<td><select name="cat_id">
         <?php foreach ($cat_list as $menu): ?>
         <option value="<?php echo $menu['cat_id']; ?>"><?php echo $menu['cat_name']; ?></option>
 			<?php if (isset($menu['sub'])): ?>
@@ -28,44 +31,42 @@ require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 			<?php endforeach; ?>
 			<?php endif; ?>
 		<?php endforeach; ?>
-		</select>
-		</td>
-    </tr>
-    <tr>
-        <th> 友情链接名称：</th>
-        <td><input type="text" name="link_name" id="link_name" style="width:120px;" class="input-text" ></td>
-    </tr>
-	<tr>
-        <th>友情链接URL：</th>
-        <td><input type="text" name="link_url" id="link_url" style="width:250px;" class="input-text" /></td>
-    </tr>
-	<tr>
-        <th>是否显示：</th>
-        <td>
-            <select name="display">
-            <option value="1">是</option>
-            <option value="0">否</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-		<th width="100">友情链接图片：</th>
-		<td>
-		    <input type="hidden" name="image_url" id="input_voucher" value="" />
-            <div id="previewImage"></div>
-		</td>
-	</tr>
-    <tr>
-	    <td width="100%" align="center" colspan="2">
-	       <input id="form_submit"  type="button" name="dosubmit" class="btn_submit"  value=" 提交 " />
-	    </td>
-	</tr>
-</table>
+		</select></td>
+			</tr>
+			<tr>
+				<th>友情链接名称：</th>
+				<td><input type="text" name="link_name" id="link_name"
+					style="width: 120px;" class="input-text"></td>
+			</tr>
+			<tr>
+				<th>友情链接URL：</th>
+				<td><input type="text" name="link_url" id="link_url"
+					style="width: 250px;" class="input-text" /></td>
+			</tr>
+			<tr>
+				<th>是否显示：</th>
+				<td><select name="display">
+						<option value="1">是</option>
+						<option value="0">否</option>
+				</select></td>
+			</tr>
+			<tr>
+				<th width="100">友情链接图片：</th>
+				<td><input type="hidden" name="image_url" id="input_voucher"
+					value="" />
+					<div id="previewImage"></div></td>
+			</tr>
+			<tr>
+				<td width="100%" align="center" colspan="2"><input id="form_submit"
+					type="button" name="dosubmit" class="btn_submit" value=" 提交 " /></td>
+			</tr>
+		</table>
 
-</form>
+	</form>
 
-<script src="<?php echo YUrl::assets('js', '/AjaxUploader/uploadImage.js'); ?>" ></script>
-<script type="text/javascript">
+	<script
+		src="<?php echo YUrl::assets('js', '/AjaxUploader/uploadImage.js'); ?>"></script>
+	<script type="text/javascript">
 
 var uploadUrl = '<?php echo YUrl::createBackendUrl('', 'Index', 'upload'); ?>';
 var baseJsUrl = '<?php echo YUrl::assets('js', ''); ?>';
@@ -92,5 +93,5 @@ $(document).ready(function(){
 });
 </script>
 
-</body>
-</html>
+	</body>
+	</html>

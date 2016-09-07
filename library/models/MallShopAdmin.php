@@ -8,11 +8,12 @@
 namespace models;
 
 class MallShopAdmin extends DbBase {
-
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'mall_shop_admin';
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'mall_shop_admin';
 
 }

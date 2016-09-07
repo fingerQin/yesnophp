@@ -8,12 +8,12 @@
 namespace models;
 
 class RemindData extends DbBase {
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'ms_remind_data';
 
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'ms_remind_data';
-
-	
 }

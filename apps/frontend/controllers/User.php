@@ -6,7 +6,7 @@
  */
 
 class UserController extends \common\controllers\User {
-
+    
     public function indexAction() {
         echo '登录成功';
         $this->end();

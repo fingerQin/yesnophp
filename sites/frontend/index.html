@@ -4,7 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>每天必看</title>
 <meta name="description" content="每天团购一次，精品消费指南">
-<meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
+<meta name="viewport"
+	content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-touch-fullscreen" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -171,7 +172,7 @@
 	-ms-transform: translate(-50%, -50%) rotateZ(-20deg);
 }
 
-[countdown-status='hidden'] .time-desc,[countdown-status='hidden'] .time-panel
+[countdown-status='hidden'] .time-desc, [countdown-status='hidden'] .time-panel
 	{
 	visibility: hidden;
 }
@@ -201,24 +202,30 @@
 	color: white;
 }
 
-.icon-list .icon-desc { text-align: center; color: #666666; }
+.icon-list .icon-desc {
+	text-align: center;
+	color: #666666;
+}
 
-body .icon-circle {background-color: #ff8822;}
+body .icon-circle {
+	background-color: #ff8822;
+}
 
-body .typeid22,body .typeid163,body .typeid235,body .typeid241,body .typeid242,body .typeid243
-{
+body .typeid22, body .typeid163, body .typeid235, body .typeid241, body .typeid242,
+	body .typeid243 {
 	background-color: #f48c78;
 }
 
-body .typeid2,body .typeid206,body .typeid149,body .typeid147,body .typeid165 {
-	background-color: #f8b868; 
+body .typeid2, body .typeid206, body .typeid149, body .typeid147, body .typeid165
+	{
+	background-color: #f8b868;
 }
 
-body .typeid0,body .typeid5,body .typeid,body .typeid278 {
+body .typeid0, body .typeid5, body .typeid, body .typeid278 {
 	background-color: #45d3bf;
 }
 
-body .typeid4,body .typeid78,body .typeid195,body .typeid226,body .typeid162
+body .typeid4, body .typeid78, body .typeid195, body .typeid226, body .typeid162
 	{
 	background-color: #62c4ea;
 }
@@ -292,7 +299,7 @@ body .typeid99 {
 	pointer-events: none
 }
 
-.msg-confirm,.msg-alert {
+.msg-confirm, .msg-alert {
 	-webkit-animation-name: pop;
 	-webkit-animation-duration: .3s
 }
@@ -312,18 +319,28 @@ body .typeid99 {
 -webkit-transform
 
 
+
+
 :scale
+
+
 
 
 (1
 .1
 
 
+
+
 );
 opacity
 
 
+
+
 :
+
+
 
 
 1
@@ -332,7 +349,11 @@ opacity
 -webkit-transform
 
 
+
+
 :scale(1)
+
+
 
 
 }
@@ -340,14 +361,22 @@ opacity
 -webkit-transform
 
 
+
+
 :scale(1)
+
+
 
 
 ;
 opacity
 
 
+
+
 :
+
+
 
 
 1
@@ -356,18 +385,28 @@ opacity
 -webkit-transform
 
 
+
+
 :scale
+
+
 
 
 (0
 .9
 
 
+
+
 );
 opacity
 
 
+
+
 :
+
+
 
 
 0
@@ -383,18 +422,28 @@ opacity
 -webkit-transform
 
 
+
+
 :scale
+
+
 
 
 (1
 .1
 
 
+
+
 );
 opacity
 
 
+
+
 :
+
+
 
 
 1
@@ -403,7 +452,11 @@ opacity
 -webkit-transform
 
 
+
+
 :scale(1)
+
+
 
 
 }
@@ -417,7 +470,11 @@ opacity
 -webkit-transform
 
 
+
+
 :translateY
+
+
 
 
 (-10%)
@@ -426,7 +483,11 @@ opacity
 -webkit-transform
 
 
+
+
 :translateY(0)
+
+
 
 
 }
@@ -458,7 +519,7 @@ opacity
 	bottom: .5rem
 }
 
-.msg-option div:first-child,.msg-option .msg-option-btns:first-child .btn:first-child
+.msg-option div:first-child, .msg-option .msg-option-btns:first-child .btn:first-child
 	{
 	border-radius: .06rem .06rem 0 0;
 	border-top: 0
@@ -515,199 +576,219 @@ opacity
 </style>
 <style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
 .en-markup-crop-options {
-    top: 18px !important;
-    left: 50% !important;
-    margin-left: -100px !important;
-    width: 200px !important;
-    border: 2px rgba(255,255,255,.38) solid !important;
-    border-radius: 4px !important;
+	top: 18px !important;
+	left: 50% !important;
+	margin-left: -100px !important;
+	width: 200px !important;
+	border: 2px rgba(255, 255, 255, .38) solid !important;
+	border-radius: 4px !important;
 }
 
 .en-markup-crop-options div div:first-of-type {
-    margin-left: 0px !important;
+	margin-left: 0px !important;
 }
-</style></head>
+</style>
+</head>
 <body id="index" data-com="pagecommon">
 
-        <header class="navbar">
-            <div class="nav-wrap-left">
-            	<a href="" class="react">
-                	<span class="nav-city">惠州<space></space><i class="text-icon icon-downarrow"></i></span>
-                </a>
-            </div>
-            <div class="box-search">
-            	<a class="react" href=""><i class="icon-search text-icon">⌕</i><span>输入专题/文章</span></a>
-            </div>
-            <div class="nav-wrap-right">
-                <a class="react" rel="nofollow" href=""><span class="nav-btn"><i class="text-icon">⍥</i>我的</span></a>
-            </div>
-        </header>
+	<header class="navbar">
+		<div class="nav-wrap-left">
+			<a href="" class="react"> <span class="nav-city">惠州<space></space><i
+					class="text-icon icon-downarrow"></i></span>
+			</a>
+		</div>
+		<div class="box-search">
+			<a class="react" href=""><i class="icon-search text-icon">⌕</i><span>输入专题/文章</span></a>
+		</div>
+		<div class="nav-wrap-right">
+			<a class="react" rel="nofollow" href=""><span class="nav-btn"><i
+					class="text-icon">⍥</i>我的</span></a>
+		</div>
+	</header>
 
-<!-- 广告 -->
-<section class="banner">
-	<img src="http://p0.meituan.net/mmc/4aec5752c979083eedf2fb3b685fe1f627006.jpg.webp" alt="android客户端下载">
-</section>
+	<!-- 广告 -->
+	<section class="banner">
+		<img
+			src="http://p0.meituan.net/mmc/4aec5752c979083eedf2fb3b685fe1f627006.jpg.webp"
+			alt="android客户端下载">
+	</section>
 
-<!-- 分类 -->
-<dl class="list list-in">
-	<dd>
-		<ul class="icon-list">
-			<li class="icon"><a class="react" href=""><span class="icon-circle typeid1">文</span><span class="icon-desc">文学</span></a></li><li class="icon">
-			<a class="react" href=""><span class="icon-circle typeid99">看</span><span class="icon-desc">历史</span></a></li><li class="icon">
-			<a class="react" href=""><span class="icon-circle typeid20">住</span><span class="icon-desc">科技</span></a></li><li class="icon">
-			<a class="react" href=""><span class="icon-circle typeid147">唱</span><span class="icon-desc">美食</span></a></li><li class="icon">
-            <a class="react" href=""><span class="icon-circle typeid22">美</span><span class="icon-desc">运动</span></a></li><li class="icon">
-			<a class="react" href=""><span class="icon-circle typeid162">票</span><span class="icon-desc">旅游</span></a></li><li class="icon">
-			<a class="react" href=""><span class="icon-circle typeid0">新</span><span class="icon-desc">娱乐</span></a></li><li class="icon icon-cyan">
-           	<a class="react" href=""><span class="icon-circle typeid0">全</span><span class="icon-desc">更多分类</span></a></li>
-        </ul>
-    </dd>
-</dl>
-
-<dl class="list">
-<dd>
-	<dl class="list">
-		<dt>猜你喜欢</dt>
-		<!-- start dd list -->
+	<!-- 分类 -->
+	<dl class="list list-in">
 		<dd>
-			<a href="" class="react">
-				<div class="dealcard" >
-		        <span class="dealcard-nobooking"></span>
-		        <div class="dealcard-img imgbox" data-com="unveil"></div>
-				    <div class="dealcard-block-right">
-				                <div class="dealcard-brand single-line">女性安全攻防知识全集</div>
-				        <div class="title text-block">女性安全事故频发的今天，怎样保护自己成了当前社会的焦点。本专题特别整理了相关的攻防知识。</div>
-				        <div class="price">
-				            <span class="strong-color">赞</span>&nbsp;<strong>88</strong>
-				            <span class="line-right">评论:1.8万</span>
-				        </div>
-				    </div>
-				</div>
-			</a>
+			<ul class="icon-list">
+				<li class="icon"><a class="react" href=""><span
+						class="icon-circle typeid1">文</span><span class="icon-desc">文学</span></a></li>
+				<li class="icon"><a class="react" href=""><span
+						class="icon-circle typeid99">看</span><span class="icon-desc">历史</span></a></li>
+				<li class="icon"><a class="react" href=""><span
+						class="icon-circle typeid20">住</span><span class="icon-desc">科技</span></a></li>
+				<li class="icon"><a class="react" href=""><span
+						class="icon-circle typeid147">唱</span><span class="icon-desc">美食</span></a></li>
+				<li class="icon"><a class="react" href=""><span
+						class="icon-circle typeid22">美</span><span class="icon-desc">运动</span></a></li>
+				<li class="icon"><a class="react" href=""><span
+						class="icon-circle typeid162">票</span><span class="icon-desc">旅游</span></a></li>
+				<li class="icon"><a class="react" href=""><span
+						class="icon-circle typeid0">新</span><span class="icon-desc">娱乐</span></a></li>
+				<li class="icon icon-cyan"><a class="react" href=""><span
+						class="icon-circle typeid0">全</span><span class="icon-desc">更多分类</span></a></li>
+			</ul>
 		</dd>
-
-		<dd>
-			<a href="" class="react">
-				<div class="dealcard" >
-		        <span class="dealcard-nobooking"></span>
-		        <div class="dealcard-img imgbox" data-com="unveil"></div>
-				    <div class="dealcard-block-right">
-				                <div class="dealcard-brand single-line">儿童防丢安全小知识</div>
-				        <div class="title text-block">儿童安全古往今来都是一个社会问题。怎样保护自己的孩子不受侵犯变得尤为重要。</div>
-				        <div class="price">
-				            <span class="strong-color">赞</span>&nbsp;<strong>88</strong>
-				            <span class="line-right">评论:1.8万</span>
-				        </div>
-				    </div>
-				</div>
-			</a>
-		</dd>
-		
-		<dd>
-			<a href="" class="react">
-				<div class="dealcard" >
-		        <span class="dealcard-nobooking"></span>
-		        <div class="dealcard-img imgbox" data-com="unveil"></div>
-				    <div class="dealcard-block-right">
-				                <div class="dealcard-brand single-line">火车头hotpot</div>
-				        <div class="title text-block">[3店通用]双人套餐，免费WiFi</div>
-				        <div class="price">
-				            <strong>88</strong><span class="strong-color">元</span><del>149元</del>
-				            <span class="line-right">已售429</span>
-				        </div>
-				    </div>
-				</div>
-			</a>
-		</dd>
-		
-		<dd>
-			<a href="" class="react">
-				<div class="dealcard" >
-		        <span class="dealcard-nobooking"></span>
-		        <div class="dealcard-img imgbox" data-com="unveil"></div>
-				    <div class="dealcard-block-right">
-				                <div class="dealcard-brand single-line">火车头hotpot</div>
-				        <div class="title text-block">[3店通用]双人套餐，免费WiFi</div>
-				        <div class="price">
-				            <strong>88</strong><span class="strong-color">元</span><del>149元</del>
-				            <span class="line-right">已售429</span>
-				        </div>
-				    </div>
-				</div>
-			</a>
-		</dd>
-		
-		<dd>
-			<a href="" class="react">
-				<div class="dealcard" >
-		        <span class="dealcard-nobooking"></span>
-		        <div class="dealcard-img imgbox" data-com="unveil"></div>
-				    <div class="dealcard-block-right">
-				                <div class="dealcard-brand single-line">火车头hotpot</div>
-				        <div class="title text-block">[3店通用]双人套餐，免费WiFi</div>
-				        <div class="price">
-				            <strong>88</strong><span class="strong-color">元</span><del>149元</del>
-				            <span class="line-right">已售429</span>
-				        </div>
-				    </div>
-				</div>
-			</a>
-		</dd>
-		
-		<dd>
-			<a href="" class="react">
-				<div class="dealcard" >
-		        <span class="dealcard-nobooking"></span>
-		        <div class="dealcard-img imgbox" data-com="unveil"></div>
-				    <div class="dealcard-block-right">
-				                <div class="dealcard-brand single-line">火车头hotpot</div>
-				        <div class="title text-block">[3店通用]双人套餐，免费WiFi</div>
-				        <div class="price">
-				            <strong>88</strong><span class="strong-color">元</span><del>149元</del>
-				            <span class="line-right">已售429</span>
-				        </div>
-				    </div>
-				</div>
-			</a>
-		</dd>
-		<!-- end dd list -->
 	</dl>
-</dd>
 
-<dd class="db">
-	<a class="react" href="http://i.meituan.com/huizhou?stid_b=_b4" gaevent="imt/index/list">
-		<div class="more">查看全部团购</div>
-	</a>
-</dd>
+	<dl class="list">
+		<dd>
+			<dl class="list">
+				<dt>猜你喜欢</dt>
+				<!-- start dd list -->
+				<dd>
+					<a href="" class="react">
+						<div class="dealcard">
+							<span class="dealcard-nobooking"></span>
+							<div class="dealcard-img imgbox" data-com="unveil"></div>
+							<div class="dealcard-block-right">
+								<div class="dealcard-brand single-line">女性安全攻防知识全集</div>
+								<div class="title text-block">女性安全事故频发的今天，怎样保护自己成了当前社会的焦点。本专题特别整理了相关的攻防知识。</div>
+								<div class="price">
+									<span class="strong-color">赞</span>&nbsp;<strong>88</strong> <span
+										class="line-right">评论:1.8万</span>
+								</div>
+							</div>
+						</div>
+					</a>
+				</dd>
 
-</dl>
-    <footer>
-        <div class="footer-bar">
-            <div class="pull-right">
-                <span>城市:</span>
-                <space></space>
-                <a href="" class="btn btn-weak footer-citybtn">惠州</a>
-            </div>
+				<dd>
+					<a href="" class="react">
+						<div class="dealcard">
+							<span class="dealcard-nobooking"></span>
+							<div class="dealcard-img imgbox" data-com="unveil"></div>
+							<div class="dealcard-block-right">
+								<div class="dealcard-brand single-line">儿童防丢安全小知识</div>
+								<div class="title text-block">儿童安全古往今来都是一个社会问题。怎样保护自己的孩子不受侵犯变得尤为重要。</div>
+								<div class="price">
+									<span class="strong-color">赞</span>&nbsp;<strong>88</strong> <span
+										class="line-right">评论:1.8万</span>
+								</div>
+							</div>
+						</div>
+					</a>
+				</dd>
+
+				<dd>
+					<a href="" class="react">
+						<div class="dealcard">
+							<span class="dealcard-nobooking"></span>
+							<div class="dealcard-img imgbox" data-com="unveil"></div>
+							<div class="dealcard-block-right">
+								<div class="dealcard-brand single-line">火车头hotpot</div>
+								<div class="title text-block">[3店通用]双人套餐，免费WiFi</div>
+								<div class="price">
+									<strong>88</strong><span class="strong-color">元</span>
+									<del>149元</del>
+									<span class="line-right">已售429</span>
+								</div>
+							</div>
+						</div>
+					</a>
+				</dd>
+
+				<dd>
+					<a href="" class="react">
+						<div class="dealcard">
+							<span class="dealcard-nobooking"></span>
+							<div class="dealcard-img imgbox" data-com="unveil"></div>
+							<div class="dealcard-block-right">
+								<div class="dealcard-brand single-line">火车头hotpot</div>
+								<div class="title text-block">[3店通用]双人套餐，免费WiFi</div>
+								<div class="price">
+									<strong>88</strong><span class="strong-color">元</span>
+									<del>149元</del>
+									<span class="line-right">已售429</span>
+								</div>
+							</div>
+						</div>
+					</a>
+				</dd>
+
+				<dd>
+					<a href="" class="react">
+						<div class="dealcard">
+							<span class="dealcard-nobooking"></span>
+							<div class="dealcard-img imgbox" data-com="unveil"></div>
+							<div class="dealcard-block-right">
+								<div class="dealcard-brand single-line">火车头hotpot</div>
+								<div class="title text-block">[3店通用]双人套餐，免费WiFi</div>
+								<div class="price">
+									<strong>88</strong><span class="strong-color">元</span>
+									<del>149元</del>
+									<span class="line-right">已售429</span>
+								</div>
+							</div>
+						</div>
+					</a>
+				</dd>
+
+				<dd>
+					<a href="" class="react">
+						<div class="dealcard">
+							<span class="dealcard-nobooking"></span>
+							<div class="dealcard-img imgbox" data-com="unveil"></div>
+							<div class="dealcard-block-right">
+								<div class="dealcard-brand single-line">火车头hotpot</div>
+								<div class="title text-block">[3店通用]双人套餐，免费WiFi</div>
+								<div class="price">
+									<strong>88</strong><span class="strong-color">元</span>
+									<del>149元</del>
+									<span class="line-right">已售429</span>
+								</div>
+							</div>
+						</div>
+					</a>
+				</dd>
+				<!-- end dd list -->
+			</dl>
+		</dd>
+
+		<dd class="db">
+			<a class="react" href="http://i.meituan.com/huizhou?stid_b=_b4"
+				gaevent="imt/index/list">
+				<div class="more">查看全部团购</div>
+			</a>
+		</dd>
+
+	</dl>
+	<footer>
+		<div class="footer-bar">
+			<div class="pull-right">
+				<span>城市:</span>
+				<space></space>
+				<a href="" class="btn btn-weak footer-citybtn">惠州</a>
+			</div>
 			<a href="" class="btn btn-weak" rel="nofollow">退出登录</a>
-        </div>
-        <div class="footer-nav">
-            <ul>
-                <li><a class="react" href="">首页</a></li>
-                <li><a class="react" rel="nofollow" href="">订单</a>
-                </li><li><a data-pos="footer" class="react" data-com="i2app" gaevent="imt/ft/client" href="http://i.meituan.com/client/?from=footer&subchannel=i_ft&landingpage=1">客户端</a>
-                </li><li><a class="react" href="http://i.meituan.com/help/">帮助</a></li>
-            </ul>
-        </div>
-        <div class="footer-links">友情链接：
-            <a target="_blank" href="">猫眼电影</a>
-            <a target="_blank" href="">美团外卖</a>
-            <a target="_blank" href="">饿了么</a>
-        </div>
-        <div class="footer-copyright">
-            <div class="hr"></div>
-            <span class="footer-copyright-text">©2014 每天必看网 <a href="http://www.miibeian.gov.cn/" target="_blank">京ICP证070791号</a></span>
-        </div>
-    </footer>
+		</div>
+		<div class="footer-nav">
+			<ul>
+				<li><a class="react" href="">首页</a></li>
+				<li><a class="react" rel="nofollow" href="">订单</a></li>
+				<li><a data-pos="footer" class="react" data-com="i2app"
+					gaevent="imt/ft/client"
+					href="http://i.meituan.com/client/?from=footer&subchannel=i_ft&landingpage=1">客户端</a>
+				</li>
+				<li><a class="react" href="http://i.meituan.com/help/">帮助</a></li>
+			</ul>
+		</div>
+		<div class="footer-links">
+			友情链接： <a target="_blank" href="">猫眼电影</a> <a target="_blank" href="">美团外卖</a>
+			<a target="_blank" href="">饿了么</a>
+		</div>
+		<div class="footer-copyright">
+			<div class="hr"></div>
+			<span class="footer-copyright-text">©2014 每天必看网 <a
+				href="http://www.miibeian.gov.cn/" target="_blank">京ICP证070791号</a></span>
+		</div>
+	</footer>
 
-	</body>
+</body>
 </html>

@@ -8,9 +8,10 @@
 namespace models;
 
 class GmBetRecordNumber extends DbBase {
-
+    
     /**
      * 表名。
+     * 
      * @var string
      */
     protected $_table_name = 'gm_bet_record_number';

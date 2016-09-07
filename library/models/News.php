@@ -8,15 +8,17 @@
 namespace models;
 
 class News extends DbBase {
-
+    
     /**
      * 表名。
+     * 
      * @var string
      */
     protected $_table_name = 'ms_news';
-
+    
     /**
      * 文章列表。
+     * 
      * @param string $title 文章标题。
      * @param number $admin_id 管理员ID。
      * @param string $starttime 开始时间。
@@ -26,11 +28,11 @@ class News extends DbBase {
      * @return array
      */
     public function getList($title = '', $admin_id = -1, $starttime = '', $endtime = '', $page, $count) {
-        $offset  = $this->getPaginationOffset($page, $count);
+        $offset = $this->getPaginationOffset($page, $count);
         $columns = ' * ';
-        $where   = ' WHERE status = :status ';
+        $where = ' WHERE status = :status ';
         $params = [
-            ':status' => 1,
+                ':status' => 1 
         ];
         if (strlen($title) > 0) {
             $where .= ' AND title LIKE :title ';
@@ -44,7 +46,7 @@ class News extends DbBase {
             $where .= ' AND created_time < :endtime ';
             $params[':endtime'] = strtotime($endtime);
         }
-        if ($admin_id != -1) {
+        if ($admin_id != - 1) {
             $where .= ' AND created_by = :admin_id ';
             $params[':admin_id'] = $admin_id;
         }
@@ -53,17 +55,14 @@ class News extends DbBase {
         $sth = $this->link->prepare($sql);
         $sth->execute($params);
         $count_data = $sth->fetch();
-        $total  = $count_data ? $count_data['count'] : 0;
+        $total = $count_data ? $count_data['count'] : 0;
         $sql = "SELECT {$columns} FROM {$this->_table_name} {$where} {$order_by} LIMIT {$offset},{$count}";
         $sth = $this->link->prepare($sql);
         $sth->execute($params);
         $list = $sth->fetchAll();
         $result = array(
-            'list'   => $list,
-            'total'  => $total,
-            'page'   => $page,
-            'count'  => $count,
-            'isnext' => $this->IsHasNextPage($total, $page, $count),
+                'list' => $list,'total' => $total,'page' => $page,'count' => $count,
+                'isnext' => $this->IsHasNextPage($total, $page, $count) 
         );
         return $result;
     }

@@ -5,10 +5,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="" enctype="multipart/form-data" method="post" >
-<input type="file" name="photo[]" /><br />
-<input type="file" name="photo[]" /><br />
-<input type="submit" value="提交" >
-</form>
+	<form action="" enctype="multipart/form-data" method="post">
+		<input type="file" name="photo[]" /><br /> <input type="file"
+			name="photo[]" /><br /> <input type="submit" value="提交">
+	</form>
 </body>
 </html>

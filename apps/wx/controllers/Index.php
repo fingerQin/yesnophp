@@ -6,11 +6,11 @@
  */
 
 class IndexController extends \common\controllers\Guest {
-
+    
     /**
      * 微信公众号网站首页。
      */
     public function indexAction() {
-        
+    
     }
 }

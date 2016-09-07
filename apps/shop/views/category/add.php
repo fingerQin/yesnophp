@@ -4,7 +4,9 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/dialog_header.php');
 ?>
 
 <div class="site-form">
-	<form action="<?php echo YUrl::createShopUrl('', 'Category', 'add'); ?>" method="post" name="myform" id="myform">
+	<form
+		action="<?php echo YUrl::createShopUrl('', 'Category', 'add'); ?>"
+		method="post" name="myform" id="myform">
 
 		<div class="row">
 			<div class="col-1" align="right">
@@ -12,7 +14,8 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/dialog_header.php');
 			</div>
 			<div class="cc">
 				<div class="input">
-					<input type="text" style="width:200px;" class="form-input" name="cat_name" value="">
+					<input type="text" style="width: 200px;" class="form-input"
+						name="cat_name" value="">
 				</div>
 			</div>
 		</div>
@@ -23,7 +26,8 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/dialog_header.php');
 			</div>
 			<div class="cc">
 				<div class="input">
-					<input type="text" style="width:50px;" class="form-input" name="listorder" value="0"> (从小到大排序)
+					<input type="text" style="width: 50px;" class="form-input"
+						name="listorder" value="0"> (从小到大排序)
 				</div>
 			</div>
 		</div>
@@ -34,7 +38,8 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/dialog_header.php');
 			</div>
 			<div class="col-8">
 				<div class="ctrl">
-					<input id="form_submit" type="button" value="保存" class="form-submit">
+					<input id="form_submit" type="button" value="保存"
+						class="form-submit">
 				</div>
 			</div>
 		</div>

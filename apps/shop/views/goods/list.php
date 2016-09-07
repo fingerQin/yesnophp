@@ -5,8 +5,8 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 <div class="main" id="main">
 	<div class="w cc">
 			<?php
-			require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/left_menu.php');
-			?>
+require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/left_menu.php');
+?>
 			<div class="container">
 			<div class="site-crumb">
 				<a href="/">首页</a> <span class="arrow">></span> <a href="">商品管理</a>
@@ -68,9 +68,12 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 			<div class="site-filter-bar m-t-20">
 				<div class="tags">
 					<ul class="cc">
-						<li <?php echo ($updown==-1) ? 'class="active"' : ''; ?> onClick="chanageStatus(-1);">全部商品</li>
-						<li <?php echo ($updown==1) ? 'class="active"' : ''; ?> onClick="chanageStatus(1);">在售的商品</li>
-						<li <?php echo ($updown==0) ? 'class="active"' : ''; ?> onClick="chanageStatus(0);">下架的商品</li>
+						<li <?php echo ($updown==-1) ? 'class="active"' : ''; ?>
+							onClick="chanageStatus(-1);">全部商品</li>
+						<li <?php echo ($updown==1) ? 'class="active"' : ''; ?>
+							onClick="chanageStatus(1);">在售的商品</li>
+						<li <?php echo ($updown==0) ? 'class="active"' : ''; ?>
+							onClick="chanageStatus(0);">下架的商品</li>
 					</ul>
 				</div>
 				<div class="bar">
@@ -93,7 +96,8 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 					<div class="detail cc">
 						<div class="col-5">
 							<div class="thumb">
-								<img src="<?php echo $goods['goods_img']; ?>" alt="<?php echo htmlspecialchars($goods['goods_name']); ?>">
+								<img src="<?php echo $goods['goods_img']; ?>"
+									alt="<?php echo htmlspecialchars($goods['goods_name']); ?>">
 							</div>
 							<div class="info">
 								<strong><?php echo htmlspecialchars($goods['goods_name']); ?></strong>
@@ -118,12 +122,16 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 						</div>
 						<div class="col-1">
 							<p class="ctrl m-t-20">
-								<a target="_blank" href="<?php echo YUrl::createShopUrl('', 'Goods', 'detail', ['goods_id' => $goods['goods_id']]); ?>">[编辑商品]</a>
-								<br /> <a href="###" onclick="deleteDialog('deleteCoupon', '<?php echo YUrl::createShopUrl('', 'Goods', 'delete', ['goods_id' => $goods['goods_id']]); ?>', '<?php echo htmlspecialchars($goods['goods_name']); ?>')">[删除商品]</a>
+								<a target="_blank"
+									href="<?php echo YUrl::createShopUrl('', 'Goods', 'detail', ['goods_id' => $goods['goods_id']]); ?>">[编辑商品]</a>
+								<br /> <a href="###"
+									onclick="deleteDialog('deleteCoupon', '<?php echo YUrl::createShopUrl('', 'Goods', 'delete', ['goods_id' => $goods['goods_id']]); ?>', '<?php echo htmlspecialchars($goods['goods_name']); ?>')">[删除商品]</a>
 								<?php if ($goods['marketable']): ?>
-								<br /> <a href="###" onclick="normalDialog('updownCoupon', '<?php echo YUrl::createShopUrl('', 'Goods', 'updown', ['goods_id' => $goods['goods_id'], 'updown' => 0]); ?>', '您确定要下架该商品吗？')">[下架]</a>
+								<br /> <a href="###"
+									onclick="normalDialog('updownCoupon', '<?php echo YUrl::createShopUrl('', 'Goods', 'updown', ['goods_id' => $goods['goods_id'], 'updown' => 0]); ?>', '您确定要下架该商品吗？')">[下架]</a>
 								<?php else: ?>
-								<br /> <a href="###" onclick="normalDialog('updownCoupon', '<?php echo YUrl::createShopUrl('', 'Goods', 'updown', ['goods_id' => $goods['goods_id'], 'updown' => 1]); ?>', '您确定要上架该商品吗？')">[上架]</a>
+								<br /> <a href="###"
+									onclick="normalDialog('updownCoupon', '<?php echo YUrl::createShopUrl('', 'Goods', 'updown', ['goods_id' => $goods['goods_id'], 'updown' => 1]); ?>', '您确定要上架该商品吗？')">[上架]</a>
 								<?php endif; ?>
 							</p>
 						</div>

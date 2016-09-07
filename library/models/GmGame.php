@@ -8,11 +8,12 @@
 namespace models;
 
 class GmGame extends DbBase {
-
+    
     /**
      * 表名。
+     * 
      * @var string
      */
     protected $_table_name = 'gm_game';
-    
+
 }

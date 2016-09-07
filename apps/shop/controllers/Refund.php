@@ -6,11 +6,11 @@
  */
 
 class RefundController extends \common\controllers\Shop {
-
+    
     /**
      * 退款列表。
      */
     public function listAction() {
-        
+    
     }
 }

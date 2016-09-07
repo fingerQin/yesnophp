@@ -5,13 +5,15 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 <div class="main" id="main">
 	<div class="w cc">
 			<?php
-			require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/left_menu.php');
-			?>
+require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/left_menu.php');
+?>
 			<div class="container">
 			<div class="site-crumb">
 				<a href="/">首页</a> <span class="arrow">></span> <a href="">商品管理</a>
 				<span class="arrow"> > </span> <a href="">运费模板</a>
-				<button style="float:right;" onClick="postDialog('addFreight', '<?php echo YUrl::createShopUrl('', 'Freight', 'add'); ?>', '添加运费模板', 520, 450);" class="normal_btn">添加运费模板</button>
+				<button style="float: right;"
+					onClick="postDialog('addFreight', '<?php echo YUrl::createShopUrl('', 'Freight', 'add'); ?>', '添加运费模板', 520, 450);"
+					class="normal_btn">添加运费模板</button>
 			</div>
 
 			<div class="site-filter-bar m-t-20">
@@ -54,8 +56,11 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 						</div>
 						<div class="col-1 txt-c">
 							<p class="ctrl">
-								<a href="###" onClick="edit(<?php echo $tpl['tpl_id'] ?>, '<?php echo htmlspecialchars($tpl['freight_name']); ?>')">[编辑]</a>
-								<a href="###" onclick="deleteDialog('deleteFreight', '<?php echo YUrl::createShopUrl('', 'Freight', 'delete', ['tpl_id' => $tpl['tpl_id']]); ?>', '<?php echo htmlspecialchars($tpl['freight_name']); ?>')" title="删除">[删除]</a>
+								<a href="###"
+									onClick="edit(<?php echo $tpl['tpl_id'] ?>, '<?php echo htmlspecialchars($tpl['freight_name']); ?>')">[编辑]</a>
+								<a href="###"
+									onclick="deleteDialog('deleteFreight', '<?php echo YUrl::createShopUrl('', 'Freight', 'delete', ['tpl_id' => $tpl['tpl_id']]); ?>', '<?php echo htmlspecialchars($tpl['freight_name']); ?>')"
+									title="删除">[删除]</a>
 							</p>
 						</div>
 					</div>
@@ -63,7 +68,7 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 				<?php endforeach; ?>
 
 			</div>
-			
+
 			<div class="m-t-50"></div>
 		</div>
 	</div>

@@ -6,9 +6,13 @@ use common\YUrl;
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>UploadiFive Test</title>
-<script src="<?php echo YUrl::assets('js', '/jquery.min.js'); ?>" type="text/javascript"></script>
-<script language="javascript" type="text/javascript" src="<?php echo YUrl::assets('js', '/uploadify/jquery.uploadify.min.js'); ?>"></script>
-<link href="<?php echo YUrl::assets('js', '/uploadify/uploadify.css'); ?>" rel="stylesheet" type="text/css">
+<script src="<?php echo YUrl::assets('js', '/jquery.min.js'); ?>"
+	type="text/javascript"></script>
+<script language="javascript" type="text/javascript"
+	src="<?php echo YUrl::assets('js', '/uploadify/jquery.uploadify.min.js'); ?>"></script>
+<link
+	href="<?php echo YUrl::assets('js', '/uploadify/uploadify.css'); ?>"
+	rel="stylesheet" type="text/css">
 <style type="text/css">
 body {
 	font: 13px Arial, Helvetica, Sans-serif;
@@ -20,7 +24,8 @@ body {
 	<h1>Uploadify Demo</h1>
 	<form>
 		<div id="queue"></div>
-		<input id="file_upload" name="file_upload" type="file" multiple="false">
+		<input id="file_upload" name="file_upload" type="file"
+			multiple="false">
 	</form>
 
 	<script type="text/javascript">

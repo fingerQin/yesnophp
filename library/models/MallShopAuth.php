@@ -8,10 +8,11 @@
 namespace models;
 
 class MallShopAuth extends DbBase {
-
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'mall_shop_auth';
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'mall_shop_auth';
 }

@@ -8,9 +8,10 @@
 namespace models;
 
 class GmYygQh extends DbBase {
-
+    
     /**
      * 表名。
+     * 
      * @var string
      */
     protected $_table_name = 'gm_yyg_qh';

@@ -6,13 +6,12 @@
  */
 
 class IndexController extends \common\controllers\Common {
+    
+    /**
+     * 首页。
+     */
+    public function indexAction() {
+    
+    }
 
-	/**
-	 * 首页。
-	 */
-	public function indexAction() {
-		
-	}
-
-	
 }

@@ -5,17 +5,22 @@ use common\YUrl;
 <html lang="zh-cmn-Hans">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,user-scalable=0">
 <title>不单卖</title>
-<link rel="stylesheet" href="<?php echo YUrl::assets('css', '/wx/common.css'); ?>" />
-<link rel="stylesheet" href="<?php echo YUrl::assets('css', '/wx/lottery.css'); ?>" />
+<link rel="stylesheet"
+	href="<?php echo YUrl::assets('css', '/wx/common.css'); ?>" />
+<link rel="stylesheet"
+	href="<?php echo YUrl::assets('css', '/wx/lottery.css'); ?>" />
 </head>
 <body>
 
 	<article class="docBody clearfix newBetPage">
 		<header id="header">
 			<h1>大乐透</h1>
-			<a href="javascript:;" cpurl="" class="rightBox" rel="nofollow">往期开奖</a> <a class="goBack" href="javascript:;" cpurl="" target="_self" rel="nofollow">返回</a>
+			<a href="javascript:;" cpurl="" class="rightBox" rel="nofollow">往期开奖</a>
+			<a class="goBack" href="javascript:;" cpurl="" target="_self"
+				rel="nofollow">返回</a>
 		</header>
 		<section id="wraper" style="height: 760px;">
 			<div>
@@ -23,8 +28,7 @@ use common\YUrl;
 					<span class="period">第2016053期</span>
 				</div>
 				<div class="gameTip clearfix">
-					<span class="l_box rockTip" style="">机选</span> <span
-						class="r_box">至少选择5个红球，2个蓝球</span>
+					<span class="l_box rockTip" style="">机选</span> <span class="r_box">至少选择5个红球，2个蓝球</span>
 				</div>
 				<div class="betBox">
 					<div class="ballCon redBalls">

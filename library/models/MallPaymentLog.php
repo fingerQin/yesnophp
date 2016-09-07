@@ -8,10 +8,11 @@
 namespace models;
 
 class MallPaymentLog extends DbBase {
-
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'mall_payment_log';
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'mall_payment_log';
 }

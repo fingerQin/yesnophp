@@ -1,40 +1,47 @@
 <?php
 use common\YUrl;
-require_once(APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
+require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 ?>
 
 <style type="text/css">
-	html{_overflow-y:scroll}
+html {
+	_overflow-y: scroll
+}
 </style>
 
 <div class="pad_10">
-<form action="<?php echo YUrl::createBackendUrl('', 'Config', 'add'); ?>" method="post" name="myform" id="myform">
-<table cellpadding="2" cellspacing="1" class="table_form" width="100%">
+	<form
+		action="<?php echo YUrl::createBackendUrl('', 'Config', 'add'); ?>"
+		method="post" name="myform" id="myform">
+		<table cellpadding="2" cellspacing="1" class="table_form" width="100%">
 
-	<tr>
-		<th width="80">配置标题：</th>
-		<td><input type="text" name="ctitle" id="ctitle" size="20" class="input-text" value="">（简要说明）</td>
-	</tr>
-	<tr>
-		<th width="80">配置编码：</th>
-		<td><input type="text" name="cname" id="cname" size="20" class="input-text" value="">（字母、数字、下划线组成）</td>
-	</tr>
-	<tr>
-		<th width="80">配置值：</th>
-		<td><textarea name="cvalue" id="cvalue" style="width:300px;height:50px;" rows="3" cols="50"></textarea></td>
-	</tr>
-	<tr>
-		<th width="80">描述：</th>
-		<td><textarea name="description" id="description" style="width:300px;height:50px;" rows="3" cols="50"></textarea></td>
-	</tr>
-    <tr>
-	    <td width="100%" align="center" colspan="2">
-	       <input id="form_submit"  type="button" name="dosubmit" class="btn_submit"  value=" 提交 " />
-	    </td>
-	</tr>
-</table>
+			<tr>
+				<th width="80">配置标题：</th>
+				<td><input type="text" name="ctitle" id="ctitle" size="20"
+					class="input-text" value="">（简要说明）</td>
+			</tr>
+			<tr>
+				<th width="80">配置编码：</th>
+				<td><input type="text" name="cname" id="cname" size="20"
+					class="input-text" value="">（字母、数字、下划线组成）</td>
+			</tr>
+			<tr>
+				<th width="80">配置值：</th>
+				<td><textarea name="cvalue" id="cvalue"
+						style="width: 300px; height: 50px;" rows="3" cols="50"></textarea></td>
+			</tr>
+			<tr>
+				<th width="80">描述：</th>
+				<td><textarea name="description" id="description"
+						style="width: 300px; height: 50px;" rows="3" cols="50"></textarea></td>
+			</tr>
+			<tr>
+				<td width="100%" align="center" colspan="2"><input id="form_submit"
+					type="button" name="dosubmit" class="btn_submit" value=" 提交 " /></td>
+			</tr>
+		</table>
 
-</form>
+	</form>
 </div>
 
 <script type="text/javascript">

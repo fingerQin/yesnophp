@@ -8,10 +8,11 @@
 namespace models;
 
 class MallOrderItem extends DbBase {
-
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'mall_order_item';
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'mall_order_item';
 }

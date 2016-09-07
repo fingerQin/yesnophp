@@ -7,7 +7,7 @@
 namespace winer\WeChat\Pay;
 
 class WxPayException extends \Exception {
-	public function errorMessage() {
-		return $this->getMessage();
-	}
+    public function errorMessage() {
+        return $this->getMessage();
+    }
 }

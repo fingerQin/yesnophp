@@ -8,11 +8,12 @@
 namespace models;
 
 class WxMenu extends DbBase {
-
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'wx_menu';
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'wx_menu';
 
 }

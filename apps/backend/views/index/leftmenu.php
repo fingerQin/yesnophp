@@ -1,7 +1,7 @@
-<?php 
+<?php
 use common\YUrl;
-foreach ($left_menu as $menu): 
-?>
+foreach ($left_menu as $menu) :
+    ?>
 <h3 class="f14">
 	<span class="switchs cu on" title="展开与收缩"></span><?php echo $menu['name']; ?>
 </h3>
@@ -9,7 +9,9 @@ foreach ($left_menu as $menu):
 <?php foreach ($menu['sub_menu'] as $sub): ?>
 
 	<?php $menu_url = YUrl::createBackendUrl($sub['m'], $sub['c'], $sub['a']); ?>
-	<li id="_MP<?php echo $sub['menu_id']; ?>" class="sub_menu"><a href="javascript:_MP(<?php echo $sub['menu_id']; ?>, '<?php echo $menu_url; ?>');" hidefocus="true" style="outline: none;"><?php echo $sub['name']; ?></a></li>
+	<li id="_MP<?php echo $sub['menu_id']; ?>" class="sub_menu"><a
+		href="javascript:_MP(<?php echo $sub['menu_id']; ?>, '<?php echo $menu_url; ?>');"
+		hidefocus="true" style="outline: none;"><?php echo $sub['name']; ?></a></li>
 
 <?php endforeach; ?>
 </ul>

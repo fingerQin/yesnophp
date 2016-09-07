@@ -8,11 +8,12 @@
 namespace models;
 
 class MallShopCategory extends DbBase {
-
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'mall_shop_category';
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'mall_shop_category';
 
 }

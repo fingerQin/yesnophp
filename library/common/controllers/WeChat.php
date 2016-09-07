@@ -6,8 +6,8 @@
  * @date 2015-11-13
  */
 
-namespace common\controllers; 
+namespace common\controllers;
 
 class WeChat extends Common {
-	
+
 }

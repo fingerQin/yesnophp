@@ -6,5 +6,5 @@
  */
 
 class ErrorController extends \common\controllers\Error {
-	
+
 }

@@ -8,9 +8,10 @@
 namespace models;
 
 class NewsData extends DbBase {
-
+    
     /**
      * 表名。
+     * 
      * @var string
      */
     protected $_table_name = 'ms_news_data';

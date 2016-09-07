@@ -8,11 +8,12 @@
 namespace models;
 
 class UserBind extends DbBase {
-
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'ms_user_bind';
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'ms_user_bind';
 
 }

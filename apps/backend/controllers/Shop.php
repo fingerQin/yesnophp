@@ -10,36 +10,36 @@ use winer\Paginator;
 use services\ShopService;
 
 class ShopController extends \common\controllers\Admin {
-
+    
     /**
      * 商家列表。
      */
     public function listAction() {
         $shop_name = $this->getString('shop_name', '');
-        $cat_id    = $this->getString('cat_id', -1);
-        $page      = $this->getInt(YCore::appconfig('pager'), 1);
-        $list      = ShopService::getShopList($shop_name, $page, 10);
+        $cat_id = $this->getString('cat_id', - 1);
+        $page = $this->getInt(YCore::appconfig('pager'), 1);
+        $list = ShopService::getShopList($shop_name, $page, 10);
         $paginator = new Paginator($list['total'], 10);
         $page_html = $paginator->backendPageShow();
         $this->_view->assign('page_html', $page_html);
         $this->_view->assign('shop_name', $shop_name);
         $this->_view->assign('list', $list['list']);
     }
-
+    
     /**
      * 商家添加。
      */
     public function addAction() {
         if ($this->_request->isXmlHttpRequest()) {
-        	$account     = $this->getString('account', '');
-            $shop_name   = $this->getString('shop_name');
-            $shop_logo   = $this->getString('shop_logo');
-            $shop_desc   = $this->getString('shop_desc');
+            $account = $this->getString('account', '');
+            $shop_name = $this->getString('shop_name');
+            $shop_logo = $this->getString('shop_logo');
+            $shop_desc = $this->getString('shop_desc');
             $shop_notice = $this->getString('shop_notice');
-            $link_man    = $this->getString('link_man');
+            $link_man = $this->getString('link_man');
             $mobilephone = $this->getString('mobilephone');
-            $telephone   = $this->getString('telephone');
-            $qq          = $this->getString('qq');
+            $telephone = $this->getString('telephone');
+            $qq = $this->getString('qq');
             $max_goods_count = $this->getInt('max_goods_count');
             $is_allow_delete_comment = $this->getInt('is_allow_delete_comment');
             $is_lock = $this->getInt('is_lock');
@@ -51,22 +51,22 @@ class ShopController extends \common\controllers\Admin {
             }
         }
     }
-
+    
     /**
      * 商家编辑。
      */
     public function editAction() {
         if ($this->_request->isXmlHttpRequest()) {
-        	$account     = $this->getString('account', '');
-            $shop_id     = $this->getString('shop_id');
-            $shop_name   = $this->getString('shop_name');
-            $shop_logo   = $this->getString('shop_logo');
-            $shop_desc   = $this->getString('shop_desc');
+            $account = $this->getString('account', '');
+            $shop_id = $this->getString('shop_id');
+            $shop_name = $this->getString('shop_name');
+            $shop_logo = $this->getString('shop_logo');
+            $shop_desc = $this->getString('shop_desc');
             $shop_notice = $this->getString('shop_notice');
-            $link_man    = $this->getString('link_man');
+            $link_man = $this->getString('link_man');
             $mobilephone = $this->getString('mobilephone');
-            $telephone   = $this->getString('telephone');
-            $qq          = $this->getString('qq');
+            $telephone = $this->getString('telephone');
+            $qq = $this->getString('qq');
             $max_goods_count = $this->getString('max_goods_count');
             $is_allow_delete_comment = $this->getString('is_allow_delete_comment');
             $is_lock = $this->getString('is_lock');
@@ -81,7 +81,7 @@ class ShopController extends \common\controllers\Admin {
         $detail = ShopService::getShopDetail($shop_id);
         $this->_view->assign('detail', $detail);
     }
-
+    
     /**
      * 商家删除。
      */

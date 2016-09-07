@@ -8,9 +8,10 @@
 namespace models;
 
 class MallLogistics extends DbBase {
-
+    
     /**
      * 表名。
+     * 
      * @var string
      */
     protected $_table_name = 'mall_logistics';

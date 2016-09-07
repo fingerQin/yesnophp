@@ -9,37 +9,38 @@ namespace apis;
 
 use common\YCore;
 class ApiFactory {
-
-	/**
-	 * 根据接口名称返回接口对象。
-	 * -- 1、接口名称转类名称规则：user.login = UserLoginApi
-	 * -- 2、当method参数为空的时候，要抛出异常给调用的人捕获处理。
-	 * @param array $api_data 请求来的所有参数。
-	 * @throws Exception
-	 * @return Api
-	 */
-	public static function factory($api_data) {
-		if (!isset($api_data['method']) || strlen($api_data['method']) === 0) {
-			YCore::exception(1100001, 'method does not exist');
-		}
-		if (!isset($api_data['v']) || strlen($api_data['v']) === 0 || is_numeric($api_data['v']) === false) {
-			YCore::exception(1100002, 'version number is wrong');
-		}
-		// 将method参数转换为实际的接口类名称。
-		$api_name = $api_data['method'];
-		$params = explode('.', $api_name);
-		$classname = '';
-		foreach($params as $param) {
-			$classname .= ucfirst($param);
-		}
-		$version = $api_data['v'];
-		$version = str_replace('.', '_', $version);
-		// 只能通过此种方式才能通过变量形式new对象。
-		$classname = "apis\\v{$version}\\{$classname}Api";
-		if (strlen($api_name) && class_exists($classname)) {
-			return new $classname($api_data);
-		} else {
-			YCore::exception(1100003, 'Interface does not exist');
-		}
-	}
+    
+    /**
+     * 根据接口名称返回接口对象。
+     * -- 1、接口名称转类名称规则：user.login = UserLoginApi
+     * -- 2、当method参数为空的时候，要抛出异常给调用的人捕获处理。
+     * 
+     * @param array $api_data 请求来的所有参数。
+     * @throws Exception
+     * @return Api
+     */
+    public static function factory($api_data) {
+        if (! isset($api_data['method']) || strlen($api_data['method']) === 0) {
+            YCore::exception(1100001, 'method does not exist');
+        }
+        if (! isset($api_data['v']) || strlen($api_data['v']) === 0 || is_numeric($api_data['v']) === false) {
+            YCore::exception(1100002, 'version number is wrong');
+        }
+        // 将method参数转换为实际的接口类名称。
+        $api_name = $api_data['method'];
+        $params = explode('.', $api_name);
+        $classname = '';
+        foreach ($params as $param) {
+            $classname .= ucfirst($param);
+        }
+        $version = $api_data['v'];
+        $version = str_replace('.', '_', $version);
+        // 只能通过此种方式才能通过变量形式new对象。
+        $classname = "apis\\v{$version}\\{$classname}Api";
+        if (strlen($api_name) && class_exists($classname)) {
+            return new $classname($api_data);
+        } else {
+            YCore::exception(1100003, 'Interface does not exist');
+        }
+    }
 }

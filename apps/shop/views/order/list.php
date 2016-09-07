@@ -5,11 +5,12 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 <div class="main" id="main">
 	<div class="w cc">
 			<?php
-			require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/left_menu.php');
-			?>
+require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/left_menu.php');
+?>
 			<div class="container">
 			<div class="site-crumb">
-				<a href="/">首页</a> <span class="arrow">></span> <a href="">交易管理</a><span class="arrow"> > </span> <a href="">订单管理</a>
+				<a href="/">首页</a> <span class="arrow">></span> <a href="">交易管理</a><span
+					class="arrow"> > </span> <a href="">订单管理</a>
 			</div>
 
 			<!-- 搜索条件 start -->
@@ -18,25 +19,33 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 					<dl>
 						<dt>商品名称：</dt>
 						<dd>
-							<input type="text" class="i-txt" size="40" name="goods_name" value="<?php echo htmlspecialchars($goods_name); ?>" placeholder="商品名称">
+							<input type="text" class="i-txt" size="40" name="goods_name"
+								value="<?php echo htmlspecialchars($goods_name); ?>"
+								placeholder="商品名称">
 						</dd>
 					</dl>
 					<dl>
 						<dt>收货人姓名：</dt>
 						<dd>
-							<input type="text" class="i-txt" size="40" name="receiver_name" value="<?php echo htmlspecialchars($receiver_name); ?>" placeholder="收货人姓名">
+							<input type="text" class="i-txt" size="40" name="receiver_name"
+								value="<?php echo htmlspecialchars($receiver_name); ?>"
+								placeholder="收货人姓名">
 						</dd>
 					</dl>
 					<dl>
 						<dt>收货人手机号：</dt>
 						<dd>
-							<input type="text" class="i-txt" size="40" name="receiver_mobile" value="<?php echo htmlspecialchars($receiver_mobile); ?>" placeholder="收货人手机号">
+							<input type="text" class="i-txt" size="40" name="receiver_mobile"
+								value="<?php echo htmlspecialchars($receiver_mobile); ?>"
+								placeholder="收货人手机号">
 						</dd>
 					</dl>
 					<dl>
 						<dt>订单号：</dt>
 						<dd>
-							<input type="text" class="i-txt" size="40" name="order_sn" value="<?php echo htmlspecialchars($order_sn); ?>" placeholder="订单号">
+							<input type="text" class="i-txt" size="40" name="order_sn"
+								value="<?php echo htmlspecialchars($order_sn); ?>"
+								placeholder="订单号">
 						</dd>
 					</dl>
 					<dl class="ctrl clear">
@@ -52,13 +61,20 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 			<div class="site-filter-bar m-t-20">
 				<div class="tags">
 					<ul class="cc">
-						<li <?php echo ($order_status==-1) ? 'class="active"' : ''; ?> onClick="chanageStatus(-1);">全部订单</li>
-						<li <?php echo ($order_status==0) ? 'class="active"' : ''; ?> onClick="chanageStatus(0);">待付款订单</li>
-						<li <?php echo ($order_status==1) ? 'class="active"' : ''; ?> onClick="chanageStatus(1);">待发货订单</li>
-						<li <?php echo ($order_status==2) ? 'class="active"' : ''; ?> onClick="chanageStatus(2);">待收货订单</li>
-						<li <?php echo ($order_status==3) ? 'class="active"' : ''; ?> onClick="chanageStatus(3);">交易成功</li>
-						<li <?php echo ($order_status==4) ? 'class="active"' : ''; ?> onClick="chanageStatus(4);">交易关闭</li>
-						<li <?php echo ($order_status==5) ? 'class="active"' : ''; ?> onClick="chanageStatus(5);">交易取消</li>
+						<li <?php echo ($order_status==-1) ? 'class="active"' : ''; ?>
+							onClick="chanageStatus(-1);">全部订单</li>
+						<li <?php echo ($order_status==0) ? 'class="active"' : ''; ?>
+							onClick="chanageStatus(0);">待付款订单</li>
+						<li <?php echo ($order_status==1) ? 'class="active"' : ''; ?>
+							onClick="chanageStatus(1);">待发货订单</li>
+						<li <?php echo ($order_status==2) ? 'class="active"' : ''; ?>
+							onClick="chanageStatus(2);">待收货订单</li>
+						<li <?php echo ($order_status==3) ? 'class="active"' : ''; ?>
+							onClick="chanageStatus(3);">交易成功</li>
+						<li <?php echo ($order_status==4) ? 'class="active"' : ''; ?>
+							onClick="chanageStatus(4);">交易关闭</li>
+						<li <?php echo ($order_status==5) ? 'class="active"' : ''; ?>
+							onClick="chanageStatus(5);">交易取消</li>
 						<!-- <li <?php echo ($order_status==6) ? 'class="active"' : ''; ?> onClick="chanageStatus(6);">退款/售后</li> -->
 					</ul>
 				</div>
@@ -80,76 +96,91 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 				<?php foreach ($list as $order): ?>
 				<div class="list-item">
 					<div class="base">
-			            <div class="cc">
-			                <p class="info"> 
-			                	<?php 
-			                	switch ($order['order_status']){ 
-			                		case 0:
-			                			echo '[待支付]';
-			                			break;
-			                		case 1:
-			                			echo '[已支付]';
-			                			break;
-			                		case 2:
-			                			echo '[已发货]';
-			                			break;
-			                		case 3:
-			                			echo '[已收货]';
-			                			break;
-			                		case 4:
-			                			echo '[已关闭]';
-			                			break;
-			                		case 5:
-			                			echo '[已取消]';
-			                			break;
-			                	}
-			                	?>
-			                	<span class="arrow">|</span> 
-			                	订单号：<?php echo $order['order_sn']; ?> <span class="arrow">|</span> 
-			                	下单时间：<?php echo date('Y-m-d H:i:s', $order['created_time']); ?> <span class="arrow">|</span> 
-			                	<a href="###" onclick="viewBuyerMessage('<?php echo htmlspecialchars($order['buyer_message']); ?>')">[查看买家留言]</a>
-			                </p>
-			                <div style="float:right;padding-right:10px;">
+						<div class="cc">
+							<p class="info"> 
 			                	<?php
-			                	switch ($order['order_status']) {
-			                		case 0: // 未支付。
-			                			?>
-			                			<button type="button" class="normal_btn" style="width: 80px;" onclick="normalDialog('closeOrder', '<?php echo YUrl::createShopUrl('', 'Order', 'close', ['order_id' => $order['order_id']]); ?>', '您确定要关闭该订单吗？')">关闭订单</button>
-			                			<button type="button" class="normal_btn" style="width: 80px;" onclick="adjustAddress(<?php echo $order['order_id']; ?>);">修正地址</button>
+        switch ($order['order_status']) {
+            case 0 :
+                echo '[待支付]';
+                break;
+            case 1 :
+                echo '[已支付]';
+                break;
+            case 2 :
+                echo '[已发货]';
+                break;
+            case 3 :
+                echo '[已收货]';
+                break;
+            case 4 :
+                echo '[已关闭]';
+                break;
+            case 5 :
+                echo '[已取消]';
+                break;
+        }
+        ?>
+			                	<span class="arrow">|</span> 
+			                	订单号：<?php echo $order['order_sn']; ?> <span
+									class="arrow">|</span> 
+			                	下单时间：<?php echo date('Y-m-d H:i:s', $order['created_time']); ?> <span
+									class="arrow">|</span> <a href="###"
+									onclick="viewBuyerMessage('<?php echo htmlspecialchars($order['buyer_message']); ?>')">[查看买家留言]</a>
+							</p>
+							<div style="float: right; padding-right: 10px;">
+			                	<?php
+        switch ($order['order_status']) {
+            case 0 : // 未支付。
+                ?>
+			                			<button type="button" class="normal_btn"
+									style="width: 80px;"
+									onclick="normalDialog('closeOrder', '<?php echo YUrl::createShopUrl('', 'Order', 'close', ['order_id' => $order['order_id']]); ?>', '您确定要关闭该订单吗？')">关闭订单</button>
+								<button type="button" class="normal_btn" style="width: 80px;"
+									onclick="adjustAddress(<?php echo $order['order_id']; ?>);">修正地址</button>
 			                			<?php
-			                			break;
-			                		case 1: // 已支付。
-			                			?>
-			                			<button type="button" class="normal_btn" style="width: 80px;" onclick="adjustAddress(<?php echo $order['order_id']; ?>);">修正地址</button>
-			                			<button type="button" class="normal_btn" style="width: 50px;" onclick="deliver(<?php echo $order['order_id']; ?>);">发货</button>
+                break;
+            case 1 : // 已支付。
+                ?>
+			                			<button type="button" class="normal_btn"
+									style="width: 80px;"
+									onclick="adjustAddress(<?php echo $order['order_id']; ?>);">修正地址</button>
+								<button type="button" class="normal_btn" style="width: 50px;"
+									onclick="deliver(<?php echo $order['order_id']; ?>);">发货</button>
 			                			<?php
-			                			break;
-			                		case 2: // 已发货。
-			                			?>
-                						<button type="button" class="normal_btn" style="width: 50px;" onclick="deliver(<?php echo $order['order_id']; ?>);">发货</button>
+                break;
+            case 2 : // 已发货。
+                ?>
+                						<button type="button" class="normal_btn"
+									style="width: 50px;"
+									onclick="deliver(<?php echo $order['order_id']; ?>);">发货</button>
                 						<?php
-			                			break;
-			                	}
-			                	?>
+                break;
+        }
+        ?>
 			                </div>
-			            </div>
-			        </div>
-			        <div class="base">
-			            <div class="cc">
-			                <p class="info"> 
-			                	实付金额：<?php echo $order['payment_price']; ?> <span class="arrow">|</span> 
-			                	收货人：<?php echo $order['receiver_name']; ?>  <span class="arrow">|</span> 
-			                	收货人手机：<?php echo $order['receiver_mobile']; ?> <span class="arrow">|</span> 
-			                	邮编：<?php echo $order['receiver_zip']; ?> <span class="arrow">|</span> 
+						</div>
+					</div>
+					<div class="base">
+						<div class="cc">
+							<p class="info"> 
+			                	实付金额：<?php echo $order['payment_price']; ?> <span
+									class="arrow">|</span> 
+			                	收货人：<?php echo $order['receiver_name']; ?>  <span
+									class="arrow">|</span> 
+			                	收货人手机：<?php echo $order['receiver_mobile']; ?> <span
+									class="arrow">|</span> 
+			                	邮编：<?php echo $order['receiver_zip']; ?> <span
+									class="arrow">|</span> 
 			                	收货地址：<?php echo "{$order['receiver_province']}{$order['receiver_city']}{$order['receiver_district']}{$order['receiver_street']}{{$order['receiver_address']}"; ?>
 			                </p>
-			            </div>
-			        </div>
+						</div>
+					</div>
 					<?php foreach ($order['goods_list'] as $goods): ?>
 					<div class="detail cc">
 						<div class="col-5">
 							<div class="thumb">
-								<img src="<?php echo $goods['goods_image']; ?>" alt="<?php echo htmlspecialchars($goods['goods_name']); ?>">
+								<img src="<?php echo $goods['goods_image']; ?>"
+									alt="<?php echo htmlspecialchars($goods['goods_name']); ?>">
 							</div>
 							<div class="info">
 								<strong><?php echo htmlspecialchars($goods['goods_name']); ?></strong>
@@ -161,7 +192,8 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 						</div>
 						<div class="col-1">
 							<p class="label">
-								<?php echo $goods['quantity']; ?> <i class="edit" action-do="editLocalStock" data-goods-id="1"></i>
+								<?php echo $goods['quantity']; ?> <i class="edit"
+									action-do="editLocalStock" data-goods-id="1"></i>
 							</p>
 						</div>
 						<div class="col-1">
@@ -177,7 +209,8 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 						<div class="col-1">
 							<p class="label">
 							<?php if ($order['order_status']==0): ?>
-								<a href="###" onclick="adjustPrice(<?php echo $order['order_id']; ?>, <?php echo $goods['product_id']; ?>, <?php echo $goods['sales_price']; ?>)">[修改价格]</a>
+								<a href="###"
+									onclick="adjustPrice(<?php echo $order['order_id']; ?>, <?php echo $goods['product_id']; ?>, <?php echo $goods['sales_price']; ?>)">[修改价格]</a>
 							<?php else: ?>
 								-
 							<?php endif; ?>

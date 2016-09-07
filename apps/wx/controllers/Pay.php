@@ -6,11 +6,11 @@
  */
 
 class PayController extends \common\controllers\WeChat {
-
+    
     /**
      * 微信支付回调。
      */
     public function payNotifyAction() {
-        
+    
     }
 }

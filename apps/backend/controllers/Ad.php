@@ -10,28 +10,28 @@ use common\YCore;
 use winer\Paginator;
 
 class AdController extends \common\controllers\Admin {
-
+    
     /**
      * 广告位置列表。
      */
     public function positionListAction() {
-        $keywords  = $this->getString('keywords', '');
-        $page      = $this->getInt(YCore::appconfig('pager'), 1);
-        $list      = AdService::getAdPostionList($keywords, $page, 20);
+        $keywords = $this->getString('keywords', '');
+        $page = $this->getInt(YCore::appconfig('pager'), 1);
+        $list = AdService::getAdPostionList($keywords, $page, 20);
         $paginator = new Paginator($list['total'], 20);
         $page_html = $paginator->backendPageShow();
         $this->_view->assign('page_html', $page_html);
         $this->_view->assign('keywords', $keywords);
         $this->_view->assign('list', $list['list']);
     }
-
+    
     /**
      * 广告位置添加。
      */
     public function positionAddAction() {
         if ($this->_request->isXmlHttpRequest()) {
-            $pos_name     = $this->getString('pos_name');
-            $pos_code     = $this->getString('pos_code');
+            $pos_name = $this->getString('pos_name');
+            $pos_code = $this->getString('pos_code');
             $pos_ad_count = $this->getInt('pos_ad_count');
             $status = AdService::addAdPostion($this->admin_id, $pos_name, $pos_code, $pos_ad_count);
             if ($status) {
@@ -41,15 +41,15 @@ class AdController extends \common\controllers\Admin {
             }
         }
     }
-
+    
     /**
      * 广告位置编辑。
      */
     public function positionEditAction() {
         if ($this->_request->isXmlHttpRequest()) {
-            $pos_id       = $this->getInt('pos_id');
-            $pos_name     = $this->getString('pos_name');
-            $pos_code     = $this->getString('pos_code');
+            $pos_id = $this->getInt('pos_id');
+            $pos_name = $this->getString('pos_name');
+            $pos_code = $this->getString('pos_code');
             $pos_ad_count = $this->getInt('pos_ad_count');
             $status = AdService::editAdPostion($this->admin_id, $pos_id, $pos_name, $pos_code, $pos_ad_count);
             if ($status) {
@@ -62,7 +62,7 @@ class AdController extends \common\controllers\Admin {
         $detail = AdService::getAdPostionDetail($pos_id);
         $this->_view->assign('detail', $detail);
     }
-
+    
     /**
      * 广告位置删除。
      */
@@ -75,16 +75,16 @@ class AdController extends \common\controllers\Admin {
             $this->json($status, '删除失败');
         }
     }
-
+    
     /**
      * 广告列表。
      */
     public function indexAction() {
-        $pos_id    = $this->getInt('pos_id');
-        $ad_name   = $this->getString('ad_name', '');
-        $display    = $this->getInt('display', -1);
-        $page      = $this->getInt(YCore::appconfig('pager'), 1);
-        $list      = AdService::getAdList($pos_id, $ad_name, $display, $page, 10);
+        $pos_id = $this->getInt('pos_id');
+        $ad_name = $this->getString('ad_name', '');
+        $display = $this->getInt('display', - 1);
+        $page = $this->getInt(YCore::appconfig('pager'), 1);
+        $list = AdService::getAdList($pos_id, $ad_name, $display, $page, 10);
         $paginator = new Paginator($list['total'], 10);
         $page_html = $paginator->backendPageShow();
         $this->_view->assign('page_html', $page_html);
@@ -93,21 +93,21 @@ class AdController extends \common\controllers\Admin {
         $this->_view->assign('list', $list['list']);
         $this->_view->assign('pos_id', $pos_id);
     }
-
+    
     /**
      * 广告添加。
      */
     public function addAction() {
         if ($this->_request->isXmlHttpRequest()) {
-            $pos_id       = $this->getInt('pos_id');
-            $ad_name      = $this->getString('ad_name');
-            $start_time   = $this->getString('start_time');
-            $end_time     = $this->getString('end_time');
-            $display      = $this->getInt('display');
-            $remark       = $this->getString('remark');
+            $pos_id = $this->getInt('pos_id');
+            $ad_name = $this->getString('ad_name');
+            $start_time = $this->getString('start_time');
+            $end_time = $this->getString('end_time');
+            $display = $this->getInt('display');
+            $remark = $this->getString('remark');
             $ad_image_url = $this->getString('ad_image_url');
-            $ad_url       = $this->getString('ad_url');
-            $status       = AdService::addAd($this->admin_id, $pos_id, $ad_name, $start_time, $end_time, $display, $remark, $ad_image_url, $ad_url);
+            $ad_url = $this->getString('ad_url');
+            $status = AdService::addAd($this->admin_id, $pos_id, $ad_name, $start_time, $end_time, $display, $remark, $ad_image_url, $ad_url);
             if ($status) {
                 $this->json($status, '添加成功');
             } else {
@@ -117,21 +117,21 @@ class AdController extends \common\controllers\Admin {
         $pos_id = $this->getInt('pos_id');
         $this->_view->assign('pos_id', $pos_id);
     }
-
+    
     /**
      * 广告编辑。
      */
     public function editAction() {
         if ($this->_request->isXmlHttpRequest()) {
-            $ad_id        = $this->getInt('ad_id');
-            $ad_name      = $this->getString('ad_name');
-            $start_time   = $this->getString('start_time');
-            $end_time     = $this->getString('end_time');
-            $display      = $this->getInt('display');
-            $remark       = $this->getString('remark');
+            $ad_id = $this->getInt('ad_id');
+            $ad_name = $this->getString('ad_name');
+            $start_time = $this->getString('start_time');
+            $end_time = $this->getString('end_time');
+            $display = $this->getInt('display');
+            $remark = $this->getString('remark');
             $ad_image_url = $this->getString('ad_image_url');
-            $ad_url       = $this->getString('ad_url');
-            $status       = AdService::editAd($this->admin_id, $ad_id, $ad_name, $start_time, $end_time, $display, $remark, $ad_image_url, $ad_url);
+            $ad_url = $this->getString('ad_url');
+            $status = AdService::editAd($this->admin_id, $ad_id, $ad_name, $start_time, $end_time, $display, $remark, $ad_image_url, $ad_url);
             if ($status) {
                 $this->json($status, '修改成功');
             } else {
@@ -142,7 +142,7 @@ class AdController extends \common\controllers\Admin {
         $detail = AdService::getAdDetail($ad_id);
         $this->_view->assign('detail', $detail);
     }
-
+    
     /**
      * 广告删除。
      */
@@ -155,7 +155,7 @@ class AdController extends \common\controllers\Admin {
             $this->json($status, '删除失败');
         }
     }
-
+    
     /**
      * 广告排序。
      */

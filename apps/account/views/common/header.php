@@ -6,16 +6,20 @@ use common\YUrl;
 <head>
 <meta charset="utf-8" />
 <title>账户中心</title>
-<link rel="stylesheet" href="<?php echo YUrl::assets('css', '/shop/common.css'); ?>" />
+<link rel="stylesheet"
+	href="<?php echo YUrl::assets('css', '/shop/common.css'); ?>" />
 
 <!-- JQuery start -->
 <script src="<?php echo YUrl::assets('js', '/jquery-1.10.2.js'); ?>"></script>
 <!-- JQuery end -->
 
 <!-- ArtDialog 对话框 start -->
-<link rel="stylesheet" href="<?php echo YUrl::assets('js', '/artDialog/css/ui-dialog.css'); ?>">
-<script src="<?php echo YUrl::assets('js', '/artDialog/dist/dialog-min.js'); ?>"></script>
-<script src="<?php echo YUrl::assets('js', '/artDialog/dist/dialog-plus-min.js'); ?>"></script>
+<link rel="stylesheet"
+	href="<?php echo YUrl::assets('js', '/artDialog/css/ui-dialog.css'); ?>">
+<script
+	src="<?php echo YUrl::assets('js', '/artDialog/dist/dialog-min.js'); ?>"></script>
+<script
+	src="<?php echo YUrl::assets('js', '/artDialog/dist/dialog-plus-min.js'); ?>"></script>
 <!-- ArtDialog 对话框 end -->
 
 <!-- laydate时间控件 start -->
@@ -83,17 +87,21 @@ use common\YUrl;
 	padding: 10px 0 20px;
 }
 </style>
-	
+
 	<div class="site-top"></div>
 	<div class="site-header">
 		<div class="w">
 			<div class="title-left">
 				<h1 class="logo">
-					<a href="/index/shop"><img height="40px" src="<?php echo YUrl::assets('image', '/shop/logo3.png'); ?>" /></a>
+					<a href="/index/shop"><img height="40px"
+						src="<?php echo YUrl::assets('image', '/shop/logo3.png'); ?>" /></a>
 				</h1>
 				<em class="nav-title-line"></em> <span class="nav-title">账户中心</span>
 			</div>
-			<div class="user-info" id="user-info">你好，xxxx（18575202691），<a href="/site/edit-pw">[修改密码]</a><a href="javascript:;" class="sign app-logout">［退出］</a></div>
+			<div class="user-info" id="user-info">
+				你好，xxxx（18575202691），<a href="/site/edit-pw">[修改密码]</a><a
+					href="javascript:;" class="sign app-logout">［退出］</a>
+			</div>
 		</div>
 	</div>
 	<div style="clear: both;"></div>

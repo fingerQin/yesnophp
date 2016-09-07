@@ -8,11 +8,12 @@
 namespace models;
 
 class SmsLog extends DbBase {
-
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'ms_sms_log';
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'ms_sms_log';
 
 }

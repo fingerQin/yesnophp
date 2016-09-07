@@ -5,11 +5,12 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 <div class="main" id="main">
 	<div class="w cc">
 			<?php
-			require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/left_menu.php');
-			?>
+require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/left_menu.php');
+?>
 			<div class="container">
 			<div class="site-crumb">
-				<a href="/">首页</a> <span class="arrow">></span> <a href="">交易管理</a><span class="arrow"> > </span> <a href="">评价管理</a>
+				<a href="/">首页</a> <span class="arrow">></span> <a href="">交易管理</a><span
+					class="arrow"> > </span> <a href="">评价管理</a>
 			</div>
 
 			<div class="site-filter-bar m-t-20">
@@ -39,7 +40,9 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 					<div class="detail cc">
 						<div class="col-5">
 							<div class="thumb">
-								<img src="<?php echo YUrl::assets('image', '/shop/_goods_image.png'); ?>" alt="东北优质大米">
+								<img
+									src="<?php echo YUrl::assets('image', '/shop/_goods_image.png'); ?>"
+									alt="东北优质大米">
 							</div>
 							<div class="info">
 								<strong>【天猫超市】恒大兴安贡米一号5kg/盒 绿色健康非转基因 </strong>
@@ -67,7 +70,8 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 						</div>
 						<div class="col-1">
 							<p class="ctrl m-t-20">
-								<a target="_blank" href="<?php echo YUrl::createShopUrl('', 'Goods', 'detail', ['goods_id' => 1]); ?>">[编辑商品]</a>
+								<a target="_blank"
+									href="<?php echo YUrl::createShopUrl('', 'Goods', 'detail', ['goods_id' => 1]); ?>">[编辑商品]</a>
 							</p>
 						</div>
 					</div>

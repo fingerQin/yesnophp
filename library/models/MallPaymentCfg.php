@@ -8,11 +8,12 @@
 namespace models;
 
 class MallPaymentCfg extends DbBase {
-
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'mall_payment_cfg';
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'mall_payment_cfg';
 
 }

@@ -8,11 +8,12 @@
 namespace models;
 
 class AdminLoginHistory extends DbBase {
-
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'ms_admin_login_history';
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'ms_admin_login_history';
 
 }

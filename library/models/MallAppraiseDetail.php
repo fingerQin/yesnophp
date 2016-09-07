@@ -8,10 +8,11 @@
 namespace models;
 
 class MallAppraiseDetail extends DbBase {
-
-	/**
-	 * 表名。
-	 * @var string
-	 */
-	protected $_table_name = 'mall_appraise_detail';
+    
+    /**
+     * 表名。
+     * 
+     * @var string
+     */
+    protected $_table_name = 'mall_appraise_detail';
 }

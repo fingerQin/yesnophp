@@ -5,13 +5,15 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 <div class="main" id="main">
 	<div class="w cc">
 			<?php
-			require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/left_menu.php');
-			?>
+require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/left_menu.php');
+?>
 			<div class="container">
 			<div class="site-crumb">
 				<a href="/">首页</a> <span class="arrow">></span> <a href="">商品管理</a>
 				<span class="arrow"> > </span> <a href="">自定义商品分类</a>
-				<button style="float:right;" onClick="postDialog('addFreight', '<?php echo YUrl::createShopUrl('', 'Category', 'add'); ?>', '添加分类', 350, 200);" class="normal_btn">添加分类</button>
+				<button style="float: right;"
+					onClick="postDialog('addFreight', '<?php echo YUrl::createShopUrl('', 'Category', 'add'); ?>', '添加分类', 350, 200);"
+					class="normal_btn">添加分类</button>
 			</div>
 
 			<div class="site-filter-bar m-t-20">
@@ -29,13 +31,21 @@ require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 				<div class="list-item">
 					<div class="detail cc">
 						<div class="col-1 txt-c">
-							<input type="text" name="listsorts[<?php echo $cat['cat_id']; ?>]" value="<?php echo $cat['listorder']; ?>" style="width:30px;text-align:center;" />
+							<input type="text"
+								name="listsorts[<?php echo $cat['cat_id']; ?>]"
+								value="<?php echo $cat['listorder']; ?>"
+								style="width: 30px; text-align: center;" />
 						</div>
-						<div class="col-8"><span class="label"><?php echo htmlspecialchars($cat['cat_name']); ?></span></div>
+						<div class="col-8">
+							<span class="label"><?php echo htmlspecialchars($cat['cat_name']); ?></span>
+						</div>
 						<div class="col-1 txt-c">
 							<p class="ctrl">
-								<a href="###" onClick="edit(<?php echo $cat['cat_id'] ?>, '<?php echo htmlspecialchars($cat['cat_name']); ?>')">[编辑]</a>
-								<a href="###" onclick="deleteDialog('deleteCategory', '<?php echo YUrl::createShopUrl('', 'Category', 'delete', ['cat_id' => $cat['cat_id']]); ?>', '<?php echo htmlspecialchars($cat['cat_name']); ?>')" title="删除">[删除]</a>
+								<a href="###"
+									onClick="edit(<?php echo $cat['cat_id'] ?>, '<?php echo htmlspecialchars($cat['cat_name']); ?>')">[编辑]</a>
+								<a href="###"
+									onclick="deleteDialog('deleteCategory', '<?php echo YUrl::createShopUrl('', 'Category', 'delete', ['cat_id' => $cat['cat_id']]); ?>', '<?php echo htmlspecialchars($cat['cat_name']); ?>')"
+									title="删除">[删除]</a>
 							</p>
 						</div>
 					</div>

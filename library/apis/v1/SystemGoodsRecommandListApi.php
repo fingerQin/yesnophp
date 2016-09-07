@@ -9,13 +9,14 @@ namespace apis\v1;
 
 use apis\BaseApi;
 class SystemCategoryListApi extends BaseApi {
-
-	/**
-	 * 逻辑处理。
-	 * @see Api::runService()
-	 * @return bool
-	 */
-	protected function runService() {
-		$this->render(0, 'ok');
-	}
+    
+    /**
+     * 逻辑处理。
+     * 
+     * @see Api::runService()
+     * @return bool
+     */
+    protected function runService() {
+        $this->render(0, 'ok');
+    }
 }
