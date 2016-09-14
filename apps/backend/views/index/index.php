@@ -112,7 +112,7 @@ use common\YUrl;
 }
 
 .bg_btn {
-	background: url(<? php         echo YUrl::assets('image', '/backend/icon2.jpg');
+	background: url(<?php echo YUrl::assets('image', '/backend/icon2.jpg');
         ?>) no-repeat;
 	width: 32px;
 	height: 32px;
@@ -219,7 +219,7 @@ use common\YUrl;
 		</div>
 		<div class="col-auto mr8">
 			<div class="crumbs">
-				<!--  
+				<!--
     <div class="shortcut cu-span">
 	    <a href="" target="right"><span>生成首页</span></a>
 	    <a href="" target="right"><span>更新缓存</span></a>
@@ -245,7 +245,7 @@ use common\YUrl;
 			title="使用鼠标滚轴滚动侧栏" onclick="menuScroll(2);"></a>
 	</div>
 
-	<script type="text/javascript"> 
+	<script type="text/javascript">
 if(!Array.prototype.map)
 Array.prototype.map = function(fn,scope) {
   var result = [],ri = 0;
@@ -266,7 +266,7 @@ return ["Height","Width"].map(function(name){
 window.onload = function (){
 	if(!+"\v1" && !document.querySelector) { // for IE6 IE7
 	  document.body.onresize = resize;
-	} else { 
+	} else {
 	  window.onresize = resize;
 	}
 	function resize() {
@@ -279,7 +279,7 @@ function wSize(){
 	var str=getWindowSize();
 	var strs= new Array(); //定义一数组
 	strs=str.toString().split(","); //字符分割
-	var heights = strs[0]-150,Body = $('body');$('#rightMain').height(heights);   
+	var heights = strs[0]-150,Body = $('body');$('#rightMain').height(heights);
 	//iframe.height = strs[0]-46;
 	if(strs[1]<980){
 		$('.header').css('width',980+'px');
@@ -292,10 +292,10 @@ function wSize(){
 		Body.attr('scroll','no');
 		Body.addClass('objbody');
 	}
-	
+
 	var openClose = $("#rightMain").height()+39;
 	$('#center_frame').height(openClose+9);
-	$("#openClose").height(openClose+30);	
+	$("#openClose").height(openClose+30);
 	$("#Scroll").height(openClose-20);
 	windowW();
 }
@@ -387,7 +387,7 @@ function _MP(menuid, targetUrl) {
     Scroll = document.getElementById('Scroll');
     // IE6/IE7/IE8/IE10/IE11/Opera 10+/Safari5+
     addEvent(Scroll, 'mousewheel', function(event){
-        event = window.event || event ;  
+        event = window.event || event ;
 		if(event.wheelDelta <= 0 || event.detail > 0) {
 				Scroll.scrollTop = Scroll.scrollTop + 29;
 			} else {
@@ -404,7 +404,7 @@ function _MP(menuid, targetUrl) {
 				Scroll.scrollTop = Scroll.scrollTop - 29;
 		}
     }, false);
-	
+
 })();
 
 function menuScroll(num){

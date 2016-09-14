@@ -44,7 +44,7 @@ a:hover, a:active {
 }
 
 .showMsg h5 {
-	background-image: url(<? php echo YUrl::assets('image', '/backend/msg.png');
+	background-image: url(<?php echo YUrl::assets('image', '/backend/msg.png');
 ?>);
 	background-repeat: no-repeat;
 	color: #fff;
@@ -74,7 +74,7 @@ a:hover, a:active {
 }
 
 .showMsg .ok, .showMsg .guery {
-	background: url(<? php echo YUrl::assets('image', '/backend/msg_bg.png');
+	background: url(<?php echo YUrl::assets('image', '/backend/msg_bg.png');
 ?>)
 	no-repeat
 	0px

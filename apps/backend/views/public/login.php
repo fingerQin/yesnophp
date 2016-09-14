@@ -18,7 +18,7 @@ div {
 }
 
 .login_box {
-	background: url(<? php echo YUrl::assets('image', '/backend/login_bg.jpg');
+	background: url(<?php echo YUrl::assets('image', '/backend/login_bg.jpg');
 ?>) no-repeat;
 	width: 602px;
 	height: 416px;
@@ -48,7 +48,7 @@ div {
 	width: 160px;
 	margin-right: 22px;
 	color: #fff;
-	background: url(<? php echo YUrl::assets('image', '/backend/ipt_bg.jpg');
+	background: url(<?php echo YUrl::assets('image', '/backend/ipt_bg.jpg');
 ?>) repeat-x;
 	*line-height: 24px;
 	border: none;
@@ -65,7 +65,7 @@ div {
 	margin-left: 12px;
 	width: 46px;
 	margin-right: 16px;
-	background: url(<? php echo YUrl::assets('image', '/backend/ipt_bg.jpg');
+	background: url(<?php echo YUrl::assets('image', '/backend/ipt_bg.jpg');
 ?>) repeat-x;
 	*overflow: hidden;
 	text-align: left;
@@ -75,7 +75,7 @@ div {
 }
 
 .login_tj_btn {
-	background: url(<? php echo YUrl::assets('image', '/backend/login_dl_btn.jpg');
+	background: url(<?php echo YUrl::assets('image', '/backend/login_dl_btn.jpg');
 ?>) no-repeat 0px 0px;
 	width: 52px;
 	height: 24px;
@@ -88,7 +88,7 @@ div {
 
 .yzm {
 	position: absolute;
-	background: url(<? php echo YUrl::assets('image', '/backend/login_ts140x89.gif');
+	background: url(<?php echo YUrl::assets('image', '/backend/login_ts140x89.gif');
 ?>) no-repeat;
 	width: 140px;
 	height: 89px;
