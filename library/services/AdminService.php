@@ -234,7 +234,7 @@ class AdminService extends BaseService {
         $admin_model->update($update_data, $update_where);
         $auth_token = self::createToken($admin_info['admin_id'], $encrypt_password);
         self::setAuthTokenLastAccessTime($admin_info['admin_id'], $auth_token, $_SERVER['REQUEST_TIME']);
-        $admin_cookie_domain = YUrl::getDomainName(false);
+        $admin_cookie_domain = YCore::config('admin_cookie_domain');
         setcookie('admin_token', $auth_token, 0, '/', $admin_cookie_domain);
         return true;
     }
