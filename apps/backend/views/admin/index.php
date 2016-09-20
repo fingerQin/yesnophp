@@ -60,8 +60,8 @@ html {
 						<td align="center"><?php echo $item['username']; ?></td>
 						<td align="center"><?php echo $item['mobilephone']; ?></td>
 						<td align="center"><?php echo $item['rolename']; ?></td>
-						<td align="center"><?php echo date('Y-m-d H:i:s', $item['lastlogintime']); ?></td>
-						<td align="center"><?php echo date('Y-m-d H:i:s', $item['created_time']); ?></td>
+						<td align="center"><?php echo $item['lastlogintime']; ?></td>
+						<td align="center"><?php echo $item['created_time']; ?></td>
 						<td align="center"><a href="###"
 							onclick="edit(<?php echo $item['admin_id'] ?>, '<?php echo $item['realname'] ?>')"
 							title="修改">修改</a> | <a href="###"

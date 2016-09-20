@@ -1,5 +1,6 @@
 <?php
 use common\YUrl;
+use common\YCore;
 require_once (APP_VIEW_PATH . DIRECTORY_SEPARATOR . 'common/header.php');
 ?>
 
@@ -36,7 +37,7 @@ html {
 						<td align="center"><?php echo $item['roleid']; ?></td>
 						<td align="center"><?php echo $item['rolename']; ?></td>
 						<td align="center"><?php echo $item['description']; ?></td>
-						<td align="center"><?php echo date('Y-m-d H:i:s', $item['created_time']); ?></td>
+						<td align="center"><?php echo YCore::format_timestamp($item['created_time']); ?></td>
 						<td align="center"><a href="###"
 							onclick="edit(<?php echo $item['roleid'] ?>, '<?php echo $item['rolename'] ?>')"
 							title="修改">修改</a> | <a href="###"

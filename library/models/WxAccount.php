@@ -8,17 +8,17 @@
 namespace models;
 
 class WxAccount extends DbBase {
-    
+
     /**
      * 表名。
-     * 
+     *
      * @var string
      */
     protected $_table_name = 'wx_account';
-    
+
     /**
      * 获取公众号列表。
-     * 
+     *
      * @param string $account 公众号。
      * @param string $sn 公众号编号。
      * @param string $appid APPID。
@@ -27,11 +27,11 @@ class WxAccount extends DbBase {
      * @return array
      */
     public function getList($account = '', $sn = '', $appid = '', $page = 1, $count = 10) {
-        $offset = $this->getPaginationOffset($page, $count);
+        $offset  = $this->getPaginationOffset($page, $count);
         $columns = ' * ';
-        $where = ' WHERE status = :status ';
-        $params = [
-                ':status' => 1 
+        $where   = ' WHERE status = :status ';
+        $params  = [
+                ':status' => 1
         ];
         if (strlen($account) > 0) {
             $where .= ' AND wx_account = :wx_account ';
@@ -55,10 +55,13 @@ class WxAccount extends DbBase {
         $sth = $this->link->prepare($sql);
         $sth->execute($params);
         $list = $sth->fetchAll();
-        $result = array(
-                'list' => $list,'total' => $total,'page' => $page,'count' => $count,
-                'isnext' => $this->IsHasNextPage($total, $page, $count) 
-        );
+        $result = [
+            'list'   => $list,
+            'total'  => $total,
+            'page'   => $page,
+            'count'  => $count,
+            'isnext' => $this->IsHasNextPage($total, $page, $count)
+        ];
         return $result;
     }
 }
