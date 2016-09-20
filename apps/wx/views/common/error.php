@@ -1,5 +1,4 @@
 <?php
-use common\YCore;
 use common\YUrl;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -44,8 +43,7 @@ a:hover, a:active {
 }
 
 .showMsg h5 {
-	background-image: url(<? php echo YUrl::assets('image', '/backend/msg.png');
-?>);
+	background-image: url(<?php echo YUrl::assets('image', '/backend/msg.png'); ?>);
 	background-repeat: no-repeat;
 	color: #fff;
 	padding-left: 35px;
@@ -74,8 +72,7 @@ a:hover, a:active {
 }
 
 .showMsg .ok, .showMsg .guery {
-	background: url(<? php echo YUrl::assets('image', '/backend/msg_bg.png');
-?>)
+	background: url(<?php echo YUrl::assets('image', '/backend/msg_bg.png'); ?>)
 	no-repeat
 	0px
 	-560px;
@@ -86,10 +83,8 @@ a:hover, a:active {
 }
 -->
 </style>
-<script type="text/javaScript"
-	src="<?php echo YUrl::assets('js', '/backend/jquery.min.js'); ?>"></script>
-<script language="JavaScript"
-	src="<?php echo YUrl::assets('js', '/backend/backend_common.js'); ?>"></script>
+<script type="text/javaScript" src="<?php echo YUrl::assets('js', '/backend/jquery.min.js'); ?>"></script>
+<script language="JavaScript" src="<?php echo YUrl::assets('js', '/backend/backend_common.js'); ?>"></script>
 </head>
 <body>
 	<div class="showMsg" style="text-align: center">
