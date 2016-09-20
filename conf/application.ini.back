@@ -133,7 +133,7 @@ database.mysql.other.charset  = UTF8
 database.mysql.other.prefix   = ms_
 
 ; Redis配置
-database.redis.host  = 112.74.215.151
+database.redis.host  = 127.0.0.1
 database.redis.port  = 6379
 database.redis.pwd   = shu1211ke
 database.redis.index = 9
