@@ -241,9 +241,7 @@ CREATE TABLE ms_config(
 	config_id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
 	ctitle CHAR(255) NOT NULL COMMENT '配置标题',
 	cname CHAR(255) NOT NULL COMMENT '名称',
-	dev_value CHAR(255) NOT NULL DEFAULT '' COMMENT '开发环境值',
-	test_value CHAR(255) NOT NULL DEFAULT '' COMMENT '测试环境值',
-	product_value CHAR(255) NOT NULL DEFAULT '' COMMENT '正式环境值',
+	cvalue CHAR(255) NOT NULL DEFAULT '' COMMENT '开发环境值',
 	description CHAR(255) NOT NULL DEFAULT '' COMMENT '配置描述',
     status TINYINT(1) NOT NULL DEFAULT '0' COMMENT '状态：0失效、1有效、2删除',
     created_by INT(11) UNSIGNED NOT NULL COMMENT '类型创建人',
@@ -253,26 +251,27 @@ CREATE TABLE ms_config(
 	PRIMARY KEY(config_id),
 	KEY `cname` (cname)
 ) ENGINE = InnoDB DEFAULT CHARSET UTF8 COMMENT '系统配置表';
-INSERT INTO ms_config (`ctitle`, `cname`, `dev_value`, `test_value`, `product_value`, `description`, `status`, `created_by`, `created_time`, `modified_by`, `modified_time`)
-VALUES('排他登录', 'is_unique_login', '1', '1', '1', '1是、0否。即同一时间账号只能在一个地方登录。不允许账号在其他地方登录。', 1, 1, unix_timestamp(now()), 0, 0),
-('网站名称', 'site_name', '不单麦', '不单麦', '不单麦', '', 1, 1, unix_timestamp(now()), 0, 0),
-('PC登录超时时间(分钟)', 'pc_logout_time', '30', '30', '30', '登录超时时间。距离上次最后操作时间大于当前指定时间分钟内将登录超时并退出登录', 1, 1, unix_timestamp(now()), 0, 0),
-('管理后台域名', 'backend_domain_name', 'http://dev-backend.yesnophp.com/', 'http://test-backend.yesnophp.com/', 'http://backend.yesnophp.com/', '涉及到网站页面或资源的链接地址', 1, 1, unix_timestamp(now()), 0, 0),
-('前台域名', 'frontend_domain_name', 'http://dev-frontend.yesnophp.com/', 'http://test-frontend.yesnophp.com/', 'http://frontend.yesnophp.com/', '涉及到网站页面或资源的链接地址', 1, 1, unix_timestamp(now()), 0, 0),
-('微信域名', 'wx_domain_name', 'http://dev-wx.yesnophp.com/', 'http://test-wx.yesnophp.com/', 'http://wx.yesnophp.com/', '涉及到网站页面或资源的链接地址', 1, 1, unix_timestamp(now()), 0, 0),
-('接口域名', 'api_domain_name', 'http://dev-api.yesnophp.com/', 'http://test-api.yesnophp.com/', 'http://api.yesnophp.com/', '涉及到网站页面或资源的链接地址', 1, 1, unix_timestamp(now()), 0, 0),
-('静态资源域名', 'statics_domain_name', 'http://dev-statics.yesnophp.com/', 'http://test-statics.yesnophp.com/', 'http://statics.yesnophp.com/', '涉及到网站页面或资源的链接地址', 1, 1, unix_timestamp(now()), 0, 0),
-('商家中心域名', 'shop_domain_name', 'http://dev-shop.yesnophp.com/', 'http://test-shop.yesnophp.com/', 'http://shop.yesnophp.com/', '涉及到网站页面或商家中心的链接地址', 1, 1, unix_timestamp(now()), 0, 0),
-('账户中心域名', 'account_domain_name', 'http://dev-account.yesnophp.com/', 'http://test-account.yesnophp.com/', 'http://account.yesnophp.com/', '涉及到网站页面或账户中心的链接地址', 1, 1, unix_timestamp(now()), 0, 0),
-('图片文件资源域名', 'files_domain_name', 'http://dev-files.yesnophp.com/', 'http://test-files.yesnophp.com/', 'http://files.yesnophp.com/', '涉及到网站图片文件部分', 1, 1, unix_timestamp(now()), 0, 0),
-('用户权限cookie作用域', 'user_auth_cookie_domain_name', '.yesnophp.com', '.yesnophp.com', '.yesnophp.com', '即此域下所有域名都可以自动登录', 1, 1, unix_timestamp(now()), 0, 0),
-('APP登录超时时间(天)', 'app_logout_time', '30', '30', '30', '登录超时时间。距离上次最后操作时间大于当前指定时间分钟内将登录超时并退出登录', 1, 1, unix_timestamp(now()), 0, 0),
-('管理员cookie作用域', 'admin_cookie_domain', '.dev-backend.yesnophp.com', '.test-backend.yesnophp.com', '.backend.yesnophp.com', '为避免cookie值被前台使用，配置的域必须是管理后台的域名。', 1, 1, unix_timestamp(now()), 0, 0),
-('后台登录超时时间(分钟)', 'admin_logout_time', '30', '30', '30', '超时则需要重新登录', 1, 1, unix_timestamp(now()), 0, 0),
-('系统维护状态', 'system_status', '1', '1', '1', '除管理后台之外的地方维护状态。1是正常、0是关闭系统', 1, 1, unix_timestamp(now()), 0, 0),
-('系统业务运行等级', 'system_service_level', '0', '0', '0', '示例：1,8 。1:注册功能、2:登录功能、4:找回密码、8:密码修改、16:支付功能、32:短信功能、64:邮件功能、128:评价功能、256:上传功能、512:订单查看功能、1024:提现功能、2048:API接口、4096:微信应用、8192:关闭全站（除后台）', 1, 1, unix_timestamp(now()), 0, 0),
-('luosimao短信KEY', 'luosimao_sms_key', '5d68e2564cc9deac5bc8d74935dc4e8c', '5d68e2564cc9deac5bc8d74935dc4e8c', '5d68e2564cc9deac5bc8d74935dc4e8c', 'luosimao短信发送KEY。', 1, 1, unix_timestamp(now()), 0, 0),
-('省市区JSON文件更新版本', 'district_json_version', '', '', '', '省市区JSON文件更新版本', 1, 1, unix_timestamp(now()), 0, 0);
+
+INSERT INTO `ms_config` VALUES ('1', '排他登录', 'is_unique_login', '1', '1是、0否。即同一时间账号只能在一个地方登录。不允许账号在其他地方登录。', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('2', '网站名称', 'site_name', '不单麦', '', '1', '1', '1474353609', '0', '0');
+INSERT INTO `ms_config` VALUES ('3', 'PC登录超时时间(分钟)', 'pc_logout_time', '30', '登录超时时间。距离上次最后操作时间大于当前指定时间分钟内将登录超时并退出登录', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('4', '管理后台域名', 'backend_domain_name', 'http://dev-backend.yesnophp.com/', '涉及到网站页面或资源的链接地址', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('5', '前台域名', 'frontend_domain_name', 'http://dev-frontend.yesnophp.com/', '涉及到网站页面或资源的链接地址', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('6', '微信域名', 'wx_domain_name', 'http://dev-wx.yesnophp.com/', '涉及到网站页面或资源的链接地址', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('7', '接口域名', 'api_domain_name', 'http://dev-api.yesnophp.com/', '涉及到网站页面或资源的链接地址', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('8', '静态资源域名', 'statics_domain_name', 'http://dev-statics.yesnophp.com/', '涉及到网站页面或资源的链接地址', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('9', '商家中心域名', 'shop_domain_name', 'http://dev-shop.yesnophp.com/', '涉及到网站页面或商家中心的链接地址', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('10', '账户中心域名', 'account_domain_name', 'http://dev-account.yesnophp.com/', '涉及到网站页面或账户中心的链接地址', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('11', '图片文件资源域名', 'files_domain_name', 'http://dev-files.yesnophp.com/', '涉及到网站图片文件部分', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('12', '用户权限cookie作用域', 'user_auth_cookie_domain_name', '.yesnophp.com', '即此域下所有域名都可以自动登录', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('13', 'APP登录超时时间(天)', 'app_logout_time', '30', '登录超时时间。距离上次最后操作时间大于当前指定时间分钟内将登录超时并退出登录', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('14', '管理员cookie作用域', 'admin_cookie_domain', '.dev-backend.yesnophp.com', '为避免cookie值被前台使用，配置的域必须是管理后台的域名。', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('15', '后台登录超时时间(分钟)', 'admin_logout_time', '30', '超时则需要重新登录', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('16', '系统维护状态', 'system_status', '1', '除管理后台之外的地方维护状态。1是正常、0是关闭系统', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('17', '系统业务运行等级', 'system_service_level', '0', '示例：1,8 。1:注册功能、2:登录功能、4:找回密码、8:密码修改、16:支付功能、32:短信功能、64:邮件功能、128:评价功能、256:上传功能、512:订单查看功能、1024:提现功能、2048:API接口、4096:微信应用、8192:关闭全站（除后台）', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('18', 'luosimao短信KEY', 'luosimao_sms_key', '5d68e2564cc9deac5bc8d74935dc4e8c', 'luosimao短信发送KEY。', '1', '1', unix_timestamp(now()), '0', '0');
+INSERT INTO `ms_config` VALUES ('19', '省市区JSON文件更新版本', 'district_json_version', '', '省市区JSON文件更新版本', '1', '1', unix_timestamp(now()), '0', '0');
+
 
 # 文件表
 # 上传的图片、视频等文件记录在此表中。
