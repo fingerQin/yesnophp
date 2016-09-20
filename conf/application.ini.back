@@ -135,5 +135,5 @@ database.mysql.other.prefix   = ms_
 ; Redis配置
 database.redis.host  = 127.0.0.1
 database.redis.port  = 6379
-database.redis.pwd   = shu1211ke
+database.redis.pwd   = xxxx
 database.redis.index = 9
