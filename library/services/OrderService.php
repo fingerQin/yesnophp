@@ -414,7 +414,6 @@ class OrderService extends BaseService {
      *      'province_name'  => '省名称',
      *      'city_name'      => '市名称',
      *      'district_name'  => '区县名称',
-     *      'is_exchange'    => '是否积分兑换。1是、0否。使用积分兑换的时候不能享受优惠券优惠。',
      *      'user_coupon_id' => '优惠券ID。使用积分兑换的时候不能享受优惠券优惠。',
      * ];
      *
@@ -489,17 +488,6 @@ class OrderService extends BaseService {
             }
         }
         $update_data = [];
-        // 判断积分是否足够扣取。
-        if ($data['is_exchange'] == 1) {
-            $jifen_to_cash = YCore::appconfig('jifen_to_cash', 1000);
-            $jifen_pay = $jifen_to_cash * $price_info['payment_price'];
-            GoldService::goldConsume($data['user_id'], $jifen_pay, GoldService::CONSUME_TYPE_CUT, 'order_pay');
-            $update_data['payment_type'] = 2;
-            $update_data['jifen_pay']    = $jifen_pay;
-            $update_data['pay_status']   = 1;
-            $update_data['pay_time']     = $_SERVER['REQUEST_TIME'];
-            $update_data['order_status'] = OrderService::ORDER_STATUS_PAY_OK;
-        }
         if ($data['user_coupon_id'] > 0) {
             if ($price_info['payment_price'] < $coupon_order_money) {
                 YCore::exception(-1, "订单满{$coupon_order_money}元才能使用该优惠券");

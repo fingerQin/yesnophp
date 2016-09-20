@@ -314,6 +314,22 @@ CREATE TABLE `ms_admin_role_priv` (
   KEY(roleid)
 ) ENGINE=InnoDB DEFAULT CHARSET UTF8 COMMENT '角色权限表';
 
+# 找回密码记录表
+DROP TABLE IF EXISTS ms_find_pwd;
+CREATE TABLE ms_find_pwd(
+	id INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+	user_id INT(11) UNSIGNED NOT NULL COMMENT '用户ID',
+	find_type TINYINT(1) NOT NULL COMMENT '找回密码类型：1手机号找回、2邮箱找回',
+	to_account CHAR(50) NOT NULL COMMENT '手机或邮箱或其他',
+	code CHAR(6) NOT NULL COMMENT '验证码',
+	check_times SMALLINT(3) NOT NULL DEFAULT '0' COMMENT '验证次数',
+	is_ok TINYINT(1) NOT NULL DEFAULT '0' COMMENT '最后一次否验证通过标记。0未使用、1已通过验证、2未验证通过',
+	ip CHAR(15) NOT NULL COMMENT 'IP地址',
+	created_time INT(11) UNSIGNED NOT NULL COMMENT '创建时间',
+	modified_time INT(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '修改时间',
+	PRIMARY KEY(id),
+	KEY(find_type, to_account)
+) ENGINE = InnoDB DEFAULT CHARSET UTF8 COMMENT '找回密码记录表';
 
 # 文章表
 DROP TABLE IF EXISTS ms_news;
