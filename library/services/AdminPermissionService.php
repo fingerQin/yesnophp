@@ -5,7 +5,6 @@
  * @author winerQin
  * @date 2015-11-19
  */
-
 namespace services;
 
 use models\AdminRole;
@@ -15,21 +14,22 @@ use models\Menu;
 use models\AdminRolePriv;
 use models\Admin;
 use models\DbBase;
+
 class AdminPermissionService extends BaseService {
-    
+
     /**
      * 获取角色列表。
-     * 
+     *
      * @return array
      */
     public static function getRoleList() {
         $admin_role_model = new AdminRole();
         return $admin_role_model->getAllRole(false);
     }
-    
+
     /**
      * 添加角色。
-     * 
+     *
      * @param string $rolename 角色名称。
      * @param number $listorder 排序。小在前。
      * @param string $description 角色介绍。
@@ -38,25 +38,27 @@ class AdminPermissionService extends BaseService {
     public static function addRole($rolename, $listorder = 0, $description = '') {
         // [1] 验证
         $data = [
-                'rolename' => $rolename,'listorder' => $listorder,'description' => $description 
+            'rolename'    => $rolename,
+            'listorder'   => $listorder,
+            'description' => $description
         ];
         $rules = [
-                'rolename' => '角色|require:6003001|len:6003002:2:10:1',
-                'listorder' => '排序|require:6003003|integer:6003004',
-                'description' => '角色介绍|require:6003005|len:6003006:1:100:1' 
+            'rolename'    => '角色|require:6003001|len:6003002:2:10:1',
+            'listorder'   => '排序|require:6003003|integer:6003004',
+            'description' => '角色介绍|require:6003005|len:6003006:1:100:1'
         ];
         Validator::valido($data, $rules); // 验证不通过会抛异常。
-        $admin_role_model = new AdminRole();
+        $admin_role_model     = new AdminRole();
         $data['created_time'] = $_SERVER['REQUEST_TIME'];
-        $data['is_default'] = 0;
-        $data['status'] = 1;
+        $data['is_default']   = 0;
+        $data['status']       = 1;
         $roleid = $admin_role_model->addRole($data);
         return $roleid ? true : false;
     }
-    
+
     /**
      * 编辑角色。
-     * 
+     *
      * @param number $roleid 角色ID。
      * @param string $rolename 角色名称。
      * @param number $listorder 排序。
@@ -65,12 +67,14 @@ class AdminPermissionService extends BaseService {
      */
     public static function editRole($roleid, $rolename, $listorder = 0, $description = '') {
         $data = [
-                'rolename' => $rolename,'listorder' => $listorder,'description' => $description 
+            'rolename'    => $rolename,
+            'listorder'   => $listorder,
+            'description' => $description
         ];
         $rules = [
-                'rolename' => '角色|require:6003007|len:6003008:2:10:1',
-                'listorder' => '排序|require:6003009|integer:6003010',
-                'description' => '角色介绍|require:6003011|len:6003012:1:100:1' 
+            'rolename'    => '角色|require:6003007|len:6003008:2:10:1',
+            'listorder'   => '排序|require:6003009|integer:6003010',
+            'description' => '角色介绍|require:6003011|len:6003012:1:100:1'
         ];
         Validator::valido($data, $rules); // 验证不通过会抛异常。
         $admin_role_model = new AdminRole();
@@ -80,10 +84,10 @@ class AdminPermissionService extends BaseService {
         }
         return $admin_role_model->editRole($roleid, $data);
     }
-    
+
     /**
      * 角色删除。
-     * 
+     *
      * @param number $roleid 角色ID。
      * @return boolean
      */
@@ -98,7 +102,8 @@ class AdminPermissionService extends BaseService {
         }
         $admin_model = new Admin();
         $admin_count = $admin_model->count([
-                'roleid' => $roleid,'status' => 1 
+            'roleid' => $roleid,
+            'status' => 1
         ]);
         if ($admin_count == 0) {
             return $admin_role_model->deleteRole($roleid);
@@ -106,10 +111,10 @@ class AdminPermissionService extends BaseService {
             YCore::exception(- 1, '请将该角色下的管理员移动到其它角色下');
         }
     }
-    
+
     /**
      * 角色详情。
-     * 
+     *
      * @param number $roleid 角色ID。
      * @return boolean
      */
@@ -121,10 +126,10 @@ class AdminPermissionService extends BaseService {
         }
         return $role_info;
     }
-    
+
     /**
      * 获取指定角色且指定父菜单的子菜单。
-     * 
+     *
      * @param number $roleid 角色ID。
      * @param number $parentid 父菜单ID。
      * @return array
@@ -134,19 +139,22 @@ class AdminPermissionService extends BaseService {
             return self::getSubMenu($parentid);
         } else {
             $default_db = new DbBase();
-            $sql = 'SELECT b.* FROM ms_admin_role_priv AS a INNER JOIN ms_menu AS b ' . 'ON(a.menu_id=b.menu_id AND a.roleid = :roleid AND b.parentid = :parentid) ' .
-                 'WHERE b.display = :display ORDER BY b.listorder ASC,b.menu_id ASC';
+            $sql = 'SELECT b.* FROM ms_admin_role_priv AS a INNER JOIN ms_menu AS b '
+                 . 'ON(a.menu_id=b.menu_id AND a.roleid = :roleid AND b.parentid = :parentid) '
+                 . 'WHERE b.display = :display ORDER BY b.listorder ASC,b.menu_id ASC';
             $params = [
-                    ':parentid' => $parentid,':roleid' => $roleid,':display' => 1 
+                ':parentid' => $parentid,
+                ':roleid'   => $roleid,
+                ':display'  => 1
             ];
             $list = $default_db->rawQuery($sql, $params)->rawFetchAll();
             return $list ? $list : [];
         }
     }
-    
+
     /**
      * 获取指定ID的子菜单。
-     * 
+     *
      * @param number $parent_id 父ID。
      * @param number $is_get_hide 是否获取隐藏的菜单。
      * @return array
@@ -156,10 +164,10 @@ class AdminPermissionService extends BaseService {
         $menu_list = $menu_model->getByParentToMenu($parent_id, $is_get_hide);
         return $menu_list;
     }
-    
+
     /**
      * 获取管理后台左侧菜单。
-     * 
+     *
      * @param number $roleid 角色ID。
      * @param number $menu_id 菜单ID。
      * @return array
@@ -174,17 +182,17 @@ class AdminPermissionService extends BaseService {
         }
         return $menu_list;
     }
-    
+
     /**
      * 获取菜单列表[tree]。
-     * 
+     *
      * @param number $parentid 父ID。默认值0。
      * @param string $children_name 子节点键名。
      * @return array
      */
     public static function getMenuList($parentid = 0, $children_name = 'sub') {
         $menu_model = new Menu();
-        $menu_list = $menu_model->getByParentToMenu($parentid);
+        $menu_list  = $menu_model->getByParentToMenu($parentid);
         if (empty($menu_list)) {
             return $menu_list;
         } else {
@@ -194,10 +202,10 @@ class AdminPermissionService extends BaseService {
             return $menu_list;
         }
     }
-    
+
     /**
      * 获取菜单详情。
-     * 
+     *
      * @param number $menu_id 菜单ID。
      * @return array
      */
@@ -205,10 +213,10 @@ class AdminPermissionService extends BaseService {
         $menu_model = new Menu();
         return $menu_model->getMenu($menu_id);
     }
-    
+
     /**
      * 获取菜单面包屑。
-     * 
+     *
      * @param number $menu_id 菜单ID。
      * @param string $crumbs 面包屑。
      * @return string
@@ -222,13 +230,12 @@ class AdminPermissionService extends BaseService {
             return "{$menu['name']} > {$crumbs}";
         }
     }
-    
+
     /**
      * 添加菜单。
-     * 
+     *
      * @param number $parentid 父ID。
      * @param string $name 菜单名称。
-     * @param string $module_name 模块名称。
      * @param string $controller_name 控制器名称。
      * @param string $action_name 操作名称。
      * @param string $data 附加参数。
@@ -236,30 +243,36 @@ class AdminPermissionService extends BaseService {
      * @param number $display 是否显示。
      * @return boolean
      */
-    public static function addMenu($parentid, $name, $module_name, $controller_name, $action_name, $data, $listorder, $display = 0) {
+    public static function addMenu($parentid, $name, $controller_name, $action_name, $data, $listorder, $display = 0) {
         $data = [
-                'name' => $name,'parentid' => $parentid,'m' => $module_name,'c' => $controller_name,
-                'a' => $action_name,'data' => $data,'listorder' => $listorder,'display' => $display 
+            'name'      => $name,
+            'parentid'  => $parentid,
+            'c'         => $controller_name,
+            'a'         => $action_name,
+            'data'      => $data,
+            'listorder' => $listorder,
+            'display'   => $display
         ];
         $rules = [
-                'name' => '角色名称|require:6003015|len:6003016:2:10:1',
-                'parentid' => '上级菜单|require:6003017|integer:6003018','m' => '模块名称|require:6003019',
-                'c' => '控制器名称|require:6003020','a' => '操作名称|require:6003021','data' => '附加参数|len:6003022:0:100:1',
-                'listorder' => '排序|require:6003023|integer:6003024',
-                'display' => '是否显示菜单|require:6003025|integer:6003026' 
+            'name'      => '角色名称|require:6003015|len:6003016:2:10:1',
+            'parentid'  => '上级菜单|require:6003017|integer:6003018',
+            'c'         => '控制器名称|require:6003020',
+            'a'         => '操作名称|require:6003021',
+            'data'      => '附加参数|len:6003022:0:100:1',
+            'listorder' => '排序|require:6003023|integer:6003024',
+            'display'   => '是否显示菜单|require:6003025|integer:6003026'
         ];
         Validator::valido($data, $rules); // 验证不通过会抛异常。
         $menu_model = new Menu();
         return $menu_model->addMenu($data);
     }
-    
+
     /**
      * 编辑菜单。
-     * 
+     *
      * @param number $menu_id 菜单ID。
      * @param number $parentid 父ID。
      * @param string $name 菜单名称。
-     * @param string $module_name 模块名称。
      * @param string $controller_name 控制器名称。
      * @param string $action_name 操作名称。
      * @param string $data 附加参数。
@@ -267,51 +280,58 @@ class AdminPermissionService extends BaseService {
      * @param number $display 是否显示。
      * @return boolean
      */
-    public static function editMenu($menu_id, $parentid, $name, $module_name, $controller_name, $action_name, $data, $listorder, $display = 0) {
+    public static function editMenu($menu_id, $parentid, $name, $controller_name, $action_name, $data, $listorder, $display = 0) {
         $data = [
-                'name' => $name,'parentid' => $parentid,'m' => $module_name,'c' => $controller_name,
-                'a' => $action_name,'data' => $data,'listorder' => $listorder,'display' => $display 
+            'name'      => $name,
+            'parentid'  => $parentid,
+            'c'         => $controller_name,
+            'a'         => $action_name,
+            'data'      => $data,
+            'listorder' => $listorder,
+            'display'   => $display
         ];
         $rules = [
-                'name' => '角色名称|require:6003015|len:6003016:2:10:1',
-                'parentid' => '上级菜单|require:6003017|integer:6003018','m' => '模块名称|require:6003019',
-                'c' => '控制器名称|require:6003020','a' => '操作名称|require:6003021','data' => '附加参数|len:6003022:0:100:1',
-                'listorder' => '排序|require:6003023|integer:6003024',
-                'display' => '是否显示菜单|require:6003025|integer:6003026' 
+            'name'      => '角色名称|require:6003015|len:6003016:2:10:1',
+            'parentid'  => '上级菜单|require:6003017|integer:6003018',
+            'c'         => '控制器名称|require:6003020',
+            'a'         => '操作名称|require:6003021',
+            'data'      => '附加参数|len:6003022:0:100:1',
+            'listorder' => '排序|require:6003023|integer:6003024',
+            'display'   => '是否显示菜单|require:6003025|integer:6003026'
         ];
         Validator::valido($data, $rules); // 验证不通过会抛异常。
         $menu_model = new Menu();
-        $menu_info = $menu_model->getMenu($menu_id);
+        $menu_info  = $menu_model->getMenu($menu_id);
         if (empty($menu_info)) {
             YCore::exception(6003027, '菜单不存在或已经删除');
         }
         return $menu_model->editMenu($menu_id, $data);
     }
-    
+
     /**
      * 删除菜单。
-     * 
+     *
      * @param number $menu_id 菜单ID。
      * @return boolean
      */
     public static function deleteMenu($menu_id) {
         $menu_model = new Menu();
-        $menu_info = $menu_model->getMenu($menu_id);
+        $menu_info  = $menu_model->getMenu($menu_id);
         if (empty($menu_info)) {
             YCore::exception(6003028, '菜单不存在或已经删除');
         }
         $sub_menu = $menu_model->fetchAll([], [
-                'parentid' => $menu_id 
+            'parentid' => $menu_id
         ]);
         if ($sub_menu) {
             YCore::exception(- 1, '请先移除该菜单下的子菜单再删除');
         }
         return $menu_model->deleteMenu($menu_id);
     }
-    
+
     /**
      * 菜单排序。
-     * 
+     *
      * @param array $listorders 菜单排序数据。[ ['菜单ID' => '排序值'], ...... ]
      * @return boolean
      */
@@ -328,10 +348,10 @@ class AdminPermissionService extends BaseService {
         }
         return true;
     }
-    
+
     /**
      * 设置角色权限。
-     * 
+     *
      * @param number $roleid 角色ID。
      * @param array $arr_menu_id 菜单ID数组。
      * @return boolean
@@ -364,10 +384,10 @@ class AdminPermissionService extends BaseService {
         $admin_role_priv_model->commit();
         return true;
     }
-    
+
     /**
      * 获取角色对应的权限菜单(树形结构)。
-     * 
+     *
      * @param number $roleid 角色ID。
      * @return array
      */
@@ -379,7 +399,7 @@ class AdminPermissionService extends BaseService {
         }
         $admin_role_priv_model = new AdminRolePriv();
         $list = $admin_role_priv_model->fetchAll([], [
-                'roleid' => $roleid 
+            'roleid' => $roleid
         ]);
         $priv_menu_list = []; // 只存在菜单ID。
         foreach ($list as $menu) {
@@ -387,25 +407,26 @@ class AdminPermissionService extends BaseService {
         }
         return $priv_menu_list;
     }
-    
+
     /**
      * 检查角色是否拥有当前链接权限。
-     * 
+     *
      * @param number $roleid 角色ID。
      * @param string $m 模块名称。
      * @param string $c 控制器名称。
      * @param string $a 操作名称。
      * @return boolean
      */
-    public static function checkRoleMenuPriv($roleid, $m, $c, $a) {
+    public static function checkRoleMenuPriv($roleid, $c, $a) {
         $role_permission_list = self::getRolePermission($roleid);
         $is_ok = false;
         foreach ($role_permission_list as $per) {
-            if ($per['m'] == $m && $per['c'] == $c && $per['a'] == $a) {
+            if ($per['c'] == $c && $per['a'] == $a) {
                 $is_ok = true;
                 break;
             }
         }
         return $is_ok;
     }
+
 }

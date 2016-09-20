@@ -8,31 +8,30 @@
  * @author winerQin
  * @date 2015-11-19
  */
-
 namespace services;
 
 class CaptchaService extends BaseService {
-    
+
     /**
      * 获取一个验证码。
      * -- 1、验证码时效只有5分钟。
-     * 
+     *
      * @param int $user_id 用户ID。
      * @param int $position 验证码位置。
      * @return void
      */
     public static function getCode($user_id, $position) {
         $code_sn = $user_id . $position;
-        $Verify = new \winer\Captcha();
+        $Verify  = new \winer\Captcha();
         $Verify->fontSize = 14;
-        $Verify->length = 4;
+        $Verify->length   = 4;
         $Verify->useNoise = false;
         $Verify->entry($code_sn);
     }
-    
+
     /**
      * 验证码验证。
-     * 
+     *
      * @param int $user_id 用户ID。
      * @param int $position 验证码位置。
      * @param string $code 验证码。
@@ -43,4 +42,5 @@ class CaptchaService extends BaseService {
         $verify = new \winer\Captcha();
         return $verify->check($code, $code_sn);
     }
+
 }

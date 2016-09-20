@@ -1416,3 +1416,30 @@ PRIMARY KEY(item_id),
 KEY(news_id)
 ) ENGINE = InnoDB DEFAULT CHARSET utf8mb4 COMMENT '微信公众号图文文章明细表';
 # ------------------ 微信相关 end ------------#
+
+DROP TABLE IF EXISTS ms_favorites;
+CREATE TABLE ms_favorites(
+id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
+user_id INT(11) UNSIGNED NOT NULL COMMENT '用户ID',
+obj_type TINYINT(1) NOT NULL COMMENT '收藏类型：1商品收藏、2文章收藏、3问答收藏、4IT题目收藏',
+obj_id INT(11) UNSIGNED NOT NULL COMMENT '商品ID/文章ID/问答ID/IT题目ID',
+status TINYINT(1) NOT NULL DEFAULT '0' COMMENT '状态：0无效、1正常、2删除',
+modified_time INT(11) UNSIGNED NOT NULL DEFAULT '0' COMMENT '修改时间',
+created_time INT(11) UNSIGNED NOT NULL COMMENT '创建时间',
+PRIMARY KEY(id),
+KEY(user_id)
+) ENGINE = InnoDB DEFAULT CHARSET UTF8 COMMENT '用户收藏夹';
+
+CREATE TABLE ms_session (
+  session_id varchar(100) NOT NULL COMMENT 'php session_id',
+  session_expire int(11) UNSIGNED NOT NULL COMMENT 'session到期时间',
+  session_data blob,
+  UNIQUE KEY `session_id` (`session_id`)
+)ENGINE = MyISAM DEFAULT CHARSET=utf8 COMMENT 'session表';
+
+CREATE TABLE ms_cache (
+  cache_key varchar(100) NOT NULL COMMENT '缓存key',
+  cache_expire int(11) UNSIGNED NOT NULL COMMENT '缓存到期时间',
+  cache_data blob,
+  UNIQUE KEY `cache_key` (`cache_key`)
+)ENGINE = MyISAM DEFAULT CHARSET=utf8 COMMENT '缓存表';

@@ -5,7 +5,6 @@
  * @author winerQin
  * @date 2015-11-19
  */
-
 namespace services;
 
 use common\YCore;
@@ -17,11 +16,13 @@ use models\AdminRolePriv;
 use models\AdminLoginHistory;
 use models\DbBase;
 use winer\MobileDetect;
+use common\YUrl;
+
 class AdminService extends BaseService {
-    
+
     /**
      * 获取管理员列表。
-     * 
+     *
      * @param string $keyword 查询关键词(账号、手机、姓名)。
      * @param int $page 当前页码。
      * @param int $count 每页显示条数。
@@ -33,15 +34,17 @@ class AdminService extends BaseService {
         $admin_role_model = new AdminRole();
         foreach ($result['list'] as $key => $item) {
             $role = $admin_role_model->getRole($item['roleid']);
-            $item['rolename'] = $role['rolename'];
-            $result['list'][$key] = $item;
+            $item['rolename']      = $role['rolename'];
+            $item['created_time']  = YCore::format_timestamp($item['created_time']);
+            $item['lastlogintime'] = YCore::format_timestamp($item['lastlogintime']);
+            $result['list'][$key]  = $item;
         }
         return $result;
     }
-    
+
     /**
      * 添加管理员。
-     * 
+     *
      * @param string $realname 真实姓名。
      * @param string $username 账号。
      * @param string $password 密码。
@@ -52,20 +55,21 @@ class AdminService extends BaseService {
     public static function addAdmin($realname, $username, $password, $mobilephone, $roleid) {
         // [1]
         $data = [
-                'realname' => $realname,'username' => $username,'password' => $password,'mobilephone' => $mobilephone 
+            'realname'    => $realname,
+            'username'    => $username,
+            'password'    => $password,
+            'mobilephone' => $mobilephone
         ];
         $rules = [
-                'realname' => '真实姓名|require:5000001|len:5000001:2:20:1',
-                'username' => '账号|require:5000001|alpha_dash:5000002|len:5000003:6:20:0',
-                'password' => '密码|require:5000004|alpha_dash:5000005|len:5000006:6:20:0',
-                'mobilephone' => '手机号码|require:5000001|mobilephone:5000001' 
+            'realname'    => '真实姓名|require:5000001|len:5000001:2:20:1',
+            'username'    => '账号|require:5000001|alpha_dash:5000002|len:5000003:6:20:0',
+            'password'    => '密码|require:5000004|alpha_dash:5000005|len:5000006:6:20:0',
+            'mobilephone' => '手机号码|require:5000001|mobilephone:5000001'
         ];
         Validator::valido($data, $rules); // 验证不通过会抛异常。
                                           // [2]
-        $admin_model = new Admin();
-        $admin_detail = $admin_model->fetchOne([], [
-                'username' => $username,'status' => 1 
-        ]);
+        $admin_model  = new Admin();
+        $admin_detail = $admin_model->fetchOne([], ['username' => $username,'status' => 1]);
         if (! empty($admin_detail)) {
             YCore::exception('-1', '管理员账号已经存在');
         }
@@ -78,17 +82,22 @@ class AdminService extends BaseService {
         $salt = YCore::create_randomstr(6);
         $md5_password = self::encryptPassword($password, $salt);
         $data = [
-                'realname' => $realname,'username' => $username,'password' => $md5_password,
-                'mobilephone' => $mobilephone,'salt' => $salt,'roleid' => $roleid,'status' => 1,
-                'created_time' => $_SERVER['REQUEST_TIME'] 
+            'realname'     => $realname,
+            'username'     => $username,
+            'password'     => $md5_password,
+            'mobilephone'  => $mobilephone,
+            'salt'         => $salt,
+            'roleid'       => $roleid,
+            'status'       => 1,
+            'created_time' => $_SERVER['REQUEST_TIME']
         ];
         $status = $admin_model->insert($data);
         return $status ? true : false;
     }
-    
+
     /**
      * 编辑管理员。
-     * 
+     *
      * @param int $admin_id 管理员ID。
      * @param int $realname 真实姓名。
      * @param string $password 密码。不填则保持原密码。
@@ -99,14 +108,15 @@ class AdminService extends BaseService {
     public static function editAdmin($admin_id, $realname, $mobilephone, $roleid, $password = '') {
         // [1]
         $data = [
-                'realname' => $realname,'mobilephone' => $mobilephone 
+            'realname'    => $realname,
+            'mobilephone' => $mobilephone
         ];
         $rules = [
-                'realname' => '真实姓名|require:5000001|len:5000001:2:20:1',
-                'mobilephone' => '手机号码|require:5000001|mobilephone:5000001' 
+            'realname'    => '真实姓名|require:5000001|len:5000001:2:20:1',
+            'mobilephone' => '手机号码|require:5000001|mobilephone:5000001'
         ];
         if (strlen($password) > 0) {
-            $data['password'] = $password;
+            $data['password']  = $password;
             $rules['password'] = '密码|require:5000004|alpha_dash:5000005|len:5000006:6:20:0';
         }
         Validator::valido($data, $rules); // 验证不通过会抛异常。
@@ -123,31 +133,33 @@ class AdminService extends BaseService {
             YCore::exception('-1', '角色不存在或已经删除');
         }
         $data = [
-                'realname' => $realname,'mobilephone' => $mobilephone,'roleid' => $roleid 
+            'realname'    => $realname,
+            'mobilephone' => $mobilephone,
+            'roleid'      => $roleid
         ];
         if (strlen($password) > 0) {
             $salt = YCore::create_randomstr(6);
             $md5_password = self::encryptPassword($password, $salt);
             $data['password'] = $md5_password;
-            $data['salt'] = $salt;
+            $data['salt']     = $salt;
         }
         $where = [
-                'admin_id' => $admin_id 
+            'admin_id' => $admin_id
         ];
         $status = $admin_model->update($data, $where);
         return $status ? true : false;
     }
-    
+
     /**
      * 删除管理员账号。
      * -- 1、超级管理员账号是不允许删除的。
-     * 
+     *
      * @param int $op_admin_id 操作管理员ID。
      * @param int $admin_id 管理员账号ID。
      * @return boolean
      */
     public static function deleteAdmin($op_admin_id, $admin_id) {
-        $admin_model = new Admin();
+        $admin_model  = new Admin();
         $admin_detail = $admin_model->getUserOfByAdminId($admin_id);
         if (empty($admin_detail)) {
             YCore::exception(- 1, '管理员不存在或已经删除');
@@ -159,35 +171,36 @@ class AdminService extends BaseService {
             YCore::exception(- 1, '超级管理员账号不能删除');
         }
         $data = [
-                'status' => 2 
+            'status' => 2
         ];
         $where = [
-                'admin_id' => $admin_id 
+            'admin_id' => $admin_id
         ];
         return $admin_model->update($data, $where);
     }
-    
+
     /**
      * 获取管理员账号详情。
-     * 
+     *
      * @param int $admin_id 管理员账号ID。
      * @return array
      */
     public static function getAdminDetail($admin_id) {
-        $admin_model = new Admin();
+        $admin_model  = new Admin();
         $admin_detail = $admin_model->fetchOne([], [
-                'admin_id' => $admin_id,'status' => 1 
+            'admin_id' => $admin_id,
+            'status' => 1
         ]);
         if (empty($admin_detail)) {
             YCore::exception(- 1, '管理员不存在或已经删除');
         }
         return $admin_detail;
     }
-    
+
     /**
      * 管理员登录。
      * -- 1、后续增加IP限制与登录错误次数限制。
-     * 
+     *
      * @param string $username 账号。
      * @param string $password 密码。
      * @return boolean
@@ -201,7 +214,8 @@ class AdminService extends BaseService {
         }
         $admin_model = new Admin();
         $admin_info = $admin_model->fetchOne([], [
-                'username' => $username,'status' => 1 
+            'username' => $username,
+            'status' => 1
         ]);
         if (empty($admin_info)) {
             YCore::exception(6002003, '账号不存在');
@@ -212,22 +226,22 @@ class AdminService extends BaseService {
         }
         self::addAdminLoginHistory($admin_info['admin_id']);
         $update_data = [
-                'lastlogintime' => $_SERVER['REQUEST_TIME'] 
+            'lastlogintime' => $_SERVER['REQUEST_TIME']
         ];
         $update_where = [
-                'admin_id' => $admin_info['admin_id'] 
+            'admin_id' => $admin_info['admin_id']
         ];
         $admin_model->update($update_data, $update_where);
         $auth_token = self::createToken($admin_info['admin_id'], $encrypt_password);
         self::setAuthTokenLastAccessTime($admin_info['admin_id'], $auth_token, $_SERVER['REQUEST_TIME']);
-        $admin_cookie_domain = YCore::config('admin_cookie_domain');
+        $admin_cookie_domain = YUrl::getDomainName(false);
         setcookie('admin_token', $auth_token, 0, '/', $admin_cookie_domain);
         return true;
     }
-    
+
     /**
      * 添加管理员登录历史。
-     * 
+     *
      * @param number $admin_id 管理员ID。
      * @return void
      */
@@ -242,12 +256,12 @@ class AdminService extends BaseService {
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
         $ip = YCore::ip();
         $address = '';
-        
+
         $ch = curl_init();
         $url = "http://apis.baidu.com/apistore/iplookupservice/iplookup?ip={$ip}";
-        $header = array(
-                'apikey: 9728c130acfa61d31ec2d814e0d438aa' 
-        );
+        $header = [
+            'apikey: 9728c130acfa61d31ec2d814e0d438aa'
+        ];
         // 添加apikey到header
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -256,21 +270,26 @@ class AdminService extends BaseService {
         $res = curl_exec($ch);
         $ip_info = json_decode($res, true);
         if (empty($ip_info) || $ip_info['errNum'] != 0) {
-            YCore::exception(- 1, 'IP定位失败');
+            // YCore::exception(-1, 'IP定位失败');
+            $address = '';
         } else {
             $address = "{$ip_info['retData']['country']}{$ip_info['retData']['province']}{$ip_info['retData']['city']}{$ip_info['retData']['district']}{$ip_info['retData']['carrier']}";
         }
         $admin_login_history_model = new AdminLoginHistory();
         $data = [
-                'admin_id' => $admin_id,'user_agent' => $user_agent,'ip' => $ip,'browser_type' => $browser_type,
-                'address' => $address,'created_time' => $_SERVER['REQUEST_TIME'] 
+            'admin_id'     => $admin_id,
+            'user_agent'   => $user_agent,
+            'ip'           => $ip,
+            'browser_type' => $browser_type,
+            'address'      => $address,
+            'created_time' => $_SERVER['REQUEST_TIME']
         ];
         return $admin_login_history_model->insert($data);
     }
-    
+
     /**
      * 获取管理员登录记录。
-     * 
+     *
      * @param number $admin_id 管理员ID。
      * @param number $page 当前页码。
      * @param number $count 每页显示条数。
@@ -291,18 +310,21 @@ class AdminService extends BaseService {
         $sql = "SELECT COUNT(1) AS count {$from_table} {$where}";
         $count_data = $default_db->rawQuery($sql, $params)->rawFetchOne();
         $total = $count_data ? $count_data['count'] : 0;
-        $sql = "SELECT {$columns} {$from_table} {$where} {$order_by} LIMIT {$offset},{$count}";
-        $list = $default_db->rawQuery($sql, $params)->rawFetchAll();
-        $result = array(
-                'list' => $list,'total' => $total,'page' => $page,'count' => $count,
-                'isnext' => self::IsHasNextPage($total, $page, $count) 
-        );
+        $sql   = "SELECT {$columns} {$from_table} {$where} {$order_by} LIMIT {$offset},{$count}";
+        $list  = $default_db->rawQuery($sql, $params)->rawFetchAll();
+        $result = [
+            'list'   => $list,
+            'total'  => $total,
+            'page'   => $page,
+            'count'  => $count,
+            'isnext' => self::IsHasNextPage($total, $page, $count)
+        ];
         return $result;
     }
-    
+
     /**
      * 修改密码。
-     * 
+     *
      * @param int $admin_id 用户ID。
      * @param string $old_pwd 旧密码。
      * @param string $new_pwd 新密码。
@@ -333,27 +355,28 @@ class AdminService extends BaseService {
         }
         return true;
     }
-    
+
     /**
      * 获取管理员详情。
-     * 
+     *
      * @param number $admin_id 管理员ID。
      * @return array
      */
     public static function getAdminInfo($admin_id) {
         $admin_model = new Admin();
         $data = $admin_model->fetchOne([], [
-                'admin_id' => $admin_id,'status' => 1 
+            'admin_id' => $admin_id,
+            'status' => 1
         ]);
         if (empty($data)) {
             YCore::exception(- 1, '管理员不存在或已经删除');
         }
         return $data;
     }
-    
+
     /**
      * 管理员修改自己的资料。
-     * 
+     *
      * @param int $admin_id 管理员ID。
      * @param string $realname 真实姓名。
      * @param string $mobilephone 手机号码。
@@ -362,11 +385,12 @@ class AdminService extends BaseService {
     public static function editInfo($admin_id, $realname, $mobilephone) {
         $admin_model = new Admin();
         $data = [
-                'realname' => $realname,'mobilephone' => $mobilephone 
+            'realname'    => $realname,
+            'mobilephone' => $mobilephone
         ];
         $rules = [
-                'realname' => '真实姓名|require:6002401|len:6002402:2:20:1',
-                'mobilephone' => '手机号码|require:6002403|mobilephone:6002404' 
+            'realname'    => '真实姓名|require:6002401|len:6002402:2:20:1',
+            'mobilephone' => '手机号码|require:6002403|mobilephone:6002404'
         ];
         Validator::valido($data, $rules);
         unset($data, $rules);
@@ -376,20 +400,20 @@ class AdminService extends BaseService {
         }
         return true;
     }
-    
+
     /**
      * 退出登录。
      */
     public static function logout() {
-        $admin_cookie_domain = YCore::config('admin_cookie_domain');
+        $admin_cookie_domain = YUrl::getDomainName(false);
         $valid_time = $_SERVER['REQUEST_TIME'] - 3600;
         setcookie('admin_token', '', $valid_time, '/', $admin_cookie_domain);
     }
-    
+
     /**
      * 检查用户权限。
      * -- 1、在每次用户访问程序的时候调用。
-     * 
+     *
      * @param string $module_name 模块名称。
      * @param string $ctrl_name 控制器名称。
      * @param string $action_name 操作名称。
@@ -405,7 +429,8 @@ class AdminService extends BaseService {
         // [2] 用户存在与否判断
         $admin_model = new Admin();
         $admin_info = $admin_model->fetchOne([], [
-                'admin_id' => $admin_id,'status' => 1 
+            'admin_id' => $admin_id,
+            'status' => 1
         ]);
         if (empty($admin_info)) {
             self::logout();
@@ -418,8 +443,8 @@ class AdminService extends BaseService {
         // [3] token是否赶出了超时时限
         $cache = YCore::getCache();
         $cache_key_token = "admin_token_key_{$admin_id}";
-        $cache_key_time = "admin_access_time_key_{$admin_id}";
-        $cache_token = $cache->get($cache_key_token);
+        $cache_key_time  = "admin_access_time_key_{$admin_id}";
+        $cache_token     = $cache->get($cache_key_token);
         if ($cache_token === false) {
             self::logout();
             YCore::exception(6002103, '您还没有登录');
@@ -438,16 +463,18 @@ class AdminService extends BaseService {
         }
         self::setAuthTokenLastAccessTime($admin_id, $token, $access_time);
         $data = [
-                'admin_id' => $admin_info['admin_id'],'realname' => $admin_info['realname'],
-                'username' => $admin_info['username'],'mobilephone' => $admin_info['mobilephone'],
-                'roleid' => $admin_info['roleid'] 
+            'admin_id'    => $admin_info['admin_id'],
+            'realname'    => $admin_info['realname'],
+            'username'    => $admin_info['username'],
+            'mobilephone' => $admin_info['mobilephone'],
+            'roleid'      => $admin_info['roleid']
         ];
         return $data;
     }
-    
+
     /**
      * 检查指定角色的菜单权限。
-     * 
+     *
      * @param number $roleid 角色ID。
      * @param string $module_name 模块名称。
      * @param string $ctrl_name 控制器名称。
@@ -460,14 +487,16 @@ class AdminService extends BaseService {
         }
         $menu_model = new Menu();
         $where = [
-                'm' => $module_name,'c' => $ctrl_name,'a' => $action_name 
+            'c' => $ctrl_name,
+            'a' => $action_name
         ];
         $menu_info = $menu_model->fetchOne([], $where);
         if (empty($menu_info)) {
             return false;
         }
         $where = [
-                'roleid' => $roleid,'menu_id' => $menu_info['menu_id'] 
+            'roleid'  => $roleid,
+            'menu_id' => $menu_info['menu_id']
         ];
         $admin_role_priv = new AdminRolePriv();
         $priv = $admin_role_priv->fetchOne([], $where);
@@ -476,10 +505,10 @@ class AdminService extends BaseService {
         }
         return true;
     }
-    
+
     /**
      * 设置auth_token最后的访问时间。
-     * 
+     *
      * @param int $admin_id 管理员ID。
      * @param string $auth_token auth_token。
      * @param int $access_time 最后访问时间戳。
@@ -489,14 +518,14 @@ class AdminService extends BaseService {
         $cache = YCore::getCache();
         $cache_time = YCore::config('admin_logout_time') * 60;
         $cache_key_token = "admin_token_key_{$admin_id}"; // 用户保存auth_token的缓存键。
-        $cache_key_time = "admin_access_time_key_{$admin_id}"; // 用户保存最后访问时间的缓存键。
+        $cache_key_time  = "admin_access_time_key_{$admin_id}"; // 用户保存最后访问时间的缓存键。
         $cache->set($cache_key_token, $auth_token, $cache_time);
         $cache->set($cache_key_time, $access_time, $cache_time);
     }
-    
+
     /**
      * 加密密码。
-     * 
+     *
      * @param string $password 密码明文。
      * @param string $salt 密码加密盐。
      * @return string
@@ -504,11 +533,11 @@ class AdminService extends BaseService {
     private static function encryptPassword($password, $salt) {
         return md5(md5($password) . $salt);
     }
-    
+
     /**
      * 生成Token。
      * -- 1、token只分接口与非接口两种模式。
-     * 
+     *
      * @param int $admin_id 管理员ID。
      * @param string $password 用户表password字段。
      * @return string
@@ -517,10 +546,10 @@ class AdminService extends BaseService {
         $str = "{$admin_id}\t{$password}";
         return YCore::sys_auth($str, 'ENCODE', '', 0);
     }
-    
+
     /**
      * 解析Token。
-     * 
+     *
      * @param string $token token会话。
      * @return array
      */
@@ -531,10 +560,11 @@ class AdminService extends BaseService {
             YCore::exception(6004003, '登录超时,请重新登录');
         }
         $result = [
-                'admin_id' => $data[0], // 用户ID。
-'password' => $data[1] 
-        ] // 加密的密码。
-;
+            'admin_id' => $data[0],  // 用户ID。
+            'password' => $data[1]
+        ]; // 加密的密码。
+
         return $result;
     }
+
 }

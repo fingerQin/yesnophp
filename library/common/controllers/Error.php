@@ -17,37 +17,37 @@ class Error extends \common\controllers\Common {
      */
     public function errorAction($exception) {
         $errcode = $exception->getCode();
-        $errmsg = $exception->getMessage();
-        $trace = $this->logWrapper($errmsg); // $errmsg是展示给用户看的。而$trace是展示给开发人员查找BUG用的。
+        $errmsg  = $exception->getMessage();
+        $trace   = $this->logWrapper($errmsg); // $errmsg是展示给用户看的。而$trace是展示给开发人员查找BUG用的。
 
         // 默认异常类别。
         $errcode_type = - 1;
 
         // 框架级别的异常code。
         $arr_framework_exception_code = [
-            \Yaf\ERR\STARTUP_FAILED => '2000001',
-            \Yaf\ERR\ROUTE_FAILED => '2000002',
-            \Yaf\ERR\DISPATCH_FAILED => '2000003',
-            \Yaf\ERR\NOTFOUND\MODULE => '2000004',
+            \Yaf\ERR\STARTUP_FAILED      => '2000001',
+            \Yaf\ERR\ROUTE_FAILED        => '2000002',
+            \Yaf\ERR\DISPATCH_FAILED     => '2000003',
+            \Yaf\ERR\NOTFOUND\MODULE     => '2000004',
             \Yaf\ERR\NOTFOUND\CONTROLLER => '2000005',
-            \Yaf\ERR\NOTFOUND\ACTION => '2000006',
-            \Yaf\ERR\NOTFOUND\VIEW => '2000007',
-            \Yaf\ERR\CALL_FAILED => '2000008',
-            \Yaf\ERR\AUTOLOAD_FAILED => '2000009',
-            \Yaf\ERR\TYPE_ERROR => '2000010'
+            \Yaf\ERR\NOTFOUND\ACTION     => '2000006',
+            \Yaf\ERR\NOTFOUND\VIEW       => '2000007',
+            \Yaf\ERR\CALL_FAILED         => '2000008',
+            \Yaf\ERR\AUTOLOAD_FAILED     => '2000009',
+            \Yaf\ERR\TYPE_ERROR          => '2000010'
         ];
         // 框架级别的异常信息说明（用户友好）。
         $arr_framework_exception_msg = [
-            \Yaf\ERR\STARTUP_FAILED => '服务器繁忙,请稍候重试',
-            \Yaf\ERR\ROUTE_FAILED => '服务器繁忙,请稍候重试',
-            \Yaf\ERR\DISPATCH_FAILED => '服务器繁忙,请稍候重试',
-            \Yaf\ERR\NOTFOUND\MODULE => 'URL地址有误',
+            \Yaf\ERR\STARTUP_FAILED      => '服务器繁忙,请稍候重试',
+            \Yaf\ERR\ROUTE_FAILED        => '服务器繁忙,请稍候重试',
+            \Yaf\ERR\DISPATCH_FAILED     => '服务器繁忙,请稍候重试',
+            \Yaf\ERR\NOTFOUND\MODULE     => 'URL地址有误',
             \Yaf\ERR\NOTFOUND\CONTROLLER => 'URL地址有误',
-            \Yaf\ERR\NOTFOUND\ACTION => 'URL地址有误',
-            \Yaf\ERR\NOTFOUND\VIEW => '服务器繁忙,请稍候重试',
-            \Yaf\ERR\CALL_FAILED => '服务器繁忙,请稍候重试',
-            \Yaf\ERR\AUTOLOAD_FAILED => '服务器繁忙,请稍候重试',
-            \Yaf\ERR\TYPE_ERROR => '服务器繁忙,请稍候重试'
+            \Yaf\ERR\NOTFOUND\ACTION     => 'URL地址有误',
+            \Yaf\ERR\NOTFOUND\VIEW       => '服务器繁忙,请稍候重试',
+            \Yaf\ERR\CALL_FAILED         => '服务器繁忙,请稍候重试',
+            \Yaf\ERR\AUTOLOAD_FAILED     => '服务器繁忙,请稍候重试',
+            \Yaf\ERR\TYPE_ERROR          => '服务器繁忙,请稍候重试'
         ];
 
         if (strlen($errcode) == 7) { // 可识别的异常都是7位编号。
