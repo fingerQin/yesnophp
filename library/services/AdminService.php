@@ -405,7 +405,7 @@ class AdminService extends BaseService {
      * 退出登录。
      */
     public static function logout() {
-        $admin_cookie_domain = YUrl::getDomainName(false);
+        $admin_cookie_domain = YCore::config('admin_cookie_domain');
         $valid_time = $_SERVER['REQUEST_TIME'] - 3600;
         setcookie('admin_token', '', $valid_time, '/', $admin_cookie_domain);
     }

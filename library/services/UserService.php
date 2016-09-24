@@ -190,7 +190,7 @@ class UserService extends BaseService {
         $auth_token = self::createToken($userinfo['user_id'], $userinfo['password'], $login_time, $login_model);
         $return_data = [];
         if ($login_model == 1) { // web模式。
-            $user_auth_cookie_domain_name = YUrl::getDomainName(false);
+            $user_auth_cookie_domain_name = YCore::config('user_auth_cookie_domain_name');
             setcookie('auth_token', $auth_token, 0, '/', $user_auth_cookie_domain_name);
         } else if ($login_model == 2) { // 接口模式。
             $return_data['token'] = $auth_token;
