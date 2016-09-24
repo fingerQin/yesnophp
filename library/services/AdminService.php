@@ -16,7 +16,6 @@ use models\AdminRolePriv;
 use models\AdminLoginHistory;
 use models\DbBase;
 use winer\MobileDetect;
-use common\YUrl;
 
 class AdminService extends BaseService {
 
